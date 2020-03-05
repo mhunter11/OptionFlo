@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
-const { UserInputError } = require('apollo-server')
+const { AuthenticationError, UserInputError } = require('apollo-server')
 
 const { validateRegisterInput, validateLoginInput } = require('../../util/validators')
 const { SECRET_KEY } = require('../../config')
@@ -9,12 +9,36 @@ const User = require("../../models/User")
 function generateToken(user) {
   return jwt.sign({
     id: user.id, email: user.email, username: user.username
-  }, SECRET_KEY, { expiresIn: '1h' })
+  }, SECRET_KEY, { expiresIn: '7d' })
 }
 
 module.exports = {
+  Query: {
+    async getUser(_, args, { req }) {
+      //TODO: Figure out a way to compare tokens
+      // console.log(req)
+      // if (!req.session.userId) {
+      //   throw new UserInputError("User not found")
+      // }
+
+      // if (!req.session.userId !== args.userId) {
+      //   throw new AuthenticationError("You're not the owner")
+      // }
+
+      try {
+        const user = await User.findById(args.userId);
+        if (user) {
+          return user;
+        } else {
+          throw new Error('User not found');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    }
+  },
   Mutation: {
-    async login(_, { username, password }) {
+    async login(_, { username, password }, { req }) {
       const { errors, valid } = validateLoginInput(username, password) //email
       const user = await User.findOne({ username })
       // const email = await User.findOne({ email })
@@ -36,7 +60,8 @@ module.exports = {
         throw new UserInputError("Wrong credentials", { errors })
       }
       const token = generateToken(user)
-
+      // req.session = { token, userId: user.id }
+      // console.log(req.session)
       return {
         ...user._doc,
         id: user.id,
