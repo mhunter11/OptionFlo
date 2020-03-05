@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const { AuthenticationError, UserInputError } = require('apollo-server')
 
 const { validateRegisterInput, validateLoginInput } = require('../../util/validators')
+const checkAuth = require('../../util/check-auth');
 const { SECRET_KEY } = require('../../config')
 const User = require("../../models/User")
 
@@ -14,26 +15,21 @@ function generateToken(user) {
 
 module.exports = {
   Query: {
-    async getUser(_, args, { req }) {
-      //TODO: Figure out a way to compare tokens
-      // console.log(req)
-      // if (!req.session.userId) {
-      //   throw new UserInputError("User not found")
-      // }
-
-      // if (!req.session.userId !== args.userId) {
-      //   throw new AuthenticationError("You're not the owner")
-      // }
-
-      try {
-        const user = await User.findById(args.userId);
-        if (user) {
-          return user;
-        } else {
-          throw new Error('User not found');
+    async getUser(_, args, context) {
+      const user = checkAuth(context);
+      if (user.id === args.userId) {
+        try {
+          const user = await User.findById(args.userId);
+          if (user) {
+            return user;
+          } else {
+            throw new Error('User not found');
+          }
+        } catch (err) {
+          throw new Error(err);
         }
-      } catch (err) {
-        throw new Error(err);
+      } else {
+        throw new AuthenticationError('User not found');
       }
     }
   },
