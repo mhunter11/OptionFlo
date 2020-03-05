@@ -15,19 +15,19 @@ function generateToken(user) {
 module.exports = {
   Mutation: {
     async login(_, { username, password }) {
-      const { errors, valid } = validateLoginInput(username, password)
+      const { errors, valid } = validateLoginInput(username, password) //email
       const user = await User.findOne({ username })
-      const email = await User.findOne({ email })
+      // const email = await User.findOne({ email })
 
       if (!user) {
         errors.general = 'User not found'
         throw new UserInputError("User not found", { errors })
       }
 
-      if (!email) {
-        errors.general = 'Email not found'
-        throw new UserInputError("Email not found", { errors })
-      }
+      // if (!email) {
+      //   errors.general = 'Email not found'
+      //   throw new UserInputError("Email not found", { errors })
+      // }
 
       const match = await bcrypt.compare(password, user.password);
 
