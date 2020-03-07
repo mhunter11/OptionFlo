@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import LandingPage from './pages/LandingPage'
+import Subscription from './pages/Subscription'
 
 
 import 'semantic-ui-css/semantic.min.css';
@@ -25,6 +26,7 @@ export default function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/home" component={Home} />
+          <Route exact path="/subscription" component={Subscription} />
         </Container>
       </Router>
     </AuthProvider>
