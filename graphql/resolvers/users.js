@@ -6,6 +6,8 @@ const { validateRegisterInput, validateLoginInput } = require('../../util/valida
 const checkAuth = require('../../util/check-auth');
 const { SECRET_KEY } = require('../../config')
 const User = require("../../models/User")
+const stripe = require('stripe')(process.env.STRIPE_SECRET)
+
 
 function generateToken(user) {
   return jwt.sign({
@@ -17,6 +19,7 @@ module.exports = {
   Query: {
     async getUser(_, args, context) {
       const user = checkAuth(context);
+      console.log(user)
       if (user.id === args.userId) {
         try {
           const user = await User.findById(args.userId);
@@ -92,7 +95,7 @@ module.exports = {
 
       password = await bcrypt.hash(password, 12)
 
-      const newUser = new User({ username, email, password, createdAt: new Date().toISOString(), type: 'Free' })
+      const newUser = new User({ username, email, password, createdAt: new Date().toISOString(), type: '', stripeId: "" })
 
       const result = await newUser.save()
 
@@ -102,6 +105,29 @@ module.exports = {
         ...result._doc,
         id: result.id,
         token
+      }
+    },
+    async createSubscription(_, { source }, context) {
+      const user = checkAuth(context);
+      if (!user) {
+        throw new AuthenticationError("Not authenticated")
+      }
+
+      console.log(user)
+
+      const userEmail = user.email
+      const customer = await stripe.customers.create({
+        email: userEmail,
+        source,
+        plan: process.env.PLAN
+      })
+
+      user.stripeId = customer.id;
+      user.type = 'standard';
+      const result = await user.save()
+      return {
+        ...result._doc,
+        result,
       }
     }
   }
