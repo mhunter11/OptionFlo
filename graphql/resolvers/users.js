@@ -29,7 +29,7 @@ module.exports = {
           throw new Error(err);
         }
       } else {
-        throw new AuthenticationError('User not found');
+        throw new AuthenticationError('Not Allowed');
       }
     }
   },

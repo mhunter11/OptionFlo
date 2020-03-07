@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import Logo from '../logo-02.png'
+
+import styles from './Menu.module.css';
 
 export default function MenuBar() {
   const pathname = window.location.pathname;
@@ -12,14 +15,9 @@ export default function MenuBar() {
 
   return (
     <Menu pointing secondary size="massive" color="teal">
-      <Menu.Item
-        name="home"
-        active={activeItem === 'home'}
-        onClick={handleItemClick}
-        as={Link}
-        to="/"
-      />
-
+      <Link to="/">
+        <img className={styles.logo} src={Logo} />
+      </Link>
       <Menu.Menu position="right">
         <Menu.Item
           name="login"
