@@ -16,7 +16,7 @@ export default function MenuBar() {
   return (
     <Menu pointing secondary size="massive" color="teal">
       <Link to="/">
-        <img className={styles.logo} src={Logo} />
+        <img className={styles.logo} src={Logo} alt="logo" />
       </Link>
       <Menu.Menu position="right">
         <Menu.Item
