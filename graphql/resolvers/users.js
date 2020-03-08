@@ -112,8 +112,8 @@ module.exports = {
       if (!user) {
         throw new AuthenticationError("Not authenticated")
       }
-
-      console.log(user)
+      const username = user.username
+      const updateUser = await User.findOne({ username })
 
       const userEmail = user.email
       const customer = await stripe.customers.create({
@@ -122,13 +122,10 @@ module.exports = {
         plan: process.env.PLAN
       })
 
-      user.stripeId = customer.id;
-      user.type = 'standard';
-      const result = await user.save()
-      return {
-        ...result._doc,
-        result,
-      }
+      updateUser.stripeId = customer.id;
+      updateUser.type = 'standard';
+      const result = await updateUser.save()
+      return result
     }
   }
 }
