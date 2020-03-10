@@ -22,9 +22,9 @@ module.exports = {
       console.log(user)
       if (user.id === args.userId) {
         try {
-          const user = await User.findById(args.userId);
-          if (user) {
-            return user;
+          const newUser = await User.findById(args.userId);
+          if (newUser) {
+            return newUser;
           } else {
             throw new Error('User not found');
           }
