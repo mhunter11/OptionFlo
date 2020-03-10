@@ -6,9 +6,10 @@ import { AuthProvider } from "./context/auth"
 // import AuthRoute from './util/AuthRoute'
 
 import MenuBar from './components/MenuBar'
-import flow from './pages/flow'
+import Flow from './pages/Flow'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import Home from './pages/Home'
 import LandingPage from './pages/LandingPage'
 import Subscription from './pages/Subscription'
 
@@ -23,9 +24,10 @@ export default function App() {
         <Container>
           <MenuBar />
           <Route exact path="/" component={LandingPage} />
+          <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/flow" component={flow} />
+          <Route exact path="/flow" component={Flow} />
           <Route exact path="/subscription" component={Subscription} />
         </Container>
       </Router>

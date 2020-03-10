@@ -5,7 +5,7 @@ import TechnicalAnalysis from 'react-tradingview-technical-analysis'
 import styles from './Home.module.css'
 
 
-export default function Home() {
+export default function Flow() {
   useEffect(() => {
     document.getElementsByClassName("tradingview-widget-container")[0].style.margin = "auto"
   }, [])
