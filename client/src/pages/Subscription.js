@@ -21,7 +21,6 @@ export default function Subscription() {
   )
 }
 
-
 const CREATE_SUBSCRIPTION = gql`
   mutation createSubscription($source: String!) {
     createSubscription(source: $source) {
