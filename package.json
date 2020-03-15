@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "node index",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dev": "concurrently \"nodemon index.js\" \"cd client && npm run start\" \"cd data-server && node index.js\""
   },
   "keywords": [],
   "author": "",
@@ -20,5 +21,8 @@
     "jwt-decode": "^2.2.0",
     "mongoose": "^5.5.11",
     "stripe": "^8.29.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
   }
 }
