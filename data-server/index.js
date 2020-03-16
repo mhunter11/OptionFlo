@@ -49,6 +49,7 @@ function formatData(data) {
 }
 
 async function fetchLatest() {
+    console.log("Checking for updates..");
     const response = await fetch(API);
     const xml = await response.text();
 
@@ -57,6 +58,8 @@ async function fetchLatest() {
     let all_options = parsedData.result.option_activity[0].item;
 
     all_options = formatData(all_options);
+
+    console.log("Got " + all_options.length + " options");
 
     let new_options = [];
     if (lastOptionID != null) {
@@ -72,6 +75,8 @@ async function fetchLatest() {
     } else {
         new_options = all_options;
     }
+
+    console.log("Got " + new_options.length + " new options");
 
     if (new_options.length == 0) {
         return false;
@@ -93,11 +98,13 @@ async function fetchLatest() {
     }
 }
 
-setTimeout(function() {
+setInterval(function() {
     fetchLatest().then(function(result) {
         if (result) {
+            console.log("Emitting event with " + result.length + " new results");
             io.emit('options', result);
         }
+        console.log("All done");
     })
 }, 5*1000);
 

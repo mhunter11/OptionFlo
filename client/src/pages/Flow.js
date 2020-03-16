@@ -16,12 +16,20 @@ export default class Flow extends React.Component {
 
   
   componentDidMount() {
+    let self = this;
     document.getElementsByClassName("tradingview-widget-container")[0].style.margin = "auto";
 
     const socket = socketIOClient('http://localhost:8080');
 
-    socket.on("all_options", data => this.setState({ options: data }));
-    socket.on("options", data => this.setState({ options: this.state.options.unshift(...data) }));
+    socket.on("all_options", data => self.setState({ options: data }));
+    socket.on("options", function(data) {
+      let options = self.state.options;
+      options.unshift(...data);
+
+      self.setState({
+        options: options
+      });
+    });
   }
   
   render() {
