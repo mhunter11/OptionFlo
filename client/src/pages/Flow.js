@@ -14,7 +14,7 @@ export default class Flow extends React.Component {
     }
   }
 
-  
+
   componentDidMount() {
     let self = this;
     document.getElementsByClassName("tradingview-widget-container")[0].style.margin = "auto";
@@ -22,7 +22,7 @@ export default class Flow extends React.Component {
     const socket = socketIOClient('http://localhost:8080');
 
     socket.on("all_options", data => self.setState({ options: data }));
-    socket.on("options", function(data) {
+    socket.on("options", function (data) {
       let options = self.state.options;
       options.unshift(...data);
 
@@ -31,9 +31,9 @@ export default class Flow extends React.Component {
       });
     });
   }
-  
+
   render() {
-    let elements = this.state.options.map(e => <li>{e.ticker}</li> );
+    let elements = this.state.options.map(e => <li>{e.time}{e.ticker}{e.date_expiration}{e.strike_price}{e.put_call}{e.option_activity_type}{e.description}{e.sentiment}{e.cost_basis}</li>);
 
     const USE_SYMBOL = 'VXX'
     return (
