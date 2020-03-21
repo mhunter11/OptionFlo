@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { Menu } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import Logo from '../logo-02.png'
+import React, { useContext, useState } from "react";
+import { Menu } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import Logo from "../logo-02.png";
 
-import { AuthContext } from '../context/auth'
+import { AuthContext } from "../context/auth";
 
-import styles from './Menu.module.css';
+import styles from "./Menu.module.css";
 
 export default function MenuBar() {
-  const { user, logout } = useContext(AuthContext)
+  const { user, logout } = useContext(AuthContext);
   const pathname = window.location.pathname;
 
-  const path = pathname === '/' ? 'home' : pathname.substr(1);
+  const path = pathname === "/" ? "home" : pathname.substr(1);
   const [activeItem, setActiveItem] = useState(path);
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -20,40 +20,35 @@ export default function MenuBar() {
     <Menu pointing secondary size="massive" color="teal">
       <Link to="/">
         <img className={styles.logo} src={Logo} alt="logo" />
-      </Link >
+      </Link>
+      <Menu.Menu position="right">
+        <Menu.Item name={user.username} />
+        <Menu.Item name="logout" onClick={logout} />
+      </Menu.Menu>
+    </Menu>
+  ) : (
+    <Menu pointing secondary size="massive" color="teal">
+      <Link to="/">
+        <img className={styles.logo} src={Logo} alt="logo" />
+      </Link>
       <Menu.Menu position="right">
         <Menu.Item
-          name={user.username}
+          name="login"
+          active={activeItem === "login"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/login"
         />
         <Menu.Item
-          name="logout"
-          onClick={logout}
+          name="register"
+          active={activeItem === "register"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/register"
         />
       </Menu.Menu>
-    </Menu >
-  ) : (
-      <Menu pointing secondary size="massive" color="teal">
-        <Link to="/">
-          <img className={styles.logo} src={Logo} alt="logo" />
-        </Link >
-        <Menu.Menu position="right">
-          <Menu.Item
-            name="login"
-            active={activeItem === 'login'}
-            onClick={handleItemClick}
-            as={Link}
-            to="/login"
-          />
-          <Menu.Item
-            name="register"
-            active={activeItem === 'register'}
-            onClick={handleItemClick}
-            as={Link}
-            to="/register"
-          />
-        </Menu.Menu>
-      </Menu >
-    )
+    </Menu>
+  );
 
-  return menuBar
+  return menuBar;
 }

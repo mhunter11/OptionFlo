@@ -1,0 +1,5 @@
+/* custom media query variables */
+
+@custom-media --medium (width >= 768px);
+@custom-media --large (width >= 1024px);
+@custom-media --xl-large (width >= 1440px);

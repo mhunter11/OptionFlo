@@ -1,8 +1,8 @@
 :root {
-	--short-stuff: 3rem;
+  --short-stuff: 3rem;
 }
 
 .logo {
-	height: var(--short-stuff);
-	margin-top: 0.5rem;
+  height: var(--short-stuff);
+  margin-top: 0.5rem;
 }
