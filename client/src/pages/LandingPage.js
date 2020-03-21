@@ -1,9 +1,16 @@
-import React, { PureComponent } from "react";
-import { Link } from "react-router-dom";
+import React, {PureComponent} from 'react'
+import {Link} from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {
+  faCoffee,
+  faLightbulb,
+  faTrophy,
+  faFileAlt,
+} from '@fortawesome/free-solid-svg-icons'
 
-import DASHBOARD_IMAGE from "../images/dashboard-flow.png";
+import DASHBOARD_IMAGE from '../images/dashboard-flow.png'
 
-import styles from "./LandingPage.module.css";
+import styles from './LandingPage.module.css'
 
 export default class LandingPage extends PureComponent {
   render() {
@@ -28,10 +35,53 @@ export default class LandingPage extends PureComponent {
             <img className={styles.img} src={DASHBOARD_IMAGE}></img>
           </section>
           <section>
-            <h2 className={styles.h2}>UNCOVER THE POWER OF OPTIONS FLOW</h2>
+            <div className={styles.header_container}>
+              <h2 className={styles.h2}>UNCOVER THE POWER OF OPTIONS FLOW</h2>
+            </div>
+            <div className={styles.fa_icons}>
+              <div>
+                <FontAwesomeIcon
+                  style={{color: '#6DB65B'}}
+                  size="6x"
+                  icon={faLightbulb}
+                />
+                <span>Understanding order flow</span>
+                <p>
+                  Nail down the fundamentals and get familiar with all the
+                  terminologies that are used.
+                </p>
+                <a href>Learn More</a>
+              </div>
+              <div>
+                <FontAwesomeIcon
+                  style={{color: '#6DB65B'}}
+                  size="6x"
+                  icon={faTrophy}
+                />
+                <span>Understanding order flow</span>
+                <p>
+                  Nail down the fundamentals and get familiar with all the
+                  terminologies that are used.
+                </p>
+                <a href>Learn More</a>
+              </div>
+              <div>
+                <FontAwesomeIcon
+                  style={{color: '#6DB65B'}}
+                  size="6x"
+                  icon={faFileAlt}
+                />
+                <span>Market knowledge</span>
+                <p>
+                  Some of our most active users help you understand some
+                  insights into general market activity.
+                </p>
+                <a href>Learn More</a>
+              </div>
+            </div>
           </section>
         </div>
       </div>
-    );
+    )
   }
 }

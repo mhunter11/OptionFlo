@@ -8,14 +8,14 @@
 
 .h2 {
   color: #93dac5;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
   font-size: 3.125rem;
   text-transform: uppercase;
 }
 
 .h5 {
   font-size: 1.5rem;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
   color: white;
 }
 
@@ -41,11 +41,20 @@
   margin: 0 auto;
 }
 
+.fa_icons {
+  flex-direction: column;
+}
+
 /* large screen */
 @media only screen and (min-width: 1024px) {
   .container {
     max-width: 78.75rem;
     margin: 0 auto;
     flex-direction: column;
+  }
+
+  .fa_icons {
+    display: flex;
+    flex-direction: initial;
   }
 }

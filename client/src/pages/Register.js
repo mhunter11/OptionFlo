@@ -1,40 +1,40 @@
-import React, { useContext, useState } from "react";
-import { Button, Form } from "semantic-ui-react";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import React, {useContext, useState} from 'react'
+import {Button, Form} from 'semantic-ui-react'
+import {useMutation} from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
-import { AuthContext } from "../context/auth";
-import { useForm } from "../util/hooks";
+import {AuthContext} from '../context/auth'
+import {useForm} from '../util/hooks'
 
 function Register(props) {
-  const context = useContext(AuthContext);
-  const [errors, setErrors] = useState({});
+  const context = useContext(AuthContext)
+  const [errors, setErrors] = useState({})
 
-  const { onChange, onSubmit, values } = useForm(registerUser, {
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const {onChange, onSubmit, values} = useForm(registerUser, {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
 
-  const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(_, { data: { register: userData } }) {
-      context.login(userData);
-      props.history.push("/");
+  const [addUser, {loading}] = useMutation(REGISTER_USER, {
+    update(_, {data: {register: userData}}) {
+      context.login(userData)
+      props.history.push('/')
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
     variables: values,
-  });
+  })
 
   function registerUser() {
-    addUser();
+    addUser()
   }
 
   return (
     <div className="form-container">
-      <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
+      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
         <h1>Register</h1>
         <Form.Input
           label="Username"
@@ -79,14 +79,14 @@ function Register(props) {
       {Object.keys(errors).length > 0 && (
         <div className="ui error message">
           <ul className="list">
-            {Object.values(errors).map((value) => (
+            {Object.values(errors).map(value => (
               <li key={value}>{value}</li>
             ))}
           </ul>
         </div>
       )}
     </div>
-  );
+  )
 }
 
 const REGISTER_USER = gql`
@@ -111,6 +111,6 @@ const REGISTER_USER = gql`
       token
     }
   }
-`;
+`
 
-export default Register;
+export default Register
