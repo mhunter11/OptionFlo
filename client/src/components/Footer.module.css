@@ -1,0 +1,29 @@
+.logo {
+  width: 10rem;
+}
+
+.bg_color {
+  background-color: #000;
+  color: #ffffff;
+  text-align: center;
+}
+
+.icon {
+  width: 2.5rem;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+}
+
+.list_item {
+  text-decoration: none;
+  list-style: none;
+  margin-right: 1rem;
+}
+
+.container {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
