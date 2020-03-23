@@ -1,0 +1,44 @@
+.flow_list {
+  display: flex;
+  align-items: center;
+  background-color: #343333;
+  color: #ffffff;
+  height: 3.125rem;
+}
+
+.time {
+  width: 5%;
+}
+
+.ticker {
+  width: 5%;
+}
+
+.date_expiration {
+  width: 7.5%;
+}
+
+.strike_price {
+  width: 6.5%;
+}
+
+.put_call {
+  width: 5%;
+}
+
+.option_activity_type {
+  width: 5%;
+}
+
+.description {
+  width: 40%;
+  margin-right: 0.5rem;
+}
+
+.sentiment {
+  width: 7.5%;
+}
+
+.cost_basis {
+  width: 10%;
+}

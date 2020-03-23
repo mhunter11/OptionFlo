@@ -3,7 +3,7 @@ import TradingViewWidget, {Themes} from 'react-tradingview-widget'
 import TechnicalAnalysis from 'react-tradingview-technical-analysis'
 import socketIOClient from 'socket.io-client'
 
-import styles from './Home.module.css'
+import styles from './Flow.module.css'
 
 export default class Flow extends React.Component {
   constructor(props) {
@@ -34,17 +34,19 @@ export default class Flow extends React.Component {
 
   render() {
     let elements = this.state.options.map(e => (
-      <li>
-        {e.time}
-        {e.ticker}
-        {e.date_expiration}
-        {e.strike_price}
-        {e.put_call}
-        {e.option_activity_type}
-        {e.description}
-        {e.sentiment}
-        {e.cost_basis}
-      </li>
+      <div className={styles.flow_list}>
+        <div className={styles.time}>{e.time}</div>
+        <div className={styles.ticker}>{e.ticker}</div>
+        <div className={styles.date_expiration}>{e.date_expiration}</div>
+        <div className={styles.strike_price}>{e.strike_price}</div>
+        <div className={styles.put_call}>{e.put_call}</div>
+        <div className={styles.option_activity_type}>
+          {e.option_activity_type}
+        </div>
+        <div className={styles.description}>{e.description}</div>
+        <div className={styles.sentiment}>{e.sentiment}</div>
+        <div className={styles.cost_basis}>{e.cost_basis}</div>
+      </div>
     ))
 
     const USE_SYMBOL = 'VXX'
