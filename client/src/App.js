@@ -1,7 +1,7 @@
 import React from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import {AuthProvider} from './context/auth'
+import { AuthProvider } from './context/auth'
 // import AuthRoute from './util/AuthRoute'
 
 import Footer from './components/Footer'
@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import LandingPage from './pages/LandingPage'
 import Subscription from './pages/Subscription'
+import Account from './pages/Account'
 
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
@@ -27,6 +28,7 @@ export default function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/flow" component={Flow} />
         <Route exact path="/subscription" component={Subscription} />
+        <Route exact path="/account" component={Account} />
         <Footer />
       </Router>
     </AuthProvider>

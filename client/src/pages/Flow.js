@@ -14,20 +14,19 @@ export default class Flow extends React.Component {
   }
 
   componentDidMount() {
-    let self = this
     const socket = socketIOClient('http://localhost:8080')
 
     socket.on('all_options', data =>
-      self.setState({
+      this.setState({
         options: data,
       })
     )
 
     socket.on('options', function (data) {
-      let options = self.state.options
+      let options = this.state.options
       options.unshift(...data)
 
-      self.setState({options: options})
+      this.setState({ options: options })
     })
   }
 
