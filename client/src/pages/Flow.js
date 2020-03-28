@@ -1,46 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import socketIOClient from 'socket.io-client'
 
 import FlowList from './FlowList'
 
 // import styles from './Flow.module.css'
 
-export default class Flow extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      options: [],
-    }
-  }
+export default function Flow() {
+  const [options, setOptions] = useState([])
 
-  componentDidMount() {
+  useEffect(() => {
     const socket = socketIOClient('http://localhost:8080')
 
     socket.on('all_options', data =>
-      this.setState({
-        options: data,
-      })
+      setOptions(data)
     )
 
     socket.on('options', function (data) {
-      let options = this.state.options
-      options.unshift(...data)
-
-      this.setState({ options: options })
+      let newOptionData = options
+      newOptionData.unshift(...data)
+      setOptions(newOptionData)
     })
-  }
+  }, []);
 
-  render() {
-    return (
+
+  return (
+    <div>
       <div>
-        <div>
-          <ul>
-            {this.state.options.map((data, index) => (
-              <FlowList {...data} key={index} />
-            ))}
-          </ul>
-        </div>
+        <ul>
+          {options.map((data, index) => (
+            <FlowList {...data} key={index} />
+          ))}
+        </ul>
       </div>
-    )
-  }
+    </div>
+  )
+
 }
