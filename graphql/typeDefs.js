@@ -47,6 +47,7 @@ module.exports = gql`
     getUser(userId: String!): User
     getPost(postId: ID!): Post
   }
+
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String, password: String): User!
@@ -57,7 +58,32 @@ module.exports = gql`
     likePost(postId: ID!): Post!
     createSubscription(source: String!): User
   }
+
   type Subscription {
     newPost: Post!
+  }
+
+  type Option {
+    id: ID!
+    date: String!
+    time: String!
+    ticker: String!
+    description: String!
+    updated: String
+    sentiment: String!
+    aggressor_ind: String!
+    option_symbol: String!
+    underlying_type: String!
+    cost_basis: String!
+    put_call: String!
+    strike_price: String!
+    date_expiration: String!
+    option_activity_type: String!
+    trade_count: String!
+    open_interest: String!
+    volume: String!
+    bid: String!
+    ask: String!
+    midpoint: String!
   }
 `;

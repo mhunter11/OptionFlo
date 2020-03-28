@@ -126,6 +126,9 @@ module.exports = {
       updateUser.type = 'standard';
       const result = await updateUser.save()
       return result
+    },
+    async saveOption(_, { source }, _) {
+      
     }
   }
 }
