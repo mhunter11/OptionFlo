@@ -1,12 +1,35 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+
+import { AuthContext } from '../context/auth'
 
 import FlowList from './FlowList'
 
 // import styles from './Flow.module.css'
 
+
+const GET_USER_INFO = gql`
+  query getUserInfo($myUserId: String!) {
+    getUser(userId: $myUserId) {
+      type
+      stripeId
+      id
+      createdAt
+      username
+      email
+    }
+  }
+`
+
 export default function Flow() {
   const [options, setOptions] = useState([])
+  const { user } = useContext(AuthContext)
+  const { loading, error, data } = useQuery(GET_USER_INFO, {
+    variables: { myUserId: user.id },
+  })
 
   useEffect(() => {
     const socket = socketIOClient('http://localhost:8080')
@@ -22,6 +45,21 @@ export default function Flow() {
     })
   }, []);
 
+  if (loading) {
+    return null
+  }
+
+  if (!data && !loading) {
+    return <Redirect to="/">Please login</Redirect>
+  }
+
+  if (!data.getUser) {
+    return <Redirect to="/login">Please login</Redirect>
+  }
+
+  if (data.getUser.type === 'free' || data.getUser.type === '') {
+    return <Redirect to="/subscription">Please subscribe</Redirect>
+  }
 
   return (
     <div>

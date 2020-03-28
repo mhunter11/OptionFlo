@@ -23,6 +23,7 @@ export default function Account() {
   const { loading, error, data } = useQuery(GET_USER_INFO, {
     variables: { myUserId: user.id },
   })
+
   if (loading) {
     return null
   }
