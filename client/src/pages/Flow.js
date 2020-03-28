@@ -42,6 +42,10 @@ export default function Flow() {
       newOptionData.unshift(...data)
       setOptions(newOptionData)
     })
+
+    socket.on('clear', function() {
+      setOptions([])
+    })
   }, [])
 
   if (loading) {

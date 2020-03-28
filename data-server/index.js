@@ -13,7 +13,9 @@ const API = 'https://api.benzinga.com/api/v1/signal/option_activity?apiKey=3085d
 
 //Data
 var lastOptionID = null;
-const allData = [];
+var allData = [];
+
+var lastResetTime = (new Date());
 
 
 function formatData(data) {
@@ -49,6 +51,16 @@ function formatData(data) {
 }
 
 async function fetchLatest() {
+    let now = new Date();
+
+    if (now.getHours() == 9 && (now - lastResetTime) / 1000 / 60 / 60 > 23) {
+        lastResetTime = now;
+
+        allData = []; //Clear options
+
+        io.emit('clear'); //Tell connected clients to clear
+    }
+
     console.log("Checking for updates..");
     const response = await fetch(API);
     const xml = await response.text();
