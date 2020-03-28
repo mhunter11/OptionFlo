@@ -128,10 +128,20 @@ module.exports = {
       const result = await updateUser.save()
       return result
     },
-    async saveOption(_, { date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint }, __) {
-      const newOption = new Option({ date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint })
+    async saveOption(_, { optionData }, __) {
+      const results = []
 
-      const result = await newOption.save()
+      for (let i = 0; i < optionData.length; i++) {
+        const op = optionData[i];
+
+        date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint = op.date, op.time, op.ticker, op.description, op.updated, op.sentiment, op.aggressor_ind, op.option_symbol, op.underlying_type, op.cost_basis, op.put_call, op.strike_price, op.date_expiration, op.option_activity_type, op.trade_count, op.open_interest, op.volume, op.bid, op.ask, op.midpoint;
+
+        const newOption = new Option({ date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint })
+
+        const result = await newOption.save()
+
+        results.append(result);
+      }
 
       return {
         ...result._doc,
