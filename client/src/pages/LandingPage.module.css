@@ -98,6 +98,10 @@
   margin-bottom: 1.5rem;
 }
 
+.bg_blue_color {
+  background-color: #121438;
+}
+
 /* large screen */
 @media only screen and (min-width: 1024px) {
   .header_container {

@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 import styles from './Footer.module.css'
 
@@ -10,18 +11,22 @@ export default function Footer() {
   return (
     <div className={styles.bg_color}>
       <div className={styles.container}>
-        <img className={styles.logo} src={LOGO} />
+        <Link to="/">
+          <img className={styles.logo} src={LOGO} alt="OptionFlo Logo" />
+        </Link>
         <ul className={styles.list}>
           <li className={styles.list_item}>Privacy Policy</li>
           <li className={styles.list_item}>Terms of Service</li>
-          <li className={styles.list_item}>Subscription</li>
+          <li className={styles.list_item}>
+            <Link to="/subscription">Subscription</Link>
+          </li>
         </ul>
-        <div>
-          <a href="#">
-            <img src={TWITTER} className={styles.icon} />
+        <div className={styles.logo_container}>
+          <a className={styles.icon_link} href="https://twitter.com/OptionFlo">
+            <img src={TWITTER} className={styles.icon} alt="Twitter Logo" />
           </a>
-          <a href="#">
-            <img src={DISCORD} className={styles.icon} />
+          <a href="https://discord.gg/RBVCtV2">
+            <img src={DISCORD} className={styles.icon} alt="Discord Logo" />
           </a>
         </div>
         <div>

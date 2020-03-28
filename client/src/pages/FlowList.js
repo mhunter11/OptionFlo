@@ -16,7 +16,6 @@ export default function FlowList(props) {
   } = props
 
   const OPTION_COST = parseInt(cost_basis).toLocaleString('en')
-  console.log(cost_basis)
   return (
     <div className={styles.flow_list}>
       <div className={styles.time}>{time}</div>

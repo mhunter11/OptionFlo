@@ -12,6 +12,10 @@
   width: 2.5rem;
 }
 
+.icon_link {
+  margin-right: 1rem;
+}
+
 .list {
   display: flex;
   justify-content: center;
@@ -21,9 +25,22 @@
   text-decoration: none;
   list-style: none;
   margin-right: 1rem;
+  color: white;
+}
+
+.list_item a {
+  color: white;
 }
 
 .container {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.logo_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  margin: auto;
 }
