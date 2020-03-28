@@ -6,6 +6,7 @@ const { validateRegisterInput, validateLoginInput } = require('../../util/valida
 const checkAuth = require('../../util/check-auth');
 const { SECRET_KEY } = require('../../config')
 const User = require("../../models/User")
+const Option = require("../../models/Option")
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 
@@ -127,8 +128,15 @@ module.exports = {
       const result = await updateUser.save()
       return result
     },
-    async saveOption(_, { source }, _) {
-      
+    async saveOption(_, { date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint }, __) {
+      const newOption = new Option({ date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint })
+
+      const result = await newOption.save()
+
+      return {
+        ...result._doc,
+        id: result.id,
+      }
     }
   }
 }

@@ -57,6 +57,7 @@ module.exports = gql`
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
     createSubscription(source: String!): User
+    saveOption(options: [Option]): Option!
   }
 
   type Subscription {
