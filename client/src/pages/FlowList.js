@@ -25,7 +25,9 @@ export default function FlowList(props) {
       <div className={styles.put_call}>{put_call}</div>
       <div className={styles.option_activity_type}>{option_activity_type}</div>
       <div className={styles.description}>{description}</div>
-      <div className={styles.sentiment}>{sentiment}</div>
+      <div className={styles.sentiment}>
+        {sentiment === 'BULLISH' ? 'Buying' : 'Selling'}
+      </div>
       <div className={styles.cost_basis}>${OPTION_COST}</div>
     </div>
   )

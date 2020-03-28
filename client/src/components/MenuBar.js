@@ -22,7 +22,8 @@ export default function MenuBar() {
         <img className={styles.logo} src={Logo} alt="logo" />
       </Link>
       <Menu.Menu position="right">
-        <Menu.Item name={user.username} />
+        <Menu.Item name="Flow" as={Link} to="/flow" />
+        <Menu.Item name={user.username} as={Link} to="/account" />
         <Menu.Item name="logout" onClick={logout} />
       </Menu.Menu>
     </Menu>

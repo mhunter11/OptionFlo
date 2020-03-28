@@ -15,8 +15,8 @@ export default function Subscription() {
         })
         console.log(response)
       }}
-      stripeKey={REACT_APP_STRIPE_PUBLISHABLE}
-      amount={65}
+      stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE}
+      amount={6000}
     />
   )
 }

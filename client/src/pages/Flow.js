@@ -10,7 +10,6 @@ import FlowList from './FlowList'
 
 // import styles from './Flow.module.css'
 
-
 const GET_USER_INFO = gql`
   query getUserInfo($myUserId: String!) {
     getUser(userId: $myUserId) {
@@ -26,31 +25,40 @@ const GET_USER_INFO = gql`
 
 export default function Flow() {
   const [options, setOptions] = useState([])
+
   const { user } = useContext(AuthContext)
+
   const { loading, error, data } = useQuery(GET_USER_INFO, {
-    variables: { myUserId: user.id },
+    variables: { myUserId: user ? user.id : null },
   })
 
   useEffect(() => {
     const socket = socketIOClient('http://localhost:8080')
 
-    socket.on('all_options', data =>
-      setOptions(data)
-    )
+    socket.on('all_options', data => setOptions(data))
 
     socket.on('options', function (data) {
       let newOptionData = options
       newOptionData.unshift(...data)
       setOptions(newOptionData)
     })
-  }, []);
+  }, [])
 
   if (loading) {
     return null
   }
 
+  if (!user) {
+    return <Redirect to="/login">Please login</Redirect>
+  }
+
+  if (error) {
+    console.error(error)
+    return <div>Error!</div>
+  }
+
   if (!data && !loading) {
-    return <Redirect to="/">Please login</Redirect>
+    return <div>data is undefined</div>
   }
 
   if (!data.getUser) {
@@ -72,5 +80,4 @@ export default function Flow() {
       </div>
     </div>
   )
-
 }
