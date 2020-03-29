@@ -1,31 +1,27 @@
 import React from 'react'
-import StripeCheckout from 'react-stripe-checkout'
-import {useMutation} from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 
-import {REACT_APP_STRIPE_PUBLISHABLE} from '../config'
+import SubscriptionCard from './SubscriptionCard'
+
+import {SUBSCRIPTION_BENEFITS} from './subscription-data'
+
+import styles from './Subscription.module.css'
 
 export default function Subscription() {
-  const [createSub] = useMutation(CREATE_SUBSCRIPTION)
   return (
-    <StripeCheckout
-      token={async token => {
-        const response = await createSub({
-          variables: {source: token.id},
-        })
-        console.log(response)
-      }}
-      stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE}
-      amount={6000}
-    />
+    <div className={styles.bg_color}>
+      <section>
+        <div className={styles.header_container}>
+          <h2 className={styles.h2}>Subscribe Now!</h2>
+          <h5 className={styles.h5}>
+            Test out our Option Flow Unusual Activity for a week before you're
+            charged{' '}
+            <span className={styles.underline}>
+              No commitment. Cancel at anytime!
+            </span>
+          </h5>
+        </div>
+        <SubscriptionCard />
+      </section>
+    </div>
   )
 }
-
-const CREATE_SUBSCRIPTION = gql`
-  mutation createSubscription($source: String!) {
-    createSubscription(source: $source) {
-      id
-      email
-    }
-  }
-`

@@ -1,0 +1,87 @@
+.list_item {
+  list-style-type: none;
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #93dac5;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  width: 70%;
+  margin: 0 auto;
+  line-height: 1.57;
+}
+
+.card_container {
+  border: 1px solid white;
+  width: 400px;
+  margin: 0 auto;
+  border-radius: 3px;
+  padding: 2rem 0;
+  padding-bottom: 3rem;
+}
+
+.header_container {
+  text-align: center;
+  padding-bottom: 3.75rem;
+  padding-top: 2rem;
+}
+
+.h2 {
+  font-size: 3rem;
+  color: #93dac5;
+}
+
+.h5 {
+  font-size: 1.5rem;
+  color: #fff;
+  width: 50%;
+  margin: 0 auto;
+  line-height: 1.67;
+}
+
+.h6 {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.content {
+  margin-bottom: 1.5rem;
+}
+
+.button {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  background-color: #93dac5;
+  border-radius: 3px 3px 3px 3px;
+  max-width: 210px;
+  padding: 10px 55px;
+  margin: 0 auto;
+}
+
+.h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  width: 50%;
+  margin: 0 auto;
+  line-height: 1.67;
+  margin-bottom: 1rem;
+}
+
+.bg_color {
+  background-color: #232870;
+}
+
+.plan {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ccc;
+  display: block;
+}
+
+.container {
+  text-align: center;
+  padding-bottom: 7.5rem;
+}
