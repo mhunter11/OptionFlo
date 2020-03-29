@@ -128,25 +128,52 @@ module.exports = {
       const result = await updateUser.save()
       return result
     },
-    async saveOption(_, { optionData }, __) {
-      const results = []
+    async saveOption(_, optionData, __) {
+      let results = [];
 
-      for (let i = 0; i < optionData.length; i++) {
-        const op = optionData[i];
+      console.log(optionData);
 
-        date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint = op.date, op.time, op.ticker, op.description, op.updated, op.sentiment, op.aggressor_ind, op.option_symbol, op.underlying_type, op.cost_basis, op.put_call, op.strike_price, op.date_expiration, op.option_activity_type, op.trade_count, op.open_interest, op.volume, op.bid, op.ask, op.midpoint;
+      let options = optionData.options;
+
+      for (let i = 0; i < options.length; i++) {
+        const op = options[i];
+
+        const date = op.date;
+        const time = op.time;
+        const ticker = op.ticker;
+        const description = op.description;
+        const updated = op.updated;
+        const sentiment = op.sentiment;
+        const aggressor_ind = op.aggressor_ind;
+        const option_symbol = op.option_symbol;
+        const underlying_type = op.underlying_type;
+        const cost_basis = op.cost_basis;
+        const put_call = op.put_call;
+        const strike_price = op.strike_price;
+        const date_expiration = op.date_expiration;
+        const option_activity_type = op.option_activity_type;
+        const trade_count = op.trade_count;
+        const open_interest = op.open_interest;
+        const volume = op.volume;
+        const bid = op.bid;
+        const ask = op.ask;
+        const midpoint = op.midpoint;
 
         const newOption = new Option({ date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint })
 
-        const result = await newOption.save()
+        const result = await newOption.save();
 
-        results.append(result);
+        results.push(result);
       }
 
-      return {
-        ...result._doc,
-        id: result.id,
-      }
+      results = results.map(function(o) {
+        return {
+          ...o._doc,
+          id: o.id
+        }
+      });
+
+      return results;
     }
   }
 }

@@ -97,16 +97,7 @@ async function fetchLatest() {
 
         allData.unshift(...new_options);
 
-        
-
-        //TODO Store old elements (last N) in a database (Mongo? Elasticsearch?)
-        /*if (allData.length > N) {
-            let oldElements = allData[:N];
-
-            pushToDatabase(oldElements);
-
-            allData.remove(oldElements);
-        }*/
+        //TODO Push new_options to GraphQL server
 
         return new_options;
     }
