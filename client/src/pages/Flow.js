@@ -49,23 +49,22 @@ export default function Flow() {
   }, [])
 
   if (loading) {
-    return null
-  }
-
-  if (!user) {
-    return <Redirect to="/login">Please login</Redirect>
+    return <div>Loading...</div>
   }
 
   if (error) {
     console.error(error)
-    return <div>Error!</div>
+    return <Redirect to="/" />
   }
 
+  if (!user && !loading) {
+    return <Redirect to="/login">Please login</Redirect>
+  }
   if (!data && !loading) {
     return <div>data is undefined</div>
   }
 
-  if (!data.getUser) {
+  if (!data.getUser && !loading) {
     return <Redirect to="/login">Please login</Redirect>
   }
 
