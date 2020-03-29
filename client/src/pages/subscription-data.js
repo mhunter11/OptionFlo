@@ -1,6 +1,6 @@
 export const SUBSCRIPTION_BENEFITS = [
   'Realtime Option Order Flow',
-  'Unusual options activity',
+  'Unusual Options Activity',
   'Access to OptionFlo Discord',
   'Trader Chatroom',
   'Access to our Top Traders',
