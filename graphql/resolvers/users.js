@@ -1,51 +1,59 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { AuthenticationError, UserInputError } = require('apollo-server')
+const {AuthenticationError, UserInputError} = require('apollo-server')
 
-const { validateRegisterInput, validateLoginInput } = require('../../util/validators')
-const checkAuth = require('../../util/check-auth');
-const { SECRET_KEY } = require('../../config')
-const User = require("../../models/User")
-const Option = require("../../models/Option")
+const {
+  validateRegisterInput,
+  validateLoginInput,
+} = require('../../util/validators')
+const checkAuth = require('../../util/check-auth')
+const {SECRET_KEY} = require('../../config')
+const User = require('../../models/User')
+const Option = require('../../models/Option')
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
-
 function generateToken(user) {
-  return jwt.sign({
-    id: user.id, email: user.email, username: user.username
-  }, SECRET_KEY, { expiresIn: '7d' })
+  return jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    },
+    SECRET_KEY,
+    {expiresIn: '7d'}
+  )
 }
 
 module.exports = {
   Query: {
     async getUser(_, args, context) {
-      const user = checkAuth(context);
+      const user = checkAuth(context)
       console.log(user)
       if (user.id === args.userId) {
         try {
-          const newUser = await User.findById(args.userId);
+          const newUser = await User.findById(args.userId)
           if (newUser) {
-            return newUser;
+            return newUser
           } else {
-            throw new Error('User not found');
+            throw new Error('User not found')
           }
         } catch (err) {
-          throw new Error(err);
+          throw new Error(err)
         }
       } else {
-        throw new AuthenticationError('Not Allowed');
+        throw new AuthenticationError('Not Allowed')
       }
-    }
+    },
   },
   Mutation: {
-    async login(_, { username, password }, { req }) {
-      const { errors, valid } = validateLoginInput(username, password) //email
-      const user = await User.findOne({ username })
+    async login(_, {username, password}, {req}) {
+      const {errors, valid} = validateLoginInput(username, password) //email
+      const user = await User.findOne({username})
       // const email = await User.findOne({ email })
 
       if (!user) {
         errors.general = 'User not found'
-        throw new UserInputError("User not found", { errors })
+        throw new UserInputError('User not found', {errors})
       }
 
       // if (!email) {
@@ -53,11 +61,11 @@ module.exports = {
       //   throw new UserInputError("Email not found", { errors })
       // }
 
-      const match = await bcrypt.compare(password, user.password);
+      const match = await bcrypt.compare(password, user.password)
 
       if (!match) {
         errors.general = 'Wrong credentials'
-        throw new UserInputError("Wrong credentials", { errors })
+        throw new UserInputError('Wrong credentials', {errors})
       }
       const token = generateToken(user)
       // req.session = { token, userId: user.id }
@@ -65,38 +73,53 @@ module.exports = {
       return {
         ...user._doc,
         id: user.id,
-        token
+        token,
       }
     },
-    async register(parent, { registerInput: { username, email, password, confirmPassword } }) {
-      const { valid, errors } = validateRegisterInput(username, email, password, confirmPassword)
+    async register(
+      parent,
+      {registerInput: {username, email, password, confirmPassword}}
+    ) {
+      const {valid, errors} = validateRegisterInput(
+        username,
+        email,
+        password,
+        confirmPassword
+      )
 
       if (!valid) {
-        throw new UserInputError('Errors', { errors })
+        throw new UserInputError('Errors', {errors})
       }
 
-      const userUsername = await User.findOne({ username })
-      const userEmail = await User.findOne({ email })
+      const userUsername = await User.findOne({username})
+      const userEmail = await User.findOne({email})
 
       if (userUsername) {
-        throw new UserInputError("User already exists", {
+        throw new UserInputError('User already exists', {
           errors: {
-            username: "This user is taken"
-          }
+            username: 'This user is taken',
+          },
         })
       }
 
       if (userEmail) {
-        throw new UserInputError("Email already exists", {
+        throw new UserInputError('Email already exists', {
           errors: {
-            email: "This email is taken"
-          }
+            email: 'This email is taken',
+          },
         })
       }
 
       password = await bcrypt.hash(password, 12)
 
-      const newUser = new User({ username, email, password, createdAt: new Date().toISOString(), type: '', stripeId: "" })
+      const newUser = new User({
+        username,
+        email,
+        password,
+        createdAt: new Date().toISOString(),
+        type: '',
+        stripeId: '',
+      })
 
       const result = await newUser.save()
 
@@ -105,75 +128,96 @@ module.exports = {
       return {
         ...result._doc,
         id: result.id,
-        token
+        token,
       }
     },
-    async createSubscription(_, { source }, context) {
-      const user = checkAuth(context);
+    async createSubscription(_, {source}, context) {
+      const user = checkAuth(context)
       if (!user) {
-        throw new AuthenticationError("Not authenticated")
+        throw new AuthenticationError('Not authenticated')
       }
       const username = user.username
-      const updateUser = await User.findOne({ username })
+      const updateUser = await User.findOne({username})
 
       const userEmail = user.email
       const customer = await stripe.customers.create({
         email: userEmail,
         source,
-        plan: process.env.PLAN
+        plan: process.env.PLAN,
       })
 
-      updateUser.stripeId = customer.id;
-      updateUser.type = 'standard';
+      updateUser.stripeId = customer.id
+      updateUser.type = 'standard'
       const result = await updateUser.save()
       return result
     },
     async saveOption(_, optionData, __) {
-      let results = [];
+      let results = []
 
-      console.log(optionData);
+      console.log(optionData)
 
-      let options = optionData.options;
+      let options = optionData.options
 
       for (let i = 0; i < options.length; i++) {
-        const op = options[i];
+        const op = options[i]
 
-        const date = op.date;
-        const time = op.time;
-        const ticker = op.ticker;
-        const description = op.description;
-        const updated = op.updated;
-        const sentiment = op.sentiment;
-        const aggressor_ind = op.aggressor_ind;
-        const option_symbol = op.option_symbol;
-        const underlying_type = op.underlying_type;
-        const cost_basis = op.cost_basis;
-        const put_call = op.put_call;
-        const strike_price = op.strike_price;
-        const date_expiration = op.date_expiration;
-        const option_activity_type = op.option_activity_type;
-        const trade_count = op.trade_count;
-        const open_interest = op.open_interest;
-        const volume = op.volume;
-        const bid = op.bid;
-        const ask = op.ask;
-        const midpoint = op.midpoint;
+        const date = op.date
+        const time = op.time
+        const ticker = op.ticker
+        const description = op.description
+        const updated = op.updated
+        const sentiment = op.sentiment
+        const aggressor_ind = op.aggressor_ind
+        const option_symbol = op.option_symbol
+        const underlying_type = op.underlying_type
+        const cost_basis = op.cost_basis
+        const put_call = op.put_call
+        const strike_price = op.strike_price
+        const date_expiration = op.date_expiration
+        const option_activity_type = op.option_activity_type
+        const trade_count = op.trade_count
+        const open_interest = op.open_interest
+        const volume = op.volume
+        const bid = op.bid
+        const ask = op.ask
+        const midpoint = op.midpoint
 
-        const newOption = new Option({ date, time, ticker, description, updated, sentiment, aggressor_ind, option_symbol, underlying_type, cost_basis, put_call, strike_price, date_expiration, option_activity_type, trade_count, open_interest, volume, bid, ask, midpoint })
+        const newOption = new Option({
+          date,
+          time,
+          ticker,
+          description,
+          updated,
+          sentiment,
+          aggressor_ind,
+          option_symbol,
+          underlying_type,
+          cost_basis,
+          put_call,
+          strike_price,
+          date_expiration,
+          option_activity_type,
+          trade_count,
+          open_interest,
+          volume,
+          bid,
+          ask,
+          midpoint,
+        })
 
-        const result = await newOption.save();
+        const result = await newOption.save()
 
-        results.push(result);
+        results.push(result)
       }
 
-      results = results.map(function(o) {
+      results = results.map(function (o) {
         return {
           ...o._doc,
-          id: o.id
+          id: o.id,
         }
-      });
+      })
 
-      return results;
-    }
-  }
+      return results
+    },
+  },
 }

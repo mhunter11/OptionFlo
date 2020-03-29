@@ -21,7 +21,7 @@ const GET_USER_INFO = gql`
 export default function Account() {
   const {user} = useContext(AuthContext)
   const {loading, error, data} = useQuery(GET_USER_INFO, {
-    variables: { myUserId: user ? user.id : null },
+    variables: {myUserId: user ? user.id : null},
   })
 
   if (loading) {

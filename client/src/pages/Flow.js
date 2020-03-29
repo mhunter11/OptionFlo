@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import React, {useState, useEffect, useContext} from 'react'
+import {Link, Redirect} from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
-import { useQuery } from '@apollo/react-hooks'
+import {useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
-import { AuthContext } from '../context/auth'
+import {AuthContext} from '../context/auth'
 
 import FlowList from './FlowList'
 
@@ -26,10 +26,10 @@ const GET_USER_INFO = gql`
 export default function Flow() {
   const [options, setOptions] = useState([])
 
-  const { user } = useContext(AuthContext)
+  const {user} = useContext(AuthContext)
 
-  const { loading, error, data } = useQuery(GET_USER_INFO, {
-    variables: { myUserId: user ? user.id : null },
+  const {loading, error, data} = useQuery(GET_USER_INFO, {
+    variables: {myUserId: user ? user.id : null},
   })
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Flow() {
       setOptions(newOptionData)
     })
 
-    socket.on('clear', function() {
+    socket.on('clear', function () {
       setOptions([])
     })
   }, [])
