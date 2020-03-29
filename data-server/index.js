@@ -1,3 +1,4 @@
+require('dotenv').config()
 const xml2js = require('xml2js')
 const fetch = require('node-fetch')
 const date = require('date-and-time')
@@ -8,8 +9,7 @@ const parser = new xml2js.Parser(/* options */)
 const date_pattern = date.compile('YYYY-MM-DD HH:mm:ss')
 
 //API Config
-const API =
-  'https://api.benzinga.com/api/v1/signal/option_activity?apiKey=3085d152a4124662836f7f0d963672ca&token=3085d152a4124662836f7f0d963672ca'
+const API = process.env.BENZINGA_API_KEY
 
 //Data
 var lastOptionID = null
