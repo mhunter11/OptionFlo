@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mongoose": "^5.5.11",
+    "node-fetch": "^2.6.0",
     "stripe": "^8.29.0"
   },
   "devDependencies": {

@@ -183,6 +183,9 @@ module.exports = {
         const underlying_type = op.underlying_type
         const cost_basis = op.cost_basis
         const put_call = op.put_call
+        const price = op.price
+        const size = op.size
+        const day_volume = op.day_volume
         const strike_price = op.strike_price
         const date_expiration = op.date_expiration
         const option_activity_type = op.option_activity_type
@@ -205,6 +208,9 @@ module.exports = {
           underlying_type,
           cost_basis,
           put_call,
+          price,
+          size,
+          day_volume,
           strike_price,
           date_expiration,
           option_activity_type,

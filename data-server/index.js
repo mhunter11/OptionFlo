@@ -3,6 +3,7 @@ const xml2js = require('xml2js')
 const fetch = require('node-fetch')
 const date = require('date-and-time')
 const io = require('socket.io')(8080)
+const {saveOptions} = require("./upload.js");
 
 //Date Config
 const parser = new xml2js.Parser(/* options */)
@@ -15,6 +16,8 @@ const API =
 //Data
 var lastOptionID = null
 var allData = []
+
+var backlog = []
 
 var lastResetTime = new Date()
 
@@ -100,9 +103,33 @@ async function fetchLatest() {
 
     allData.unshift(...new_options)
 
-    //TODO Push new_options to GraphQL server
+    let toReturn = new_options;
 
-    return new_options
+    try {
+      //If there are items that failed last time
+      //Include in this call
+      if (backlog.length > 0) {
+        //We need to clone it if the backlog isn't empty
+        //Otherwise, unshift will change toReturn
+        toReturn = [ ...new_options ];
+      }
+
+      new_options.unshift(...backlog);
+
+      //Push new options
+      await saveOptions(new_options);
+      
+      //If we are successful, clear the backlog
+      backlog = []
+    } catch (e) {
+      console.log(e);
+
+      //If we error, add the items we wanted to push to the backlog
+      //so it will be included next time
+      backlog.unshift(...new_options);
+    }
+
+    return toReturn
   }
 }
 

@@ -54,6 +54,9 @@ module.exports = gql`
     underlying_type: String!
     cost_basis: String!
     put_call: String!
+    price: String!
+    size: String!
+    day_volume: String!
     strike_price: String!
     date_expiration: String!
     option_activity_type: String!
@@ -101,6 +104,9 @@ module.exports = gql`
     underlying_type: String!
     cost_basis: String!
     put_call: String!
+    price: String!
+    size: String!
+    day_volume: String!
     strike_price: String!
     date_expiration: String!
     option_activity_type: String!
