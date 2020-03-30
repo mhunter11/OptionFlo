@@ -4,6 +4,8 @@ import StripeCheckout from 'react-stripe-checkout'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
+import OPTIONFLO_ICON from '../images/optionflo-icon.png'
+
 import styles from './Subscription.module.css'
 
 import {SUBSCRIPTION_BENEFITS} from './subscription-data'
@@ -30,6 +32,9 @@ export default function SubscriptionCard() {
         </div>
         <h6 className={styles.h6}>Already sign up subscribe!</h6>
         <StripeCheckout
+          name="OptionFlo"
+          currency="USD"
+          image={OPTIONFLO_ICON}
           token={async token => {
             const response = await createSub({
               variables: {source: token.id},
@@ -49,6 +54,7 @@ const CREATE_SUBSCRIPTION = gql`
     createSubscription(source: $source) {
       id
       email
+      type
     }
   }
 `

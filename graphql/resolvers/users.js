@@ -151,6 +151,17 @@ module.exports = {
       const result = await updateUser.save()
       return result
     },
+    async changeCreditCard(_, {source}, context) {
+      const user = checkAuth(context)
+
+      if (!user || !user.stripeId || user.type === 'free') {
+        throw new AuthenticationError('Not authenticated')
+      }
+
+      await stripe.customers.update(user.stripeId, {source})
+
+      return user
+    },
     async saveOption(_, optionData, __) {
       let results = []
 

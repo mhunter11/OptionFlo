@@ -80,6 +80,7 @@ module.exports = gql`
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
     createSubscription(source: String!): User
+    changeCreditCard(source: String!): User
     saveOption(options: [OptionData]): [Option]!
   }
 

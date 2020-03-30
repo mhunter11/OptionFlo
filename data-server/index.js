@@ -9,7 +9,8 @@ const parser = new xml2js.Parser(/* options */)
 const date_pattern = date.compile('YYYY-MM-DD HH:mm:ss')
 
 //API Config
-const API = process.env.BENZINGA_API_KEY
+const API =
+  'https://api.benzinga.com/api/v1/signal/option_activity?apiKey=3085d152a4124662836f7f0d963672ca&token=3085d152a4124662836f7f0d963672ca'
 
 //Data
 var lastOptionID = null

@@ -1,5 +1,7 @@
 import React, {useContext} from 'react'
 import {Link, Redirect} from 'react-router-dom'
+import StripeCheckout from 'react-stripe-checkout'
+import {useMutation} from '@apollo/react-hooks'
 import {useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
@@ -18,14 +20,25 @@ const GET_USER_INFO = gql`
   }
 `
 
+const CHANGE_CREDIT_CARD = gql`
+  mutation changeCreditCard($source: String!) {
+    changeCreditCard(source: $source) {
+      id
+      email
+      type
+    }
+  }
+`
+
 export default function Account() {
   const {user} = useContext(AuthContext)
   const {loading, error, data} = useQuery(GET_USER_INFO, {
     variables: {myUserId: user ? user.id : null},
   })
+  const [changeCreditCard] = useMutation(CHANGE_CREDIT_CARD)
 
   if (loading) {
-    return null
+    return <div>Loading...</div>
   }
 
   if (!data && !loading) {
@@ -40,5 +53,21 @@ export default function Account() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
-  return <div>{data.getUser.email}</div>
+  return (
+    <div>
+      {data.getUser.email}
+      <StripeCheckout
+        name="OptionFlo"
+        currency="USD"
+        token={async token => {
+          const response = await changeCreditCard({
+            variables: {source: token.id},
+          })
+          console.log(response)
+        }}
+        stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE}
+        amount={6000}
+      />
+    </div>
+  )
 }

@@ -60,8 +60,9 @@ export default function Flow() {
   if (!user && !loading) {
     return <Redirect to="/login">Please login</Redirect>
   }
+
   if (!data && !loading) {
-    return <div>data is undefined</div>
+    return <Redirect to="/" />
   }
 
   if (!data.getUser && !loading) {
