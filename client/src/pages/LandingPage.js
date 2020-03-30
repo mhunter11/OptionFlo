@@ -60,7 +60,10 @@ export default class LandingPage extends PureComponent {
                     Nail down the fundamentals and get familiar with all the
                     terminologies that are used.
                   </p>
-                  <a className={cx(styles.button, styles.margin_top_24)} href>
+                  <a
+                    className={cx(styles.button, styles.margin_top_24)}
+                    href="#"
+                  >
                     Learn More
                   </a>
                 </div>
@@ -75,7 +78,10 @@ export default class LandingPage extends PureComponent {
                     Each month we highlight important smart money action. Read
                     our most recent case study.
                   </p>
-                  <a className={cx(styles.button, styles.margin_top_24)} href>
+                  <a
+                    className={cx(styles.button, styles.margin_top_24)}
+                    href="#"
+                  >
                     Learn More
                   </a>
                 </div>
@@ -90,7 +96,10 @@ export default class LandingPage extends PureComponent {
                     Some of our most active users help you understand some
                     insights into general market activity.
                   </p>
-                  <a className={cx(styles.button, styles.margin_top_24)} href>
+                  <a
+                    className={cx(styles.button, styles.margin_top_24)}
+                    href="#"
+                  >
                     Learn More
                   </a>
                 </div>

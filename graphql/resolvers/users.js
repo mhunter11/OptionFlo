@@ -171,7 +171,7 @@ module.exports = {
       for (let i = 0; i < options.length; i++) {
         const op = options[i]
 
-        const date = op.date
+        const date = op.date.substring(0, 10)
         const time = op.time
         const ticker = op.ticker
         const description = op.description

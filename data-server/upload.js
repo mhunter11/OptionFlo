@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const endpoint = 'http://localhost:5000/graphql'
+const endpoint = process.env.ENDPOINT
 const query = `mutation CreateMessage($input: [OptionData]) {
     saveOption(options: $input) {
     id

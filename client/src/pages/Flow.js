@@ -33,7 +33,7 @@ export default function Flow() {
   })
 
   useEffect(() => {
-    const socket = socketIOClient('http://localhost:8080')
+    const socket = socketIOClient(process.env.REACT_APP_DATA_SERVER_URL)
 
     socket.on('all_options', data => setOptions(data))
 

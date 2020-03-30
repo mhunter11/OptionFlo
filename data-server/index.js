@@ -3,15 +3,14 @@ const xml2js = require('xml2js')
 const fetch = require('node-fetch')
 const date = require('date-and-time')
 const io = require('socket.io')(8080)
-const {saveOptions} = require("./upload.js");
+const {saveOptions} = require('./upload.js')
 
 //Date Config
 const parser = new xml2js.Parser(/* options */)
 const date_pattern = date.compile('YYYY-MM-DD HH:mm:ss')
 
 //API Config
-const API =
-  'https://api.benzinga.com/api/v1/signal/option_activity?apiKey=3085d152a4124662836f7f0d963672ca&token=3085d152a4124662836f7f0d963672ca'
+const API = process.env.BENZINGA_API_KEY
 
 //Data
 var lastOptionID = null
@@ -103,7 +102,7 @@ async function fetchLatest() {
 
     allData.unshift(...new_options)
 
-    let toReturn = new_options;
+    let toReturn = new_options
 
     try {
       //If there are items that failed last time
@@ -111,22 +110,22 @@ async function fetchLatest() {
       if (backlog.length > 0) {
         //We need to clone it if the backlog isn't empty
         //Otherwise, unshift will change toReturn
-        toReturn = [ ...new_options ];
+        toReturn = [...new_options]
       }
 
-      new_options.unshift(...backlog);
+      new_options.unshift(...backlog)
 
       //Push new options
-      await saveOptions(new_options);
-      
+      await saveOptions(new_options)
+
       //If we are successful, clear the backlog
       backlog = []
     } catch (e) {
-      console.log(e);
+      console.log(e)
 
       //If we error, add the items we wanted to push to the backlog
       //so it will be included next time
-      backlog.unshift(...new_options);
+      backlog.unshift(...new_options)
     }
 
     return toReturn
