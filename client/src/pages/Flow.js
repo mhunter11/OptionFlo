@@ -29,18 +29,20 @@ export default function Flow() {
   const {user} = useContext(AuthContext)
 
   const {loading, error, data} = useQuery(GET_USER_INFO, {
-    variables: {myUserId: user ? user.id : null},
+    variables: {
+      myUserId: user ? user.id : null,
+    },
   })
 
   useEffect(() => {
     const socket = socketIOClient(process.env.REACT_APP_DATA_SERVER_URL)
 
-    socket.on('all_options', data => setOptions(data))
+    socket.on('all_options', function (data) {
+      setOptions(options => [...data, ...options])
+    })
 
     socket.on('options', function (data) {
-      let newOptionData = options
-      newOptionData.unshift(...data)
-      setOptions(newOptionData)
+      setOptions(options => [...data, ...options])
     })
 
     socket.on('clear', function () {

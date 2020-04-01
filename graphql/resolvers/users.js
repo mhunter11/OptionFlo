@@ -43,6 +43,14 @@ module.exports = {
         throw new AuthenticationError('Not Allowed')
       }
     },
+    // async getOptions() {
+    //   try {
+    //     const Options = await Option.find()
+    //     return Options
+    //   } catch (err) {
+    //     throw new Error(err)
+    //   }
+    // },
   },
   Mutation: {
     async login(_, {username, password}, {req}) {
@@ -164,7 +172,7 @@ module.exports = {
     async saveOption(_, optionData, __) {
       let results = []
 
-      console.log(optionData)
+      console.log('Saving options')
 
       let options = optionData.options
 

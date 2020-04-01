@@ -63,6 +63,8 @@ async function fetchLatest() {
 
     allData = [] //Clear options
 
+    console.log('clear')
+
     io.emit('clear') //Tell connected clients to clear
   }
 

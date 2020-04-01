@@ -68,29 +68,6 @@ module.exports = gql`
     midpoint: String!
   }
 
-  type Query {
-    getPosts: [Post]
-    getUser(userId: String!): User
-    getPost(postId: ID!): Post
-  }
-
-  type Mutation {
-    register(registerInput: RegisterInput): User!
-    login(username: String, password: String): User!
-    createPost(body: String!): Post!
-    deletePost(postId: ID!): String!
-    createComment(postId: String!, body: String): Post!
-    deleteComment(postId: ID!, commentId: ID!): Post!
-    likePost(postId: ID!): Post!
-    createSubscription(source: String!): User
-    changeCreditCard(source: String!): User
-    saveOption(options: [OptionData]): [Option]!
-  }
-
-  type Subscription {
-    newPost: Post!
-  }
-
   type Option {
     id: ID!
     date: String!
@@ -116,5 +93,29 @@ module.exports = gql`
     bid: String!
     ask: String!
     midpoint: String!
+  }
+
+  type Query {
+    getPosts: [Post]
+    getUser(userId: String!): User
+    getPost(postId: ID!): Post
+    getAllOptions: [Option]
+  }
+
+  type Mutation {
+    register(registerInput: RegisterInput): User!
+    login(username: String, password: String): User!
+    createPost(body: String!): Post!
+    deletePost(postId: ID!): String!
+    createComment(postId: String!, body: String): Post!
+    deleteComment(postId: ID!, commentId: ID!): Post!
+    likePost(postId: ID!): Post!
+    createSubscription(source: String!): User
+    changeCreditCard(source: String!): User
+    saveOption(options: [OptionData]): [Option]!
+  }
+
+  type Subscription {
+    newPost: Post!
   }
 `
