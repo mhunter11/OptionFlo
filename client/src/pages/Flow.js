@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {Link,Redirect} from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import {useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -75,6 +75,7 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
+  console.log(options)
   return (
     <div>
       <div>

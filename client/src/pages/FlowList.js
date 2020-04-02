@@ -16,6 +16,19 @@ export default function FlowList(props) {
   } = props
 
   const OPTION_COST = parseInt(cost_basis).toLocaleString('en')
+
+  function formatSentiment(data) {
+    if (data === 'BULLISH') {
+      return 'Buying'
+    }
+
+    if (data === 'BEARISH') {
+      return 'Selling'
+    }
+
+    return 'Midpoint'
+  }
+
   return (
     <div className={styles.flow_list}>
       <div className={styles.time}>{time}</div>
@@ -23,11 +36,11 @@ export default function FlowList(props) {
       <div className={styles.date_expiration}>{date_expiration}</div>
       <div className={styles.strike_price}>{strike_price}</div>
       <div className={styles.put_call}>{put_call}</div>
-      <div className={styles.option_activity_type}>{option_activity_type}</div>
-      <div className={styles.description}>{description}</div>
-      <div className={styles.sentiment}>
-        {sentiment === 'BULLISH' ? 'Buying' : 'Selling'}
+      <div className={styles.option_activity_type}>
+        {option_activity_type === 'SWEEP' ? 'SWEEP' : 'BLOCK'}
       </div>
+      <div className={styles.description}>{description}</div>
+      <div className={styles.sentiment}>{formatSentiment(sentiment)}</div>
       <div className={styles.cost_basis}>${OPTION_COST}</div>
     </div>
   )
