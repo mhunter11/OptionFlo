@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-import styles from './Footer.module.css'
+import styles from './Footer.module.scss'
 
 import LOGO from '../images/logo-02.png'
 import TWITTER from '../images/twitter.svg'

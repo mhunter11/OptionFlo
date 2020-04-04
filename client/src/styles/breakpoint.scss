@@ -1,0 +1,19 @@
+/* custom media query variables */
+
+@mixin --medium {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin --large {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin --xl-large {
+  @media (min-width: 1440px) {
+    @content;
+  }
+}
