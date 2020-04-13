@@ -43,14 +43,14 @@ module.exports = {
         throw new AuthenticationError('Not Allowed')
       }
     },
-    // async getOptions() {
-    //   try {
-    //     const Options = await Option.find()
-    //     return Options
-    //   } catch (err) {
-    //     throw new Error(err)
-    //   }
-    // },
+    async getOptions() {
+      try {
+        const Options = await Option.find()
+        return Options
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
   },
   Mutation: {
     async login(_, {username, password}, {req}) {

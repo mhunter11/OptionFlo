@@ -99,7 +99,7 @@ module.exports = gql`
     getPosts: [Post]
     getUser(userId: String!): User
     getPost(postId: ID!): Post
-    getAllOptions: [Option]
+    getOptions: [Option]
   }
 
   type Mutation {
