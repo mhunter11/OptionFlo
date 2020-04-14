@@ -45,6 +45,7 @@ const GET_OPTIONS = gql`
 
 export default function Flow() {
   const [options, setOptions] = useState([])
+  const [saveOptions, setSaveOptions] = useState([])
 
   const {user} = useContext(AuthContext)
 
@@ -59,7 +60,22 @@ export default function Flow() {
 
   const {loading, error, data} = useQuery(GET_OPTIONS)
 
-  console.log(data)
+  let today = new Date()
+  let dd = String(today.getDate()).padStart(2, '0')
+  let mm = String(today.getMonth() + 1).padStart(2, '0')
+  let yyyy = today.getFullYear()
+  let todayOptionData = []
+
+  today = yyyy + '-' + mm + '-' + dd
+  if (data != undefined) {
+    data.getOptions.map(data => {
+      if (data.date === today) {
+        todayOptionData.push(data)
+      }
+    })
+    // today option data that is saved on the database
+    console.log(todayOptionData)
+  }
 
   useEffect(() => {
     const socket = socketIOClient(process.env.REACT_APP_DATA_SERVER_URL)
@@ -102,7 +118,6 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
-  console.log(options)
   return (
     <div>
       <ul>
