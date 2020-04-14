@@ -78,13 +78,11 @@ export default function Flow() {
   console.log(options)
   return (
     <div>
-      <div>
-        <ul>
-          {options.map((data, index) => (
-            <FlowList {...data} key={index} />
-          ))}
-        </ul>
-      </div>
+      <ul>
+        {options.map((data, index) => (
+          <FlowList {...data} key={index} />
+        ))}
+      </ul>
     </div>
   )
 }
