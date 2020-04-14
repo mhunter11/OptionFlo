@@ -74,8 +74,9 @@ export default function Flow() {
 
     today = yyyy + '-' + mm + '-' + dd
     if (data != undefined) {
-      if (new Date().getDay() == 6 || new Date().getDay() == 0)
+      if (new Date().getDay() == 6 || new Date().getDay() == 0) {
         return "It's the weekend!"
+      }
 
       data.getOptions.map(data => {
         if (data.date === today) {
