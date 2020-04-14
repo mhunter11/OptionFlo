@@ -1,8 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import {useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+
+import styles from './Flow.module.css'
 
 import {AuthContext} from '../context/auth'
 
@@ -39,6 +41,7 @@ const GET_OPTIONS = gql`
       ask
       cost_basis
       trade_count
+      strike_price
     }
   }
 `
@@ -46,8 +49,11 @@ const GET_OPTIONS = gql`
 export default function Flow() {
   const [options, setOptions] = useState([])
   const [saveOptions, setSaveOptions] = useState([])
+  const [filteredOptions, setFilteredOptions] = useState(false)
+  // const [searchInput, setSearchInput] = useState('')
 
   const {user} = useContext(AuthContext)
+  let todayOptionData = []
 
   const {loading: loadingR, error: errorR, data: dataR} = useQuery(
     GET_USER_INFO,
@@ -60,21 +66,30 @@ export default function Flow() {
 
   const {loading, error, data} = useQuery(GET_OPTIONS)
 
-  let today = new Date()
-  let dd = String(today.getDate()).padStart(2, '0')
-  let mm = String(today.getMonth() + 1).padStart(2, '0')
-  let yyyy = today.getFullYear()
-  let todayOptionData = []
+  function filterData(ticker) {
+    let today = new Date()
+    let dd = String(today.getDate()).padStart(2, '0')
+    let mm = String(today.getMonth() + 1).padStart(2, '0')
+    let yyyy = today.getFullYear()
 
-  today = yyyy + '-' + mm + '-' + dd
-  if (data != undefined) {
-    data.getOptions.map(data => {
-      if (data.date === today) {
-        todayOptionData.push(data)
-      }
-    })
-    // today option data that is saved on the database
-    console.log(todayOptionData)
+    today = yyyy + '-' + mm + '-' + dd
+    if (data != undefined) {
+      if (new Date().getDay() == 6 || new Date().getDay() == 0)
+        return "It's the weekend!"
+
+      data.getOptions.map(data => {
+        if (data.date === today) {
+          todayOptionData.push(data)
+        }
+      })
+      // today option data that is saved on the database
+    }
+
+    // filtered option data
+    const filteredOptionData = todayOptionData.filter(x => x.ticker === ticker)
+
+    setSaveOptions(filteredOptionData.reverse())
+    setFilteredOptions(!filteredOptions)
   }
 
   useEffect(() => {
@@ -120,10 +135,18 @@ export default function Flow() {
 
   return (
     <div>
-      <ul>
-        {options.map((data, index) => (
-          <FlowList {...data} key={index} />
-        ))}
+      <button onClick={filterData}>Spy</button>
+      <ul className={styles.ul_list}>
+        {!filteredOptions &&
+          options.map((data, index) => (
+            <FlowList
+              {...data}
+              key={index}
+              onClick={() => filterData(data.ticker)}
+            />
+          ))}
+        {filteredOptions &&
+          saveOptions.map((data, index) => <FlowList {...data} key={index} />)}
       </ul>
     </div>
   )

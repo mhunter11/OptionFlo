@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames'
 
 import styles from './Flow.module.css'
 
@@ -13,6 +14,7 @@ export default function FlowList(props) {
     description,
     sentiment,
     cost_basis,
+    onClick,
   } = props
 
   const OPTION_COST = parseInt(cost_basis).toLocaleString('en')
@@ -32,10 +34,19 @@ export default function FlowList(props) {
   return (
     <div className={styles.flow_list}>
       <div className={styles.time}>{time}</div>
-      <div className={styles.ticker}>{ticker}</div>
+      <div className={styles.ticker} onClick={onClick}>
+        {ticker}
+      </div>
       <div className={styles.date_expiration}>{date_expiration}</div>
       <div className={styles.strike_price}>{strike_price}</div>
-      <div className={styles.put_call}>{put_call}</div>
+      <div
+        className={cx(styles.put_call, {
+          [styles.call_green]: put_call === 'CALL',
+          [styles.put_red]: put_call === 'PUT',
+        })}
+      >
+        {put_call}
+      </div>
       <div className={styles.option_activity_type}>
         {option_activity_type === 'SWEEP' ? 'SWEEP' : 'BLOCK'}
       </div>

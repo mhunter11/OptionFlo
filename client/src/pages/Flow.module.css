@@ -44,6 +44,18 @@
   width: 10%;
 }
 
+.call_green {
+  color: green;
+}
+
+.put_red { 
+  color: red;
+}
+
+.ticker {
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 1024px) {
   .flow_list {
     max-width: 1260px;
