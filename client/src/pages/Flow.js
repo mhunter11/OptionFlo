@@ -23,16 +23,43 @@ const GET_USER_INFO = gql`
   }
 `
 
+const GET_OPTIONS = gql`
+  {
+    getOptions {
+      ticker
+      put_call
+      time
+      sentiment
+      option_symbol
+      option_activity_type
+      open_interest
+      date_expiration
+      date
+      description
+      ask
+      cost_basis
+      trade_count
+    }
+  }
+`
+
 export default function Flow() {
   const [options, setOptions] = useState([])
 
   const {user} = useContext(AuthContext)
 
-  const {loading, error, data} = useQuery(GET_USER_INFO, {
-    variables: {
-      myUserId: user ? user.id : null,
-    },
-  })
+  const {loading: loadingR, error: errorR, data: dataR} = useQuery(
+    GET_USER_INFO,
+    {
+      variables: {
+        myUserId: user ? user.id : null,
+      },
+    }
+  )
+
+  const {loading, error, data} = useQuery(GET_OPTIONS)
+
+  console.log(data)
 
   useEffect(() => {
     const socket = socketIOClient(process.env.REACT_APP_DATA_SERVER_URL)
@@ -50,28 +77,28 @@ export default function Flow() {
     })
   }, [])
 
-  if (loading) {
+  if (loadingR) {
     return <div>Loading...</div>
   }
 
-  if (error) {
-    console.error(error)
+  if (errorR) {
+    console.error(errorR)
     return <Redirect to="/" />
   }
 
-  if (!user && !loading) {
+  if (!user && !loadingR) {
     return <Redirect to="/login">Please login</Redirect>
   }
 
-  if (!data && !loading) {
+  if (!dataR && !loadingR) {
     return <Redirect to="/" />
   }
 
-  if (!data.getUser && !loading) {
+  if (!dataR.getUser && !loadingR) {
     return <Redirect to="/login">Please login</Redirect>
   }
 
-  if (data.getUser.type === 'free' || data.getUser.type === '') {
+  if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
