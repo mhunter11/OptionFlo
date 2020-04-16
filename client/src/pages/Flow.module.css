@@ -56,6 +56,18 @@
   cursor: pointer;
 }
 
+.input_search {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ul_list {
+  max-width: 1260px;
+  margin: auto;
+  max-height: 75vh;
+  overflow: auto;
+}
+
 @media only screen and (min-width: 1024px) {
   .flow_list {
     max-width: 1260px;

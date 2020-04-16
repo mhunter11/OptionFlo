@@ -50,7 +50,7 @@ export default function Flow() {
   const [options, setOptions] = useState([])
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
-  // const [searchInput, setSearchInput] = useState('')
+  const [searchInput, setSearchInput] = useState('')
 
   const {user} = useContext(AuthContext)
   let todayOptionData = []
@@ -67,14 +67,15 @@ export default function Flow() {
   const {loading, error, data} = useQuery(GET_OPTIONS)
 
   function filterData(ticker) {
+    if (!ticker && !filteredOptions) return null
     let today = new Date()
     let dd = String(today.getDate()).padStart(2, '0')
     let mm = String(today.getMonth() + 1).padStart(2, '0')
     let yyyy = today.getFullYear()
 
     today = yyyy + '-' + mm + '-' + dd
-    if (data != undefined) {
-      if (new Date().getDay() == 6 || new Date().getDay() == 0) {
+    if (data !== undefined) {
+      if (new Date().getDay() === 6 || new Date().getDay() === 0) {
         return "It's the weekend!"
       }
 
@@ -82,6 +83,8 @@ export default function Flow() {
         if (data.date === today) {
           todayOptionData.push(data)
         }
+
+        return todayOptionData
       })
       // today option data that is saved on the database
     }
@@ -91,6 +94,7 @@ export default function Flow() {
 
     setSaveOptions(filteredOptionData.reverse())
     setFilteredOptions(!filteredOptions)
+    setSearchInput('')
   }
 
   useEffect(() => {
@@ -136,7 +140,20 @@ export default function Flow() {
 
   return (
     <div>
-      <button onClick={filterData}>Spy</button>
+      <div className={styles.input_search}>
+        <input
+          type="text"
+          value={searchInput}
+          onChange={e => setSearchInput(e.target.value)}
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              filterData(searchInput)
+            }
+          }}
+          placeholder="SPY"
+        />
+        <button onClick={() => filterData(searchInput)}>Filter</button>
+      </div>
       <ul className={styles.ul_list}>
         {!filteredOptions &&
           options.map((data, index) => (

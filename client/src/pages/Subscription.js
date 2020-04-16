@@ -2,7 +2,7 @@ import React from 'react'
 
 import SubscriptionCard from './SubscriptionCard'
 
-import {SUBSCRIPTION_BENEFITS} from './subscription-data'
+// import {SUBSCRIPTION_BENEFITS} from './subscription-data'
 
 import styles from './Subscription.module.css'
 
