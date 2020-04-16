@@ -67,7 +67,8 @@ export default function Flow() {
   const {loading, error, data} = useQuery(GET_OPTIONS)
 
   function filterData(ticker) {
-    if (!ticker && !filteredOptions) return null
+    ticker = ticker.toUpperCase()
+    if (!ticker) return null
     let today = new Date()
     let dd = String(today.getDate()).padStart(2, '0')
     let mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -94,7 +95,6 @@ export default function Flow() {
 
     setSaveOptions(filteredOptionData.reverse())
     setFilteredOptions(!filteredOptions)
-    setSearchInput('')
   }
 
   useEffect(() => {
@@ -154,6 +154,7 @@ export default function Flow() {
         />
         <button onClick={() => filterData(searchInput)}>Filter</button>
       </div>
+      <button onClick={() => setFilteredOptions(false)}>Reset</button>
       <ul className={styles.ul_list}>
         {!filteredOptions &&
           options.map((data, index) => (

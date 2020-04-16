@@ -73,7 +73,7 @@ async function fetchLatest() {
   const xml = await response.text()
 
   const parsedData = await parser.parseStringPromise(xml)
-
+  console.log(parsedData)
   let all_options = parsedData.result.option_activity[0].item
 
   all_options = formatData(all_options)

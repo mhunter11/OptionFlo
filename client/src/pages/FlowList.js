@@ -20,16 +20,15 @@ export default function FlowList(props) {
   const OPTION_COST = parseInt(cost_basis).toLocaleString('en')
 
   function formatSentiment(data) {
-    if (data === 'BULLISH') {
-      return 'Buying'
+    if (data == 'null') {
+      return 'MIDPOINT'
     }
 
-    if (data === 'BEARISH') {
-      return 'Selling'
-    }
-
-    return 'Midpoint'
+    return data
   }
+  const REF = description.split('Ref')[1]
+  const OI = description.split('vs')[1].split(';')[0]
+  const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
 
   return (
     <div className={styles.flow_list}>
@@ -50,9 +49,11 @@ export default function FlowList(props) {
       <div className={styles.option_activity_type}>
         {option_activity_type === 'SWEEP' ? 'SWEEP' : 'BLOCK'}
       </div>
-      <div className={styles.description}>{description}</div>
+      <div className={styles.description}>{CONTRACT_AND_PRICE}</div>
       <div className={styles.sentiment}>{formatSentiment(sentiment)}</div>
       <div className={styles.cost_basis}>${OPTION_COST}</div>
+      <div className={styles.OI}>{OI}</div>
+      <div>Ref {REF}</div>
     </div>
   )
 }
