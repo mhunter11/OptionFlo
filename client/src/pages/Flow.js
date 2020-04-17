@@ -43,6 +43,7 @@ const GET_OPTIONS = gql`
       trade_count
       strike_price
       updated
+      volume
     }
   }
 `

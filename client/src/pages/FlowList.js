@@ -15,12 +15,17 @@ export default function FlowList(props) {
     cost_basis,
     onClick,
     updated,
+    volume,
   } = props
 
   const OPTION_COST = parseInt(cost_basis).toLocaleString('en')
   const REF = description.split('Ref')[1]
-  const OI = description.split('vs')[1].split(';')[0]
+  const OI = description.split('vs')[1].split(';')[0].split('OI')[0].trim()
   const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
+  const GOLDEN_SWEEP =
+    parseInt(cost_basis) >= 1000000 &&
+    option_activity_type === 'SWEEP' &&
+    volume > OI
 
   function formatTime(time) {
     const date = new Date(time * 1000)
@@ -29,7 +34,7 @@ export default function FlowList(props) {
     const seconds = '0' + date.getSeconds()
     const formattedTime =
       hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
-    
+
     return formattedTime
   }
 
@@ -42,7 +47,11 @@ export default function FlowList(props) {
   }
 
   return (
-    <div className={styles.flow_list}>
+    <div
+      className={cx(styles.flow_list, {
+        [styles.golden_sweep]: GOLDEN_SWEEP,
+      })}
+    >
       <div className={styles.time}>{formatTime(updated)}</div>
       <div className={styles.ticker} onClick={onClick}>
         {ticker}
@@ -63,7 +72,7 @@ export default function FlowList(props) {
       <div className={styles.description}>{CONTRACT_AND_PRICE}</div>
       <div className={styles.sentiment}>{formatSentiment(sentiment)}</div>
       <div className={styles.cost_basis}>${OPTION_COST}</div>
-      <div className={styles.OI}>{OI}</div>
+      <div className={styles.OI}>Open Interest: {OI}</div>
       <div>Ref {REF}</div>
     </div>
   )
