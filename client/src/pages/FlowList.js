@@ -5,7 +5,6 @@ import styles from './Flow.module.css'
 
 export default function FlowList(props) {
   const {
-    time,
     ticker,
     strike_price,
     date_expiration,
@@ -15,9 +14,24 @@ export default function FlowList(props) {
     sentiment,
     cost_basis,
     onClick,
+    updated,
   } = props
 
   const OPTION_COST = parseInt(cost_basis).toLocaleString('en')
+  const REF = description.split('Ref')[1]
+  const OI = description.split('vs')[1].split(';')[0]
+  const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
+
+  function formatTime(time) {
+    const date = new Date(time * 1000)
+    const hours = date.getHours()
+    const minutes = '0' + date.getMinutes()
+    const seconds = '0' + date.getSeconds()
+    const formattedTime =
+      hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
+    
+    return formattedTime
+  }
 
   function formatSentiment(data) {
     if (data == 'null') {
@@ -26,13 +40,10 @@ export default function FlowList(props) {
 
     return data
   }
-  const REF = description.split('Ref')[1]
-  const OI = description.split('vs')[1].split(';')[0]
-  const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
 
   return (
     <div className={styles.flow_list}>
-      <div className={styles.time}>{time}</div>
+      <div className={styles.time}>{formatTime(updated)}</div>
       <div className={styles.ticker} onClick={onClick}>
         {ticker}
       </div>

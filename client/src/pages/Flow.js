@@ -42,6 +42,7 @@ const GET_OPTIONS = gql`
       cost_basis
       trade_count
       strike_price
+      updated
     }
   }
 `
@@ -67,8 +68,8 @@ export default function Flow() {
   const {loading, error, data} = useQuery(GET_OPTIONS)
 
   function filterData(ticker) {
-    ticker = ticker.toUpperCase()
     if (!ticker) return null
+    ticker = ticker.toUpperCase()
     let today = new Date()
     let dd = String(today.getDate()).padStart(2, '0')
     let mm = String(today.getMonth() + 1).padStart(2, '0')
