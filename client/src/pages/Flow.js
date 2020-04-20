@@ -53,6 +53,8 @@ export default function Flow() {
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
+  let [todayPuts, setTodayPuts] = useState(0)
+  let [todayCalls, setTodayCalls] = useState(0)
 
   const {user} = useContext(AuthContext)
   let todayOptionData = []
@@ -67,6 +69,19 @@ export default function Flow() {
   )
 
   const {loading, error, data} = useQuery(GET_OPTIONS)
+
+  function todayCount(put_call) {
+    put_call.map(data => {
+      if (data.put_call === 'CALL') {
+        let newCalls = todayCalls++
+        setTodayCalls(newCalls)
+      }
+      if (data.put_call === 'PUT') {
+        let newPuts = todayPuts++
+        setTodayPuts(newPuts)
+      }
+    })
+  }
 
   function filterData(ticker) {
     if (!ticker) return null
@@ -104,10 +119,12 @@ export default function Flow() {
 
     socket.on('all_options', function (data) {
       setOptions(options => [...data, ...options])
+      // todayCount(data)
     })
 
     socket.on('options', function (data) {
       setOptions(options => [...data, ...options])
+      // todayCount(data)
     })
 
     socket.on('clear', function () {
