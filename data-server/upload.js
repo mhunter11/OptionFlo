@@ -3,16 +3,11 @@ const fetch = require('node-fetch')
 const endpoint = 'http://localhost:5000'
 const query = `mutation saveOption($input: [OptionData]) {
     saveOption(options: $input) {
-    id
+      id
   }
 }`
 
 module.exports.saveOptions = async options => {
-  options = options.map(o => {
-    delete o.id
-    return o
-  })
-
   const queryBody = JSON.stringify({
     query: query,
     variables: {

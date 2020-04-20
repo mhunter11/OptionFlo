@@ -179,6 +179,15 @@ module.exports = {
       for (let i = 0; i < options.length; i++) {
         const op = options[i]
 
+        const id = op.id
+
+        const optionExist = await Option.findOne({id})
+
+        if (optionExist) {
+          console.log('Option already exist')
+          continue
+        }
+
         const date = op.date.substring(0, 10)
         const time = op.time
         const ticker = op.ticker
@@ -204,6 +213,7 @@ module.exports = {
         const midpoint = op.midpoint
 
         const newOption = new Option({
+          id,
           date,
           time,
           ticker,
@@ -237,7 +247,6 @@ module.exports = {
       results = results.map(function (o) {
         return {
           ...o._doc,
-          id: o.id,
         }
       })
 
