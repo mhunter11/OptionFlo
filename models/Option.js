@@ -24,6 +24,7 @@ const optionSchema = new Schema({
   bid: String,
   ask: String,
   midpoint: String,
+  option_id: String,
 })
 
 module.exports = model('Option', optionSchema)

@@ -169,24 +169,21 @@ module.exports = {
 
       return user
     },
-    async saveOption(_, optionData, __) {
+    async saveOption(_, {options}, __) {
       let results = []
 
       console.log('Saving options')
 
-      let options = optionData.options
-
       for (let i = 0; i < options.length; i++) {
         const op = options[i]
 
-        const id = op.id
-        // const uuid = op.uuid
-        // const optionExist = await Option.findOne({uuid})
-        // console.log(optionExist)
-        // if (optionExist) {
-        //   console.log('Option already exist')
-        //   continue
-        // }
+        const option_id = op.id
+        const optionExist = await Option.findOne({option_id})
+
+        if (optionExist) {
+          console.log('Option already exist')
+          continue
+        }
 
         const date = op.date.substring(0, 10)
         const time = op.time
@@ -213,7 +210,6 @@ module.exports = {
         const midpoint = op.midpoint
 
         const newOption = new Option({
-          id,
           date,
           time,
           ticker,
@@ -237,6 +233,7 @@ module.exports = {
           bid,
           ask,
           midpoint,
+          option_id,
         })
 
         const result = await newOption.save()
@@ -250,7 +247,6 @@ module.exports = {
           id: o.id,
         }
       })
-
       return results
     },
   },

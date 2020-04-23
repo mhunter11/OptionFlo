@@ -43,7 +43,6 @@ module.exports = gql`
   }
 
   input OptionData {
-    uuid: String!
     id: String!
     date: String!
     time: String!
@@ -58,7 +57,6 @@ module.exports = gql`
     put_call: String!
     price: String!
     size: String!
-    day_volume: String!
     strike_price: String!
     date_expiration: String!
     option_activity_type: String!
@@ -71,23 +69,20 @@ module.exports = gql`
   }
 
   type Option {
-    uuid: String!
     id: String!
     date: String!
     time: String!
     ticker: String!
     description: String!
-    updated: String
     sentiment: String!
     aggressor_ind: String!
     option_symbol: String!
     underlying_type: String!
     cost_basis: String!
     put_call: String!
+    strike_price: String!
     price: String!
     size: String!
-    day_volume: String!
-    strike_price: String!
     date_expiration: String!
     option_activity_type: String!
     trade_count: String!
@@ -96,6 +91,7 @@ module.exports = gql`
     bid: String!
     ask: String!
     midpoint: String!
+    updated: String
   }
 
   type Query {
