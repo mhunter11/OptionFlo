@@ -180,13 +180,13 @@ module.exports = {
         const op = options[i]
 
         const id = op.id
-
-        const optionExist = await Option.findOne({id})
-
-        if (optionExist) {
-          console.log('Option already exist')
-          continue
-        }
+        // const uuid = op.uuid
+        // const optionExist = await Option.findOne({uuid})
+        // console.log(optionExist)
+        // if (optionExist) {
+        //   console.log('Option already exist')
+        //   continue
+        // }
 
         const date = op.date.substring(0, 10)
         const time = op.time
@@ -247,6 +247,7 @@ module.exports = {
       results = results.map(function (o) {
         return {
           ...o._doc,
+          id: o.id,
         }
       })
 

@@ -43,6 +43,7 @@ module.exports = gql`
   }
 
   input OptionData {
+    uuid: String!
     id: String!
     date: String!
     time: String!
@@ -70,6 +71,7 @@ module.exports = gql`
   }
 
   type Option {
+    uuid: String!
     id: String!
     date: String!
     time: String!
