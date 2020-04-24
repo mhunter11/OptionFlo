@@ -10,8 +10,6 @@ import {AuthContext} from '../context/auth'
 
 import FlowList from './FlowList'
 
-// import styles from './Flow.module.css'
-
 const GET_USER_INFO = gql`
   query getUserInfo($myUserId: String!) {
     getUser(userId: $myUserId) {
