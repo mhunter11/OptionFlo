@@ -91,10 +91,7 @@ export default function Flow() {
 
     today = yyyy + '-' + mm + '-' + dd
     if (data !== undefined) {
-      if (new Date().getDay() === 6 || new Date().getDay() === 0) {
-        return "It's the weekend!"
-      }
-
+      // TODO: on weekends show previous option on friday
       data.getOptions.map(data => {
         if (data.date === today) {
           todayOptionData.push(data)
