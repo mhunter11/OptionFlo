@@ -1,7 +1,10 @@
 import React, {useState, useContext} from 'react'
+import cx from 'classnames'
 import {Button, Form} from 'semantic-ui-react'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+
+import styles from './Login.module.scss'
 
 import {AuthContext} from '../context/auth'
 
@@ -32,8 +35,12 @@ function Login(props) {
   }
 
   return (
-    <div className="form-container">
-      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
+    <div className={styles.form_container}>
+      <Form
+        onSubmit={onSubmit}
+        noValidate
+        className={cx(loading ? 'loading' : '', styles.container)}
+      >
         <h1>Login</h1>
         <Form.Input
           label="Username"

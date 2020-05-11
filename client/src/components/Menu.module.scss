@@ -1,0 +1,16 @@
+:root {
+  --short-stuff: 3rem;
+}
+
+.logo {
+  height: var(--short-stuff);
+  margin-top: 0.5rem;
+}
+
+.menu_bar {
+  margin: auto !important;
+  margin-bottom: 0 !important;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  max-width: 1280px;
+}

@@ -5,7 +5,7 @@ import Logo from '../logo-02.png'
 
 import {AuthContext} from '../context/auth'
 
-import styles from './Menu.module.css'
+import styles from './Menu.module.scss'
 
 export default function MenuBar() {
   const {user, logout} = useContext(AuthContext)
@@ -17,7 +17,7 @@ export default function MenuBar() {
   const handleItemClick = (e, {name}) => setActiveItem(name)
 
   const menuBar = user ? (
-    <Menu pointing secondary size="massive" color="teal">
+    <Menu pointing secondary size="massive" color="teal" className={styles.menu_bar}>
       <Link to="/">
         <img className={styles.logo} src={Logo} alt="logo" />
       </Link>
@@ -28,7 +28,7 @@ export default function MenuBar() {
       </Menu.Menu>
     </Menu>
   ) : (
-    <Menu pointing secondary size="massive" color="teal">
+    <Menu pointing secondary size="massive" color="teal" className={styles.menu_bar}>
       <Link to="/">
         <img className={styles.logo} src={Logo} alt="logo" />
       </Link>
