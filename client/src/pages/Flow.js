@@ -6,45 +6,11 @@ import gql from 'graphql-tag'
 
 import styles from './Flow.module.css'
 
+import { GET_OPTIONS, SUBSCRIPTION_NEW_OPTION, GET_USER_INFO } from '../util/gql'
+
 import {AuthContext} from '../context/auth'
 
 import FlowList from './FlowList'
-
-const GET_USER_INFO = gql`
-  query getUserInfo($myUserId: String!) {
-    getUser(userId: $myUserId) {
-      type
-      stripeId
-      id
-      createdAt
-      username
-      email
-    }
-  }
-`
-
-const GET_OPTIONS = gql`
-  {
-    getOptions {
-      ticker
-      put_call
-      time
-      sentiment
-      option_symbol
-      option_activity_type
-      open_interest
-      date_expiration
-      date
-      description
-      ask
-      cost_basis
-      trade_count
-      strike_price
-      updated
-      volume
-    }
-  }
-`
 
 export default function Flow() {
   const [options, setOptions] = useState([])

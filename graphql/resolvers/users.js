@@ -10,6 +10,7 @@ const checkAuth = require('../../util/check-auth')
 const User = require('../../models/User')
 const Option = require('../../models/Option')
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
+const NEW_OPTION = 'NEW_OPTION'
 
 function generateToken(user) {
   return jwt.sign(
@@ -27,7 +28,6 @@ module.exports = {
   Query: {
     async getUser(_, args, context) {
       const user = checkAuth(context)
-      console.log(user)
       if (user.id === args.userId) {
         try {
           const newUser = await User.findById(args.userId)
@@ -169,7 +169,7 @@ module.exports = {
 
       return user
     },
-    async saveOption(_, {options}, __) {
+    async saveOption(_, {options}, context) {
       let results = []
 
       console.log('Saving options')
@@ -237,6 +237,7 @@ module.exports = {
         })
 
         const result = await newOption.save()
+        context.newPubSub.publish(NEW_OPTION, {newOption: result})
 
         results.push(result)
       }
@@ -248,6 +249,11 @@ module.exports = {
         }
       })
       return results
+    },
+  },
+  Subscription: {
+    newOption: {
+      subscribe: (_, __, {newPubSub}) => newPubSub.asyncIterator([NEW_OPTION]),
     },
   },
 }

@@ -18,5 +18,6 @@ module.exports = {
   },
   Subscription: {
     ...postsResolvers.Subscription,
+    ...usersResolvers.Subscription,
   },
 }
