@@ -1,7 +1,7 @@
 require('dotenv').config()
 const fetch = require('node-fetch')
 
-const endpoint = process.env.ENDPOINT
+const endpoint = process.env.ENDPOINT || 'http://localhost:5000'
 const query = `mutation saveOption($input: [OptionData]) {
     saveOption(options: $input) {
       id
