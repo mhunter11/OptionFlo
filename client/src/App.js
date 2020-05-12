@@ -13,7 +13,6 @@ import Home from './pages/Homepage/Home'
 import LandingPage from './pages/Homepage/LandingPage'
 import Subscription from './pages/Subscription/Subscription'
 import Account from './pages/Account/Account'
-import Page from './components/Page'
 
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
@@ -23,7 +22,6 @@ export default function App() {
     <AuthProvider>
       <Router>
         <MenuBar />
-        <Page>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
@@ -31,7 +29,6 @@ export default function App() {
           <Route exact path="/flow" component={Flow} />
           <Route exact path="/subscription" component={Subscription} />
           <Route exact path="/account" component={Account} />
-        </Page>
         <Footer />
       </Router>
     </AuthProvider>
