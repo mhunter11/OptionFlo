@@ -1,0 +1,7 @@
+node_modules
+config.js
+.env
+.vscode
+
+# Local Netlify folder
+.netlify
