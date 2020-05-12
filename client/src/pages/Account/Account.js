@@ -5,7 +5,8 @@ import {useMutation} from '@apollo/react-hooks'
 import {useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
-import {AuthContext} from '../context/auth'
+import {ENVIRONMENT} from '../../env'
+import {AuthContext} from '../../context/auth'
 
 const GET_USER_INFO = gql`
   query getUserInfo($myUserId: String!) {
@@ -65,7 +66,7 @@ export default function Account() {
           })
           console.log(response)
         }}
-        stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE}
+        stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
         amount={6000}
       />
     </div>

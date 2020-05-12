@@ -6,8 +6,8 @@ import gql from 'graphql-tag'
 
 import styles from './Register.module.scss'
 
-import {AuthContext} from '../context/auth'
-import {useForm} from '../util/hooks'
+import {AuthContext} from '../../context/auth'
+import {useForm} from '../../util/hooks'
 
 function Register(props) {
   const context = useContext(AuthContext)

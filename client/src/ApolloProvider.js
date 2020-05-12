@@ -6,8 +6,10 @@ import {createHttpLink} from 'apollo-link-http'
 import {ApolloProvider} from '@apollo/react-hooks'
 import {setContext} from 'apollo-link-context'
 
+import {ENVIRONMENT} from './env'
+
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_URL,
+  uri: ENVIRONMENT.GRAPHQL_URL,
 })
 
 const authLink = setContext(() => {

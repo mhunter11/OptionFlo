@@ -29,7 +29,7 @@ const optionSchema = new Schema({
     index: true,
     unique: true,
     required: true,
-    dropDups: true
+    dropDups: true,
   },
 })
 

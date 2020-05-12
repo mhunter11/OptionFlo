@@ -2,13 +2,13 @@ import React, {useState, useEffect, useContext} from 'react'
 import {Redirect} from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import {useQuery} from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 
 import styles from './Flow.module.css'
 
-import { GET_OPTIONS, SUBSCRIPTION_NEW_OPTION, GET_USER_INFO } from '../util/gql'
+import {GET_OPTIONS, GET_USER_INFO} from '../../util/gql'
 
-import {AuthContext} from '../context/auth'
+import {AuthContext} from '../../context/auth'
+import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
 
@@ -76,7 +76,7 @@ export default function Flow() {
   }
 
   useEffect(() => {
-    const socket = socketIOClient(process.env.REACT_APP_DATA_SERVER_URL)
+    const socket = socketIOClient(ENVIRONMENT.DATA_SERVER_URL)
 
     socket.on('all_options', function (data) {
       setOptions(options => [...data, ...options])

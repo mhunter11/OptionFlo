@@ -1,0 +1,77 @@
+@import '../../styles/breakpoint.scss';
+
+:root {
+  --button-color: teal;
+}
+
+.image_background {
+  background: url('../../images/space-grey-ipad-air-with-graph-on-brown-wooden-table-187041.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+  height: 75vh;
+  margin-top: -10rem;
+  z-index: -9999;
+  color: white;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.inner_image_background {
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  @include --large {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+}
+
+.h3 {
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.15;
+  @include --large {
+    text-align: center;
+  }
+
+  span {
+    @include --large {
+      line-height: 1.15;
+      text-align: center;
+    }
+  }
+}
+
+.h5 {
+  font-size: 1.5rem;
+}
+
+.header_h5 {
+  margin-top: 2rem;
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--button-color);
+  background-color: var(--button-color);
+  max-width: 15.625rem;
+  margin: auto;
+  color: white;
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+
+  &:hover {
+    color: white;
+    opacity: 0.7;
+  }
+}

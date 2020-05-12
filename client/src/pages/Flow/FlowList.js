@@ -1,6 +1,8 @@
 import React from 'react'
 import cx from 'classnames'
 
+import {formatTime, formatSentiment} from './FlowListFunction'
+
 import styles from './Flow.module.css'
 
 export default function FlowList(props) {
@@ -18,7 +20,7 @@ export default function FlowList(props) {
     volume,
   } = props
 
-  const OPTION_COST = parseInt(cost_basis).toLocaleString('en')
+  let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
   const REF = description.split('Ref')[1]
   const OI = description.split('vs')[1].split(';')[0].split('OI')[0].trim()
   const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
@@ -26,24 +28,9 @@ export default function FlowList(props) {
     parseInt(cost_basis) >= 1000000 &&
     option_activity_type === 'SWEEP' &&
     volume > OI
-
-  function formatTime(time) {
-    const date = new Date(time * 1000)
-    const hours = date.getHours()
-    const minutes = '0' + date.getMinutes()
-    const seconds = '0' + date.getSeconds()
-    const formattedTime =
-      hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
-
-    return formattedTime
-  }
-
-  function formatSentiment(data) {
-    if (data == 'null') {
-      return 'MIDPOINT'
-    }
-
-    return data
+  if (OPTION_COST.length <= 2) {
+    OPTION_COST = Number.parseFloat(cost_basis).toFixed(2)
+    OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
   }
 
   return (

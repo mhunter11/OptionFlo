@@ -49,7 +49,7 @@
   color: green;
 }
 
-.put_red { 
+.put_red {
   color: red;
 }
 
@@ -75,8 +75,13 @@
 }
 
 .golden_sweep {
-  background: rgb(34,36,0);
-  background: linear-gradient(180deg, rgba(34,36,0,1) 0%, rgb(255,223,0) 100%, rgba(0,212,255,1) 100%);
+  background: rgb(34, 36, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(34, 36, 0, 1) 0%,
+    rgb(255, 223, 0) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
 }
 
 @media only screen and (min-width: 1024px) {

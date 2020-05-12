@@ -6,13 +6,14 @@ import {AuthProvider} from './context/auth'
 
 import Footer from './components/Footer'
 import MenuBar from './components/MenuBar'
-import Flow from './pages/Flow'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import Home from './pages/Home'
-import LandingPage from './pages/LandingPage'
-import Subscription from './pages/Subscription'
-import Account from './pages/Account'
+import Flow from './pages/Flow/Flow'
+import Register from './pages/Account/Register'
+import Login from './pages/Account/Login'
+import Home from './pages/Homepage/Home'
+import LandingPage from './pages/Homepage/LandingPage'
+import Subscription from './pages/Subscription/Subscription'
+import Account from './pages/Account/Account'
+import Page from './components/Page'
 
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
@@ -22,13 +23,15 @@ export default function App() {
     <AuthProvider>
       <Router>
         <MenuBar />
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/flow" component={Flow} />
-        <Route exact path="/subscription" component={Subscription} />
-        <Route exact path="/account" component={Account} />
+        <Page>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/flow" component={Flow} />
+          <Route exact path="/subscription" component={Subscription} />
+          <Route exact path="/account" component={Account} />
+        </Page>
         <Footer />
       </Router>
     </AuthProvider>

@@ -4,7 +4,8 @@ import StripeCheckout from 'react-stripe-checkout'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
-import OPTIONFLO_ICON from '../images/optionflo-icon.png'
+import OPTIONFLO_ICON from '../../images/optionflo-icon.png'
+import {ENVIRONMENT} from '../../env'
 
 import styles from './Subscription.module.css'
 
@@ -41,7 +42,7 @@ export default function SubscriptionCard() {
             })
             console.log(response)
           }}
-          stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE}
+          stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
           amount={6000}
         />
       </div>
