@@ -2,7 +2,7 @@ require('dotenv').config()
 const xml2js = require('xml2js')
 const fetch = require('node-fetch')
 const date = require('date-and-time')
-const io = require('socket.io')(8080)
+const io = require('socket.io')(1337)
 const {saveOptions} = require('./upload.js')
 
 //Date Config
