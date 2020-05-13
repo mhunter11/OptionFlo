@@ -39,7 +39,6 @@
 .affordable_card_container {
   color: var(--white);
   border: 2px solid black;
-  min-width: 30rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,6 +47,10 @@
   padding-bottom: 2.5rem;
   margin-left: 2.5rem;
   margin-right: 2.5rem;
+
+  @include --large {
+    min-width: 20rem;
+  }
 }
 
 .card_name {
