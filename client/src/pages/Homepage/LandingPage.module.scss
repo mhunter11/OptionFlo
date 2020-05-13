@@ -30,6 +30,7 @@
   line-height: 1.15;
   color: var(--light-green);
   text-align: center;
+  margin-bottom: 5rem;
 
   span {
     @include --large {
@@ -67,14 +68,14 @@
   background-color: var(--light-green);
   max-width: 17.625rem;
   margin: auto;
-  color: white;
+  color: var(--blue);
   font-weight: 800;
   font-size: 1.25rem;
   margin-top: 2.5rem;
   filter: brightness(90%);
 
   &:hover {
-    color: white;
+    color: var(--blue);
     filter: brightness(110%);
   }
 }
@@ -82,7 +83,7 @@
 .benefit_container {
   @include --medium {
     display: flex;
-    max-width: 1280px;
+    max-width: 80rem;
     margin: 0 auto;
   }
 }

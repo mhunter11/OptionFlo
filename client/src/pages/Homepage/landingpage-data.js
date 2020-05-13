@@ -9,7 +9,7 @@ export const START_TRIAL = 'Start 7 Days Free Trial'
 
 export const HOW_WILL_YOU_BENEFIT = 'How do we benefit you?'
 
-export const AFFORDABLE_HEADER = 'How affordable we are'
+export const AFFORDABLE_HEADER = 'How affordable we are compared to others?'
 
 export const BENEFITS_DATA = [
   {
@@ -33,5 +33,24 @@ export const BENEFITS_DATA = [
     text: 'Are you ready to track what the big money is buying?',
     url: '/flow',
     trueLink: true,
+  },
+]
+
+export const COMPETITION_DATA = [
+  {
+    name: 'OptionFlo',
+    price: '$60',
+    discord: 'Access to OptionFlo Discord',
+    alerts: 'Option Alerts',
+    orderFlow: 'Realtime Option Order Flow',
+    darkPool: 'Dark Pool Order Data (soon coming)',
+  },
+  {
+    name: 'CheddarFlow',
+    price: '$85',
+    discord: `Doesn't Discord`,
+    alerts: 'No Option Alerts',
+    orderFlow: 'Realtime Option Order Flow',
+    darkPool: 'No Dark Pool Order Data',
   },
 ]

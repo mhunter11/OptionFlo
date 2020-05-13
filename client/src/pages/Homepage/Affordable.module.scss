@@ -14,3 +14,28 @@
     text-align: center;
   }
 }
+
+.affordable_card {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.75rem;
+}
+
+.affordable_card_container {
+  color: var(--white);
+  border: 2px solid black;
+  min-width: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+.card_name {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
