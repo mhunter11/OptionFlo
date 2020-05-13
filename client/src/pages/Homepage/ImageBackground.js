@@ -23,6 +23,7 @@ export default function ImageBackground() {
             loop
           ></Typed> */}
           <h3 className={styles.h3}>Most Affordable Real Time Option Flow</h3>
+          <h4 className={styles.h4}>Track & Moniter Activity in Real Time</h4>
         </div>
         <div className={styles.header_h5}>
           <h5 className={styles.h5}>{CANCEL_ANYTIME}</h5>

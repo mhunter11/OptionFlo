@@ -1,15 +1,12 @@
 @import '../../styles/breakpoint.scss';
-
-:root {
-  --button-color: teal;
-}
+@import '../../styles/color.scss';
 
 .image_background {
-  background: url('../../images/space-grey-ipad-air-with-graph-on-brown-wooden-table-187041.jpg');
+  background: url('../../images/black-blue-and-red-graph-illustration-186461.jpg');
   background-size: cover;
   background-position: 50% 50%;
   height: 75vh;
-  margin-top: -10rem;
+  margin-top: 1rem;
   z-index: -9999;
   color: white;
   display: flex;
@@ -31,9 +28,8 @@
   font-size: 3rem;
   font-weight: 600;
   line-height: 1.15;
-  @include --large {
-    text-align: center;
-  }
+  color: var(--light-green);
+  text-align: center;
 
   span {
     @include --large {
@@ -43,8 +39,14 @@
   }
 }
 
+.h4 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  font-size: 2rem;
+}
+
 .h5 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .header_h5 {
@@ -61,17 +63,67 @@
   justify-content: center;
   align-items: center;
   padding: 1rem 2.5rem;
-  border: 1px solid var(--button-color);
-  background-color: var(--button-color);
-  max-width: 15.625rem;
+  border: 1px solid var(--light-green);
+  background-color: var(--light-green);
+  max-width: 17.625rem;
   margin: auto;
   color: white;
   font-weight: 800;
   font-size: 1.25rem;
   margin-top: 2.5rem;
+  filter: brightness(90%);
 
   &:hover {
     color: white;
+    filter: brightness(110%);
+  }
+}
+
+.benefit_container {
+  @include --medium {
+    display: flex;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+}
+
+.individual_container {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 3.75rem 2.5rem;
+
+  @include --large {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.text_p {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.benefit_inner_container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: var(--dark-black);
+}
+
+.h5 {
+  font-size: 1.75rem;
+  text-align: center;
+}
+
+.benefit_image {
+  border: 1px solid white;
+  padding: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover {
     opacity: 0.7;
   }
 }

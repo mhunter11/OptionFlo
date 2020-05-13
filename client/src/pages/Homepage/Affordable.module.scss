@@ -1,0 +1,16 @@
+@import '../../styles/breakpoint.scss';
+@import '../../styles/color.scss';
+
+.affordable_container {
+  background-color: var(--light-black);
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+
+  .h3 {
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--light-green);
+    text-align: center;
+  }
+}
