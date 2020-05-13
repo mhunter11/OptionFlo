@@ -10,7 +10,7 @@ export default function Affordable() {
       <h3 className={styles.h3}>{AFFORDABLE_HEADER}</h3>
       <div className={styles.affordable_card}>
         {COMPETITION_DATA.map((data, i) => {
-          return <AffordableCard {...data} />
+          return <AffordableCard key={i} {...data} />
         })}
       </div>
     </div>

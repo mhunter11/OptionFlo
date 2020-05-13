@@ -12,13 +12,28 @@
     line-height: 1.15;
     color: var(--light-green);
     text-align: center;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
   }
 }
 
 .affordable_card {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-top: 3.75rem;
+
+  @include --large {
+    flex-direction: initial;
+  }
+
+  .affordable_card_container:not(:first-child) {
+    margin-top: 2.5rem;
+
+    @include --large {
+      margin-top: 0;
+    }
+  }
 }
 
 .affordable_card_container {
