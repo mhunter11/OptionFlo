@@ -55,11 +55,12 @@
     rgba(33, 46, 91, 1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
-  min-width: 35rem;
   margin: 0 auto;
+  width: 90%;
 
   @include --large {
     min-width: 20rem;
+    width: auto;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     margin-left: 2.5rem;
@@ -80,8 +81,12 @@
   padding-top: 1rem;
   padding-left: 5rem;
   padding-right: 5rem;
-  border: 1px solid var(--blue-color);
-  background: var(--blue-color);
-  min-width: 30rem;
   text-align: center;
+  white-space: nowrap;
+
+  @include --large {
+    border: 1px solid var(--blue-color);
+    background: var(--blue-color);
+    min-width: 30rem;
+  }
 }
