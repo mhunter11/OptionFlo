@@ -1,6 +1,10 @@
 @import '../../styles/breakpoint.scss';
 @import '../../styles/color.scss';
 
+:root {
+  --blue-color: #555e7d;
+}
+
 .affordable_container {
   background-color: var(--light-black);
   padding-top: 5rem;
@@ -45,15 +49,39 @@
   align-items: center;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
+  border-radius: 6px;
+  background: linear-gradient(
+    0deg,
+    rgba(33, 46, 91, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  min-width: 35rem;
+  margin: 0 auto;
 
   @include --large {
     min-width: 20rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
   }
 }
 
 .card_name {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-bottom: 1.5rem;
+  color: white;
+}
+
+.card_info {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  border: 1px solid var(--blue-color);
+  background: var(--blue-color);
+  min-width: 30rem;
+  text-align: center;
 }

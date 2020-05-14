@@ -17,12 +17,24 @@ export default function Affordable() {
   )
 }
 
-function AffordableCard({...props}) {
+function AffordableCard({
+  name,
+  price,
+  discord,
+  topTraders,
+  optionAlerts,
+  orderFlow,
+  darkPool,
+}) {
   return (
     <div className={styles.affordable_card_container}>
-      <div className={styles.card_name}>{props.name}</div>
-      <div className={styles.card_price}>{props.price}</div>
-      <div className={styles.card_discord}>{props.discord}</div>
+      <div className={styles.card_name}>{name}</div>
+      <div className={styles.card_info}>Price: {price}</div>
+      <div className={styles.card_info}>{orderFlow}</div>
+      <div className={styles.card_info}>{darkPool}</div>
+      <div className={styles.card_info}>{discord}</div>
+      <div className={styles.card_info}>{topTraders}</div>
+      <div className={styles.card_info}>{optionAlerts}</div>
     </div>
   )
 }

@@ -5,3 +5,4 @@ config.js
 
 # Local Netlify folder
 .netlify
+client/build

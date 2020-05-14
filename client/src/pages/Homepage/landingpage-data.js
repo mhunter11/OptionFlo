@@ -44,6 +44,8 @@ export const COMPETITION_DATA = [
     alerts: 'Option Alerts',
     orderFlow: 'Realtime Option Order Flow',
     darkPool: 'Dark Pool Order Data (soon coming)',
+    topTraders: 'Access to our Top Traders',
+    optionAlerts: 'Option Alerts',
   },
   {
     name: 'CheddarFlow',
@@ -52,5 +54,7 @@ export const COMPETITION_DATA = [
     alerts: 'No Option Alerts',
     orderFlow: 'Realtime Option Order Flow',
     darkPool: 'No Dark Pool Order Data',
+    topTraders: 'No Access to our Top Traders',
+    optionAlerts: 'No Option Alerts',
   },
 ]
