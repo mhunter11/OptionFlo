@@ -1,6 +1,6 @@
 export const TYPING_ANIMATION_ARRAY = [
-  'Most Affordable Real Time Option Flow',
-  'Track & Moniter Activity in Real Time!',
+  'Option Flow',
+  'Dark Pool',
 ]
 
 export const CANCEL_ANYTIME = 'You can cancel anytime'

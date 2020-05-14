@@ -15,14 +15,16 @@ export default function ImageBackground() {
     <div className={styles.image_background}>
       <div className={styles.container}>
         <div className={styles.inner_image_background}>
-          {/* <Typed
-            className={styles.h3}
-            strings={TYPING_ANIMATION_ARRAY}
-            typeSpeed={60}
-            backSpeed={50}
-            loop
-          ></Typed> */}
-          <h3 className={styles.h3}>Most Affordable Real Time Option Flow</h3>
+          <h3 className={styles.h3}>
+            Most Affordable Real Time{' '}
+            <Typed
+              className={styles.h3}
+              strings={TYPING_ANIMATION_ARRAY}
+              typeSpeed={60}
+              backSpeed={50}
+              loop
+            ></Typed>
+          </h3>
           <h4 className={styles.h4}>Track & Moniter Activity in Real Time</h4>
         </div>
         <div className={styles.header_h5}>
