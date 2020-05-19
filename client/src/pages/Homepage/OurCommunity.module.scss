@@ -22,6 +22,7 @@
   color: var(--light-green);
   text-align: center;
   margin-bottom: 5rem;
+  padding-top: 5rem;
 }
 
 .desktop_view {
@@ -37,4 +38,30 @@
   @include --large {
     display: none;
   }
+}
+
+.desktop_customer_name {
+  text-align: right;
+  margin-top: 1.5rem;
+}
+
+.user_comment {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.mobile_user_comment {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.mobile_customer_name {
+  text-align: right;
+  margin-right: 1.5rem;
+}
+
+.mobile_container {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+  padding-bottom: 5rem;
 }
