@@ -17,8 +17,8 @@ export default function Flow() {
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
-  let [todayPuts, setTodayPuts] = useState(0)
-  let [todayCalls, setTodayCalls] = useState(0)
+  const [todayPuts, setTodayPuts] = useState(0)
+  const [todayCalls, setTodayCalls] = useState(0)
 
   const {user} = useContext(AuthContext)
   let todayOptionData = []
@@ -125,11 +125,7 @@ export default function Flow() {
           type="text"
           value={searchInput}
           onChange={e => setSearchInput(e.target.value)}
-          onKeyPress={e => {
-            if (e.key === 'Enter') {
-              filterData(searchInput)
-            }
-          }}
+          onKeyPress={e => (e.key === 'Enter' ? filterData(searchInput) : null)}
           placeholder="SPY"
         />
         <button onClick={() => filterData(searchInput)}>Filter</button>
