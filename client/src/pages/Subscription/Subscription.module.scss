@@ -1,0 +1,151 @@
+@import '../../styles/color.scss';
+
+.list_item {
+  list-style-type: none;
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #93dac5;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  margin: 0 auto;
+  line-height: 1.57;
+  text-align: center;
+}
+
+.card_container {
+  border: 1px solid white;
+  width: 400px;
+  margin: 0 auto;
+  border-radius: 3px;
+  padding: 2rem 0;
+  padding-bottom: 3rem;
+}
+
+.header_container {
+  text-align: center;
+  padding-bottom: 3.75rem;
+  padding-top: 2rem;
+}
+
+.h2 {
+  font-size: 3rem;
+  color: #93dac5;
+}
+
+.h5 {
+  font-size: 1.5rem;
+  color: #fff;
+  width: 50%;
+  margin: 0 auto;
+  line-height: 1.67;
+}
+
+.h6 {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.content {
+  margin-bottom: 1.5rem;
+}
+
+.button {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  background-color: #93dac5;
+  border-radius: 3px 3px 3px 3px;
+  max-width: 210px;
+  padding: 10px 55px;
+  margin: 0 auto;
+}
+
+.button:hover {
+  color: white;
+  opacity: 0.7;
+}
+
+.h3 {
+  font-size: 2rem;
+  margin: 0 auto;
+  line-height: 1.67;
+  margin-bottom: 1rem;
+}
+
+.bg_color {
+  background-color: var(--dark-black);
+  display: flex;
+  min-height: 90vh;
+}
+
+.bg_color_container {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding-top: 5rem;
+}
+
+.p {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.plan {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ccc;
+  display: block;
+}
+
+.subscription_benefit_list {
+  margin-left: 5rem;
+  height: fit-content;
+  border: 1.5rem solid var(--light-black);
+}
+
+.container {
+  max-width: 1280px;
+  padding: 2.5rem 0 5rem;
+}
+
+.card_subscription_container {
+  background-color: var(--light-black);
+  padding: 2rem;
+  max-width: 35rem;
+  color: white;
+  margin-bottom: 3.75rem;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--light-green);
+  background-color: var(--light-green);
+  max-width: 13rem;
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+  filter: brightness(90%);
+}
+
+.stripe_checkout_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--light-green);
+  background-color: var(--light-green);
+  max-width: 15rem;
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+  filter: brightness(90%);
+}

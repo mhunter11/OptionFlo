@@ -1,27 +1,69 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import StripeCheckout from 'react-stripe-checkout'
+import {useMutation} from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+
+import OPTIONFLO_ICON from '../../images/optionflo-icon.png'
+import {ENVIRONMENT} from '../../env'
 
 import SubscriptionCard from './SubscriptionCard'
+import Card from './Card'
 
-// import {SUBSCRIPTION_BENEFITS} from './subscription-data'
+import {SUBSCRIPTION_BENEFITS, SubscriptionCardData} from './subscription-data'
 
-import styles from './Subscription.module.css'
+import styles from './Subscription.module.scss'
 
 export default function Subscription() {
+  const [createSub] = useMutation(CREATE_SUBSCRIPTION)
+  const MONTHLY_PLAN = '$60/ Monthly Plan'
   return (
     <div className={styles.bg_color}>
-      <section>
-        <div className={styles.header_container}>
-          <h2 className={styles.h2}>Subscribe Now!</h2>
-          <h5 className={styles.h5}>
-            Test out our Option Flow Unusual Activity for a week before you're
-            charged{' '}
-            <span className={styles.underline}>
-              No commitment. Cancel at anytime!
-            </span>
-          </h5>
+      <div className={styles.bg_color_container}>
+        <div className={styles.container}>
+          <Card {...SubscriptionCardData} />
+          <div className={styles.card_subscription_container}>
+            <h3 className={styles.h3}>Already sign up?</h3>
+            <StripeCheckout
+              name="OptionFlo"
+              currency="USD"
+              image={OPTIONFLO_ICON}
+              token={async token => {
+                const response = await createSub({
+                  variables: {source: token.id},
+                })
+                console.log(response)
+              }}
+              stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
+              amount={6000}
+            >
+              <button className={styles.stripe_checkout_button}>
+                Pay with Card
+              </button>
+            </StripeCheckout>
+          </div>
         </div>
-        <SubscriptionCard />
-      </section>
+        <div className={styles.subscription_benefit_list}>
+          <div>{MONTHLY_PLAN}</div>
+          {SUBSCRIPTION_BENEFITS.map((data, i) => {
+            return (
+              <li className={styles.list_item} key={i}>
+                {data}
+              </li>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }
+
+const CREATE_SUBSCRIPTION = gql`
+  mutation createSubscription($source: String!) {
+    createSubscription(source: $source) {
+      id
+      email
+      type
+    }
+  }
+`

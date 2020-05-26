@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 import OPTIONFLO_ICON from '../../images/optionflo-icon.png'
 import {ENVIRONMENT} from '../../env'
 
-import styles from './Subscription.module.css'
+import styles from './Subscription.module.scss'
 
 import {SUBSCRIPTION_BENEFITS} from './subscription-data'
 
