@@ -1,0 +1,165 @@
+@import '../../styles/color.scss';
+@import '../../styles/breakpoint.scss';
+
+.flow_list {
+  display: flex;
+  align-items: center;
+  background-color: #343333;
+  color: #ffffff;
+  height: 3.125rem;
+}
+
+.time {
+  width: 7.5%;
+  padding-left: 1.5rem;
+}
+
+.ticker {
+  width: 5%;
+  margin-left: 1.5rem;
+}
+
+.date_expiration {
+  width: 7.5%;
+}
+
+.strike_price {
+  width: 6.5%;
+}
+
+.put_call {
+  width: 5%;
+}
+
+.option_activity_type {
+  width: 5%;
+}
+
+.description {
+  width: 10%;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.sentiment {
+  width: 7.5%;
+}
+
+.cost_basis {
+  width: 10%;
+}
+
+.call_green {
+  color: green;
+}
+
+.put_red {
+  color: red;
+}
+
+.OI {
+  width: 7.5%;
+  margin-right: 0.5rem;
+}
+
+.ticker {
+  cursor: pointer;
+}
+
+.input_search {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ul_list {
+  padding: 0;
+  margin: 0;
+  @include --large {
+    max-width: 1260px;
+    margin: 0 auto 2.5rem;
+    height: 80vh;
+    overflow: auto;
+  }
+}
+
+.golden_sweep {
+  background: rgb(34, 36, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(34, 36, 0, 1) 0%,
+    rgb(255, 223, 0) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+
+.desktop_view {
+  padding-bottom: 2.5rem;
+  display: none;
+  @include --large {
+    display: block;
+  }
+}
+
+.mobile_view {
+  margin-top: 3.5rem;
+  @include --large {
+    display: none;
+  }
+}
+
+.flow_background_color {
+  background-color: var(--light-black);
+}
+
+@media only screen and (min-width: 1024px) {
+  .flow_list {
+    max-width: 1260px;
+    margin: auto;
+  }
+}
+
+/* Mobile styles */
+
+.mobile_results {
+  color: white;
+  margin-right: 1rem;
+}
+
+.mobile_results_input {
+  display: flex;
+  padding: 1.5rem 0;
+  justify-content: center;
+}
+
+.display_flex {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.mobile_time {
+  font-size: 1rem;
+  color: lightgray;
+}
+
+.mobile_flow_list {
+  background-color: #343333;
+  color: #ffffff;
+}
+
+.mobile_ticker_call {
+  padding: 0.35rem 0.75rem;
+  background-color: #61cb4c;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+}
+
+.mobile_ticker_put {
+  padding: 0.35rem 0.75rem;
+  background-color: #d62f1a;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+}
+
+.mobile_lower_section {
+  font-size: 0.75rem;
+  font-weight: 800;
+}

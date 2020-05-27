@@ -3,7 +3,7 @@ import cx from 'classnames'
 
 import {formatTime, formatSentiment} from './FlowListFunction'
 
-import styles from './Flow.module.css'
+import styles from './Flow.module.scss'
 
 export default function FlowList(props) {
   const {

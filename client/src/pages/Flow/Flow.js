@@ -3,7 +3,7 @@ import {Redirect} from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import {useQuery} from '@apollo/react-hooks'
 
-import styles from './Flow.module.css'
+import styles from './Flow.module.scss'
 
 import {GET_OPTIONS, GET_USER_INFO} from '../../util/gql'
 
@@ -11,6 +11,7 @@ import {AuthContext} from '../../context/auth'
 import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
+import MobileFlowList from './MobileFlowList'
 
 export default function Flow() {
   const [options, setOptions] = useState([])
@@ -19,7 +20,6 @@ export default function Flow() {
   const [searchInput, setSearchInput] = useState('')
   const [todayPuts, setTodayPuts] = useState(0)
   const [todayCalls, setTodayCalls] = useState(0)
-
   const {user} = useContext(AuthContext)
   let todayOptionData = []
 
@@ -117,32 +117,75 @@ export default function Flow() {
   if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
-
   return (
-    <div>
-      <div className={styles.input_search}>
-        <input
-          type="text"
-          value={searchInput}
-          onChange={e => setSearchInput(e.target.value)}
-          onKeyPress={e => (e.key === 'Enter' ? filterData(searchInput) : null)}
-          placeholder="SPY"
-        />
-        <button onClick={() => filterData(searchInput)}>Filter</button>
+    <div className={styles.flow_background_color}>
+      <div className={styles.desktop_view}>
+        <div className={styles.input_search}>
+          <input
+            type="text"
+            value={searchInput}
+            onChange={e => setSearchInput(e.target.value)}
+            onKeyPress={e =>
+              e.key === 'Enter' ? filterData(searchInput) : null
+            }
+            placeholder="SPY"
+          />
+          <button onClick={() => filterData(searchInput)}>Filter</button>
+        </div>
+        <button onClick={() => setFilteredOptions(false)}>Reset</button>
+        <div>
+          <ul className={styles.ul_list}>
+            {!filteredOptions &&
+              options.map((data, index) => (
+                <FlowList
+                  {...data}
+                  key={index}
+                  onClick={() => filterData(data.ticker)}
+                />
+              ))}
+            {filteredOptions &&
+              saveOptions.map((data, index) => (
+                <FlowList {...data} key={index} />
+              ))}
+          </ul>
+        </div>
       </div>
-      <button onClick={() => setFilteredOptions(false)}>Reset</button>
-      <ul className={styles.ul_list}>
-        {!filteredOptions &&
-          options.map((data, index) => (
-            <FlowList
-              {...data}
-              key={index}
-              onClick={() => filterData(data.ticker)}
+      <div className={styles.mobile_view}>
+        <div className={styles.mobile_results_input}>
+          {filteredOptions && (
+            <div className={styles.mobile_results}>
+              {saveOptions.length} Results
+            </div>
+          )}
+          <div className={styles.input_search}>
+            <input
+              type="text"
+              value={searchInput}
+              onChange={e => setSearchInput(e.target.value)}
+              onKeyPress={e =>
+                e.key === 'Enter' ? filterData(searchInput) : null
+              }
+              placeholder="SPY"
             />
-          ))}
-        {filteredOptions &&
-          saveOptions.map((data, index) => <FlowList {...data} key={index} />)}
-      </ul>
+            <button onClick={() => filterData(searchInput)}>Filter</button>
+          </div>
+          <button onClick={() => setFilteredOptions(false)}>Reset</button>
+        </div>
+        <ul className={styles.ul_list}>
+          {!filteredOptions &&
+            options.map((data, index) => (
+              <MobileFlowList
+                {...data}
+                key={index}
+                onClick={() => filterData(data.ticker)}
+              />
+            ))}
+          {filteredOptions &&
+            saveOptions.map((data, index) => (
+              <MobileFlowList {...data} key={index} />
+            ))}
+        </ul>
+      </div>
     </div>
   )
 }
