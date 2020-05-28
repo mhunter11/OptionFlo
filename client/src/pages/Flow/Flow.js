@@ -75,21 +75,19 @@ export default function Flow() {
 
     socket.on('options', data => {
       setOptions(options => [...data, ...options])
-      data.map(e => {
-        if (
-          !(saveOptions.filter(a => a.id === e.id).length > 0) &&
-          filteredOptions &&
-          (e.ticker === searchInput)
-        ) {
-          setSaveOptions(newOptions => [e, ...newOptions])
-        }
-      })
+      let filteredData = data.filter(
+        n =>
+          saveOptions.find(s => n.id == s.id) == null && n.ticker == searchInput
+      )
+      if (filteredOptions) {
+        setSaveOptions(prevState => [...filteredData, ...prevState])
+      }
     })
 
     socket.on('clear', function () {
       setOptions([])
     })
-  }, [saveOptions, saveId])
+  }, [saveOptions])
 
   if (loadingR) {
     return <div>Loading...</div>
