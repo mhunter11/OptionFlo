@@ -18,8 +18,6 @@ export default function Flow() {
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
-  const [todayPuts, setTodayPuts] = useState(0)
-  const [todayCalls, setTodayCalls] = useState(0)
   const {user} = useContext(AuthContext)
   let todayOptionData = []
 
@@ -33,22 +31,9 @@ export default function Flow() {
   )
 
   const {loading, error, data} = useQuery(GET_OPTIONS)
-
-  function todayCount(put_call) {
-    put_call.map(data => {
-      if (data.put_call === 'CALL') {
-        let newCalls = todayCalls++
-        setTodayCalls(newCalls)
-      }
-      if (data.put_call === 'PUT') {
-        let newPuts = todayPuts++
-        setTodayPuts(newPuts)
-      }
-    })
-  }
-
   function filterData(ticker) {
     if (!ticker) return null
+    setSearchInput(ticker)
     ticker = ticker.toUpperCase()
     let today = new Date()
     let dd = String(today.getDate()).padStart(2, '0')
@@ -73,6 +58,12 @@ export default function Flow() {
 
     setSaveOptions(filteredOptionData.reverse())
     setFilteredOptions(!filteredOptions)
+
+    // socket data
+    // const filteredOptionData = options.filter(x => x.ticker === ticker)
+    // setSaveOptions(filteredOptionData)
+
+    // setFilteredOptions(!filteredOptions)
   }
 
   useEffect(() => {
@@ -80,18 +71,25 @@ export default function Flow() {
 
     socket.on('all_options', function (data) {
       setOptions(options => [...data, ...options])
-      // todayCount(data)
     })
 
-    socket.on('options', function (data) {
+    socket.on('options', data => {
       setOptions(options => [...data, ...options])
-      // todayCount(data)
+      data.map(e => {
+        if (
+          !(saveOptions.filter(a => a.id === e.id).length > 0) &&
+          filteredOptions &&
+          (e.ticker === searchInput)
+        ) {
+          setSaveOptions(newOptions => [e, ...newOptions])
+        }
+      })
     })
 
     socket.on('clear', function () {
       setOptions([])
     })
-  }, [])
+  }, [saveOptions, saveId])
 
   if (loadingR) {
     return <div>Loading...</div>
@@ -117,6 +115,8 @@ export default function Flow() {
   if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
+
+  // console.log(saveOptions)
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
