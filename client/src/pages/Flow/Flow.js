@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect, useContext, useCallback} from 'react'
 import {Redirect} from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import {useQuery} from '@apollo/react-hooks'
@@ -115,6 +115,9 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
+  const resetFilters = useCallback(() => {
+    setFilteredOptions(false)
+  }, [filteredOptions])
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
@@ -130,7 +133,7 @@ export default function Flow() {
           />
           <button onClick={() => filterData(searchInput)}>Filter</button>
         </div>
-        <button onClick={() => setFilteredOptions(false)}>Reset</button>
+        <button onClick={resetFilters}>Reset</button>
         <div>
           <ul className={styles.ul_list}>
             {!filteredOptions &&
