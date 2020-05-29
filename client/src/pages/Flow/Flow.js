@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import {Redirect} from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import {useQuery} from '@apollo/react-hooks'
+import _ from 'lodash'
 
 import styles from './Flow.module.scss'
 
@@ -54,16 +55,16 @@ export default function Flow() {
     }
 
     // filtered option data
-    const filteredOptionData = todayOptionData.filter(x => x.ticker === ticker)
+    // const filteredOptionData = todayOptionData.filter(x => x.ticker === ticker)
 
-    setSaveOptions(filteredOptionData.reverse())
-    setFilteredOptions(!filteredOptions)
+    // setSaveOptions(filteredOptionData.reverse())
+    // setFilteredOptions(!filteredOptions)
 
     // socket data
-    // const filteredOptionData = options.filter(x => x.ticker === ticker)
-    // setSaveOptions(filteredOptionData)
+    const filteredOptionData = options.filter(x => x.ticker === ticker)
+    setSaveOptions(filteredOptionData)
 
-    // setFilteredOptions(!filteredOptions)
+    setFilteredOptions(!filteredOptions)
   }
 
   useEffect(() => {
@@ -75,13 +76,13 @@ export default function Flow() {
 
     socket.on('options', data => {
       setOptions(options => [...data, ...options])
-      let filteredData = data.filter(
-        n =>
-          saveOptions.find(s => n.id == s.id) == null && n.ticker == searchInput
-      )
-      if (filteredOptions) {
-        setSaveOptions(prevState => [...filteredData, ...prevState])
-      }
+      data.map(dataOption => {
+        if (dataOption.ticker === searchInput) {
+          setSaveOptions(prevState =>
+            _.uniqBy([dataOption, ...prevState], 'id')
+          )
+        }
+      })
     })
 
     socket.on('clear', function () {
@@ -114,7 +115,6 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
-  // console.log(saveOptions)
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>

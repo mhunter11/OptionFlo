@@ -135,13 +135,15 @@ async function fetchLatest() {
 }
 
 setInterval(function () {
-  fetchLatest().then(function (result) {
-    if (result) {
-      console.log('Emitting event with ' + result.length + ' new results')
-      io.emit('options', result)
-    }
-    console.log('All done')
-  })
+  fetchLatest()
+    .then(function (result) {
+      if (result) {
+        console.log('Emitting event with ' + result.length + ' new results')
+        io.emit('options', result)
+      }
+      console.log('All done')
+    })
+    .catch(error => console.error(error))
 }, 5 * 1000)
 
 io.on('connection', function (socket) {
