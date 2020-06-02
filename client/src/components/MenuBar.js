@@ -15,7 +15,7 @@ export default function MenuBar() {
   const [activeItem, setActiveItem] = useState(path)
 
   const handleItemClick = (e, {name}) => setActiveItem(name)
-
+  console.log(user)
   const menuBar = user ? (
     <Menu
       pointing
@@ -28,8 +28,12 @@ export default function MenuBar() {
         <img className={styles.logo} src={Logo} alt="logo" />
       </Link>
       <Menu.Menu position="right">
-        <Menu.Item name="Flow" as={Link} to="/flow" />
-        <Menu.Item name={user.username} as={Link} to="/account" />
+        <Link className="item" to="/flow">
+          Flow
+        </Link>
+        <Link className="item" to="/account">
+          {user.username}
+        </Link>
         <Menu.Item name="logout" onClick={logout} />
       </Menu.Menu>
     </Menu>
