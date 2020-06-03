@@ -141,24 +141,85 @@
   color: lightgray;
 }
 
-.mobile_flow_list {
-  background-color: #343333;
-  color: #ffffff;
+.space_between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.mobile_flow_list {
+  background-color: #272321;
+  color: #fff;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #807774;
+  &:last-child {
+    border-bottom: 1px solid #807774;
+  }
+}
+
+.mobile_ticker {
+  color: #cfd6d9;
+  padding: 0.25rem 0.5rem;
+  font-size: 16px;
+  width: 5rem;
+  height: 3rem;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .mobile_ticker_call {
-  padding: 0.35rem 0.75rem;
-  background-color: #61cb4c;
-  margin: 0.25rem 0.5rem 0.25rem 0;
+  background-color: #06420e;
 }
 
 .mobile_ticker_put {
-  padding: 0.35rem 0.75rem;
-  background-color: #d62f1a;
-  margin: 0.25rem 0.5rem 0.25rem 0;
+  background-color: #bf220e;
+}
+
+.mobile_ticker_green_color {
+  color: #06420e;
+}
+
+.mobile_ticker_red_color {
+  color: #bf220e;
 }
 
 .mobile_lower_section {
   font-size: 0.75rem;
   font-weight: 800;
+}
+
+.mobile_flow_item_container {
+  font-size: 14px;
+  color: #807774;
+  margin-top: 0.5rem;
+  margin-right: 0.75rem;
+}
+
+.mobile_cost_basis {
+  font-size: 18px;
+  margin-top: 0.75rem;
+}
+
+.mobile_cost_call {
+  color: #0b8319;
+}
+
+.mobile_cost_put {
+  color: #bf220e;
+}
+
+.flow_item {
+  margin-top: 0.25rem;
+  text-transform: capitalize;
+}
+
+.flow_result {
+  margin-top: 0.5rem;
+}
+
+.mobile_option_data_container {
+  padding-left: 0;
+  align-items: normal;
 }
