@@ -91,6 +91,14 @@
   );
 }
 
+.purple_sweep {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(145, 2, 187, 0.10968137254901966) 20%
+  );
+}
+
 .desktop_view {
   padding-bottom: 2.5rem;
   display: none;

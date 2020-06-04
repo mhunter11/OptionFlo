@@ -15,11 +15,8 @@ export default function MobileFlowList(props) {
     put_call,
     option_activity_type,
     description,
-    sentiment,
     cost_basis,
-    onClick,
     updated,
-    volume,
   } = props
 
   let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
@@ -30,7 +27,7 @@ export default function MobileFlowList(props) {
   const GOLDEN_SWEEP =
     parseInt(cost_basis) >= 1000000 &&
     option_activity_type === 'SWEEP' &&
-    BUY < OI
+    BUY >= OI
   if (OPTION_COST.length <= 2) {
     OPTION_COST = Number.parseFloat(cost_basis).toFixed(2)
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')

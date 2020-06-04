@@ -17,7 +17,6 @@ export default function FlowList(props) {
     cost_basis,
     onClick,
     updated,
-    volume,
   } = props
 
   let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
@@ -25,19 +24,28 @@ export default function FlowList(props) {
   const OI = description.split('vs')[1].split('OI')[0].trim()
   const BUY = description.split('@')[0].split(':')[2]
   const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
+  const PURPLE_SWEEP =
+    parseInt(cost_basis) >= 250000 &&
+    option_activity_type === 'SWEEP' &&
+    BUY > OI
   const GOLDEN_SWEEP =
     parseInt(cost_basis) >= 1000000 &&
     option_activity_type === 'SWEEP' &&
-    BUY < OI
+    BUY > OI
   if (OPTION_COST.length <= 2) {
     OPTION_COST = Number.parseFloat(cost_basis).toFixed(2)
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
+  }
+
+  if (GOLDEN_SWEEP || PURPLE_SWEEP) {
+    console.log(description, OI)
   }
 
   return (
     <div
       className={cx(styles.flow_list, {
         [styles.golden_sweep]: GOLDEN_SWEEP,
+        [styles.purple_sweep]: PURPLE_SWEEP,
       })}
     >
       <div className={styles.time}>{formatTime(updated)}</div>
