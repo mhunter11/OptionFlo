@@ -177,11 +177,13 @@
 }
 
 .mobile_ticker_green_color {
-  color: #06420e;
+  color: #06420e !important;
+  filter: brightness(1.75);
 }
 
 .mobile_ticker_red_color {
-  color: #bf220e;
+  color: #bf220e !important;
+  filter: brightness(1.75);
 }
 
 .mobile_lower_section {
