@@ -22,12 +22,13 @@ export default function FlowList(props) {
 
   let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
   const REF = description.split('Ref')[1]
-  const OI = description.split('vs')[1].split(';')[0].split('OI')[0].trim()
+  const OI = description.split('vs')[1].split('OI')[0].trim()
+  const BUY = description.split('@')[0].split(':')[2]
   const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
   const GOLDEN_SWEEP =
     parseInt(cost_basis) >= 1000000 &&
     option_activity_type === 'SWEEP' &&
-    volume > OI
+    BUY > OI
   if (OPTION_COST.length <= 2) {
     OPTION_COST = Number.parseFloat(cost_basis).toFixed(2)
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
