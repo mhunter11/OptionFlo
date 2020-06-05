@@ -1,7 +1,16 @@
 import React from 'react'
 import cx from 'classnames'
 
-import {formatTime, formatSentiment} from './FlowListFunction'
+import {
+  formatTime,
+  formatSentiment,
+  getRef,
+  getOI,
+  getContractPrice,
+  getGoldenSweep,
+  getBuy,
+  getBigBuy,
+} from './FlowListFunction'
 
 import styles from './Flow.module.scss'
 
@@ -20,23 +29,21 @@ export default function FlowList(props) {
   } = props
 
   let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
-  const REF = description.split('Ref')[1]
-  const OI = description.split('vs')[1].split('OI')[0].trim()
-  const BUY = description.split('@')[0].split(':')[2]
-  const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
-  const GOLDEN_SWEEP =
-    parseInt(cost_basis) >= 1000000 &&
-    option_activity_type === 'SWEEP' &&
-    BUY > OI
+  const REF = getRef(description)
+  const OI = getOI(description)
+  const BUY = getBuy(description)
+  const CONTRACT_AND_PRICE = getContractPrice(description)
+  const GOLDEN_SWEEP = getGoldenSweep(cost_basis, option_activity_type, BUY, OI)
   if (OPTION_COST.length <= 2) {
     OPTION_COST = Number.parseFloat(cost_basis).toFixed(2)
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
   }
-
+  const BIG_BUY = getBigBuy(BUY)
   return (
     <div
       className={cx(styles.flow_list, {
         [styles.golden_sweep]: GOLDEN_SWEEP,
+        [styles.big_buy]: BIG_BUY,
       })}
     >
       <div className={styles.time}>{formatTime(updated)}</div>

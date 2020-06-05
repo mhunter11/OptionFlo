@@ -1,7 +1,15 @@
 import React from 'react'
 import cx from 'classnames'
 
-import {formatTime} from './FlowListFunction'
+import {
+  formatTime,
+  getRef,
+  getOI,
+  getContractPrice,
+  getGoldenSweep,
+  getBuy,
+  getBigBuy,
+} from './FlowListFunction'
 
 import styles from './Flow.module.scss'
 
@@ -20,14 +28,12 @@ export default function MobileFlowList(props) {
   } = props
 
   let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
-  const REF = Number.parseFloat(description.split('Ref=$')[1]).toFixed(2)
-  const OI = description.split('vs')[1].split('OI')[0].trim()
-  const BUY = description.split('@')[0].split(':')[2]
-  const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
-  const GOLDEN_SWEEP =
-    parseInt(cost_basis) >= 1000000 &&
-    option_activity_type === 'SWEEP' &&
-    BUY >= OI
+  const REF = getRef(description)
+  const OI = getOI(description)
+  const BUY = getBuy(description)
+  const CONTRACT_AND_PRICE = getContractPrice(description)
+  const BIG_BUY = getBigBuy(BUY)
+  const GOLDEN_SWEEP = getGoldenSweep(cost_basis, option_activity_type, BUY, OI)
   if (OPTION_COST.length <= 2) {
     OPTION_COST = Number.parseFloat(cost_basis).toFixed(2)
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
@@ -39,13 +45,14 @@ export default function MobileFlowList(props) {
     {item: 'C/P', result: put_call},
     {item: 'Contact', result: CONTRACT_AND_PRICE},
     {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
-    {item: 'price', result: `$${REF}`},
+    {item: 'price', result: `${REF}`},
   ]
 
   return (
     <div
       className={cx(styles.mobile_flow_list, {
         [styles.golden_sweep]: GOLDEN_SWEEP,
+        [styles.big_buy]: BIG_BUY,
       })}
     >
       <div className={styles.space_between}>

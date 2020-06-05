@@ -19,7 +19,7 @@ export default function Flow() {
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const {user} = useContext(AuthContext)
-  let todayOptionData = []
+  // let todayOptionData = []
 
   const {loading: loadingR, error: errorR, data: dataR} = useQuery(
     GET_USER_INFO,
@@ -30,32 +30,32 @@ export default function Flow() {
     }
   )
 
-  const {loading, error, data} = useQuery(GET_OPTIONS)
+  // const {loading, error, data} = useQuery(GET_OPTIONS)
   function filterData(ticker) {
     if (!ticker || ticker.length === 0) {
       setFilteredOptions(false)
       setSearchInput('')
       return
     }
-    setSearchInput(ticker)
-    ticker = ticker.toUpperCase()
-    let today = new Date()
-    let dd = String(today.getDate()).padStart(2, '0')
-    let mm = String(today.getMonth() + 1).padStart(2, '0')
-    let yyyy = today.getFullYear()
+    // setSearchInput(ticker)
+    // ticker = ticker.toUpperCase()
+    // let today = new Date()
+    // let dd = String(today.getDate()).padStart(2, '0')
+    // let mm = String(today.getMonth() + 1).padStart(2, '0')
+    // let yyyy = today.getFullYear()
 
-    today = yyyy + '-' + mm + '-' + dd
-    if (data !== undefined) {
-      // TODO: on weekends show previous option on friday
-      data.getOptions.map(data => {
-        if (data.date === today) {
-          todayOptionData.push(data)
-        }
+    // today = yyyy + '-' + mm + '-' + dd
+    // if (data !== undefined) {
+    //   // TODO: on weekends show previous option on friday
+    //   data.getOptions.map(data => {
+    //     if (data.date === today) {
+    //       todayOptionData.push(data)
+    //     }
 
-        return todayOptionData
-      })
-      // today option data that is saved on the database
-    }
+    //     return todayOptionData
+    //   })
+    //   // today option data that is saved on the database
+    // }
 
     // socket data
     const filteredOptionData = options.filter(x => x.ticker === ticker)
@@ -66,7 +66,7 @@ export default function Flow() {
 
   useEffect(() => {
     socket.on('all_options', function (data) {
-      setOptions(options => [...data, ...options])
+      setOptions(options => _.uniqBy([...data, ...options], 'id'))
     })
 
     socket.on('options', data => {

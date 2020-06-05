@@ -17,3 +17,27 @@ export function formatSentiment(data) {
 
   return data
 }
+
+export function getRef(ref) {
+  return ref.split('Ref')[1].split('=')[1]
+}
+
+export function getOI(oi) {
+  return oi.split('vs')[1].split('OI')[0].trim()
+}
+
+export function getBuy(buy) {
+  return buy.split('@')[0].split(':')[2]
+}
+
+export function getContractPrice(contract_price) {
+  return contract_price.split(':')[2].split('vs')[0]
+}
+
+export function getGoldenSweep(cost_basis, type, buy, oi) {
+  return parseInt(cost_basis) >= 1000000 && type === 'SWEEP' && buy > oi
+}
+
+export function getBigBuy(buy) {
+  return parseInt(buy) >= 10000
+}
