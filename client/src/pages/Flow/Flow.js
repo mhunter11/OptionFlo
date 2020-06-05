@@ -2,16 +2,19 @@ import React, {useState, useEffect, useContext} from 'react'
 import {Redirect} from 'react-router-dom'
 import {useQuery} from '@apollo/react-hooks'
 import _ from 'lodash'
+import io from 'socket.io-client'
 
 import styles from './Flow.module.scss'
 
-import {GET_OPTIONS, GET_USER_INFO} from '../../util/gql'
+import {GET_USER_INFO} from '../../util/gql'
 
-import {socket} from '../../util/socket'
+// import {socket} from '../../util/socket'
 import {AuthContext} from '../../context/auth'
+import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
 import MobileFlowList from './MobileFlowList'
+
 
 export default function Flow() {
   const [options, setOptions] = useState([])
@@ -19,6 +22,7 @@ export default function Flow() {
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const {user} = useContext(AuthContext)
+  const socket = io(ENVIRONMENT.DATA_SERVER_URL)
   // let todayOptionData = []
 
   const {loading: loadingR, error: errorR, data: dataR} = useQuery(
@@ -67,6 +71,7 @@ export default function Flow() {
   useEffect(() => {
     socket.on('all_options', function (data) {
       setOptions(options => [...options, ...data])
+      console.log(data)
     })
 
     socket.on('options', data => {
@@ -111,7 +116,7 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
-  let LAST_100_OPTIONS = _.takeRight(options, 200)
+  const LAST_100_OPTIONS = _.takeRight(options, 200)
 
   return (
     <div className={styles.flow_background_color}>
