@@ -1,7 +1,4 @@
-export const TYPING_ANIMATION_ARRAY = [
-  'Option Flow',
-  'Dark Pool',
-]
+export const TYPING_ANIMATION_ARRAY = ['Option Flow', 'Dark Pool']
 
 export const CANCEL_ANYTIME = 'You can cancel anytime'
 

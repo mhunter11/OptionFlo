@@ -9,7 +9,6 @@ export const SUBSCRIPTION_BENEFITS = [
   'Dark Pool Order Data (soon coming)',
 ]
 
-
 export const SubscriptionCardData = {
   header: 'Subscribe Now!',
   paragraph:

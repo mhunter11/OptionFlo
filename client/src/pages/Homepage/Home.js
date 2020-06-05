@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import {useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
 import {AuthContext} from '../../context/auth'

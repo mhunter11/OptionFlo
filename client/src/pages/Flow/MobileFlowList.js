@@ -77,7 +77,7 @@ export default function MobileFlowList(props) {
           )}
         >
           {MobileOptionData.map((data, i) => {
-            return <MobileFlowItem {...data} key={i} />;
+            return <MobileFlowItem {...data} key={i} />
           })}
         </div>
       </div>
