@@ -84,7 +84,7 @@ export default function Flow() {
     socket.on('clear', function () {
       setOptions([])
     })
-  }, [])
+  }, [options])
 
   if (loadingR) {
     return <div>Loading...</div>
