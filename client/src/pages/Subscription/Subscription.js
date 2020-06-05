@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -7,7 +6,6 @@ import gql from 'graphql-tag'
 import OPTIONFLO_ICON from '../../images/optionflo-icon.png'
 import {ENVIRONMENT} from '../../env'
 
-import SubscriptionCard from './SubscriptionCard'
 import Card from './Card'
 
 import {SUBSCRIPTION_BENEFITS, SubscriptionCardData} from './subscription-data'

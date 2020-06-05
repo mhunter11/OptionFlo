@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 
-import {formatTime, formatSentiment} from './FlowListFunction'
+import {formatTime} from './FlowListFunction'
 
 import styles from './Flow.module.scss'
 

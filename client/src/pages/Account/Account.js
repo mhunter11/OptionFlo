@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout'
 import {useMutation} from '@apollo/react-hooks'
 import {useQuery} from '@apollo/react-hooks'
