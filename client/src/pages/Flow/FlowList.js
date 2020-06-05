@@ -24,10 +24,6 @@ export default function FlowList(props) {
   const OI = description.split('vs')[1].split('OI')[0].trim()
   const BUY = description.split('@')[0].split(':')[2]
   const CONTRACT_AND_PRICE = description.split(':')[2].split('vs')[0]
-  // const PURPLE_SWEEP =
-  //   parseInt(cost_basis) >= 250000 &&
-  //   option_activity_type === 'SWEEP' &&
-  //   BUY > OI
   const GOLDEN_SWEEP =
     parseInt(cost_basis) >= 1000000 &&
     option_activity_type === 'SWEEP' &&
@@ -41,7 +37,6 @@ export default function FlowList(props) {
     <div
       className={cx(styles.flow_list, {
         [styles.golden_sweep]: GOLDEN_SWEEP,
-        [styles.purple_sweep]: PURPLE_SWEEP,
       })}
     >
       <div className={styles.time}>{formatTime(updated)}</div>
