@@ -110,6 +110,8 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
+  let LAST_100_OPTIONS = _.takeRight(options, 200)
+
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
@@ -129,7 +131,7 @@ export default function Flow() {
         <div>
           <ul className={styles.ul_list}>
             {!filteredOptions &&
-              options.map(data => (
+              LAST_100_OPTIONS.map(data => (
                 <FlowList
                   {...data}
                   key={data.id}
@@ -164,7 +166,7 @@ export default function Flow() {
         </div>
         <ul className={styles.ul_list}>
           {!filteredOptions &&
-            options.map(data => (
+            LAST_100_OPTIONS.map(data => (
               <MobileFlowList
                 {...data}
                 key={data.id}
