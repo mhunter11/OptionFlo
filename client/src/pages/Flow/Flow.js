@@ -32,7 +32,11 @@ export default function Flow() {
 
   const {loading, error, data} = useQuery(GET_OPTIONS)
   function filterData(ticker) {
-    if (!ticker) return null
+    if (!ticker || ticker.length === 0) {
+      setFilteredOptions(false)
+      setSearchInput('')
+      return
+    }
     setSearchInput(ticker)
     ticker = ticker.toUpperCase()
     let today = new Date()
@@ -125,17 +129,15 @@ export default function Flow() {
         <div>
           <ul className={styles.ul_list}>
             {!filteredOptions &&
-              options.map((data, index) => (
+              options.map(data => (
                 <FlowList
                   {...data}
-                  key={index}
+                  key={data.id}
                   onClick={() => filterData(data.ticker)}
                 />
               ))}
             {filteredOptions &&
-              saveOptions.map((data, index) => (
-                <FlowList {...data} key={index} />
-              ))}
+              saveOptions.map(data => <FlowList {...data} key={data.id} />)}
           </ul>
         </div>
       </div>
@@ -162,17 +164,15 @@ export default function Flow() {
         </div>
         <ul className={styles.ul_list}>
           {!filteredOptions &&
-            options.map((data, index) => (
+            options.map(data => (
               <MobileFlowList
                 {...data}
-                key={index}
+                key={data.id}
                 onClick={() => filterData(data.ticker)}
               />
             ))}
           {filteredOptions &&
-            saveOptions.map((data, index) => (
-              <MobileFlowList {...data} key={index} />
-            ))}
+            saveOptions.map(data => <MobileFlowList {...data} key={data.id} />)}
         </ul>
       </div>
     </div>
