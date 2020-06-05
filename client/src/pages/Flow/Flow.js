@@ -66,11 +66,12 @@ export default function Flow() {
 
   useEffect(() => {
     socket.on('all_options', function (data) {
-      setOptions(options => _.uniqBy([...data, ...options], 'id'))
+      setOptions(options => [...data, ...options])
     })
 
     socket.on('options', data => {
-      setOptions(options => [...data, ...options])
+      setOptions(options => _.uniqBy([...data, ...options], 'id'))
+
       data.map(dataOption => {
         if (dataOption.ticker === searchInput) {
           setSaveOptions(prevState =>
@@ -133,13 +134,34 @@ export default function Flow() {
             {!filteredOptions &&
               LAST_100_OPTIONS.map(data => (
                 <FlowList
-                  {...data}
+                  ticker={data.ticker}
+                  strike_price={data.strike_price}
+                  date_expiration={data.date_expiration}
+                  put_call={data.put_call}
+                  option_activity_type={data.option_activity_type}
+                  description={data.description}
+                  sentiment={data.sentiment}
+                  cost_basis={data.cost_basis}
+                  updated={data.updated}
                   key={data.id}
                   onClick={() => filterData(data.ticker)}
                 />
               ))}
             {filteredOptions &&
-              saveOptions.map(data => <FlowList {...data} key={data.id} />)}
+              saveOptions.map(data => (
+                <FlowList
+                  ticker={data.ticker}
+                  strike_price={data.strike_price}
+                  date_expiration={data.date_expiration}
+                  put_call={data.put_call}
+                  option_activity_type={data.option_activity_type}
+                  description={data.description}
+                  sentiment={data.sentiment}
+                  cost_basis={data.cost_basis}
+                  updated={data.updated}
+                  key={data.id}
+                />
+              ))}
           </ul>
         </div>
       </div>
@@ -168,13 +190,31 @@ export default function Flow() {
           {!filteredOptions &&
             LAST_100_OPTIONS.map(data => (
               <MobileFlowList
-                {...data}
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                cost_basis={data.cost_basis}
+                updated={data.updated}
                 key={data.id}
-                onClick={() => filterData(data.ticker)}
               />
             ))}
           {filteredOptions &&
-            saveOptions.map(data => <MobileFlowList {...data} key={data.id} />)}
+            saveOptions.map(data => (
+              <MobileFlowList
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                cost_basis={data.cost_basis}
+                updated={data.updated}
+                key={data.id}
+              />
+            ))}
         </ul>
       </div>
     </div>
