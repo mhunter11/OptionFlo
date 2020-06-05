@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {Redirect} from 'react-router-dom'
-import socketIOClient from 'socket.io-client'
 import {useQuery} from '@apollo/react-hooks'
 import _ from 'lodash'
 
@@ -8,8 +7,8 @@ import styles from './Flow.module.scss'
 
 import {GET_OPTIONS, GET_USER_INFO} from '../../util/gql'
 
+import {socket} from '../../util/socket'
 import {AuthContext} from '../../context/auth'
-import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
 import MobileFlowList from './MobileFlowList'
@@ -54,22 +53,14 @@ export default function Flow() {
       // today option data that is saved on the database
     }
 
-    // filtered option data
-    // const filteredOptionData = todayOptionData.filter(x => x.ticker === ticker)
-
-    // setSaveOptions(filteredOptionData.reverse())
-    // setFilteredOptions(!filteredOptions)
-
     // socket data
     const filteredOptionData = options.filter(x => x.ticker === ticker)
     setSaveOptions(filteredOptionData)
 
-    setFilteredOptions(!filteredOptions)
+    setFilteredOptions(true)
   }
 
   useEffect(() => {
-    const socket = socketIOClient(ENVIRONMENT.DATA_SERVER_URL)
-
     socket.on('all_options', function (data) {
       setOptions(options => [...data, ...options])
     })

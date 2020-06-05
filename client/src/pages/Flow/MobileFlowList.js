@@ -38,7 +38,7 @@ export default function MobileFlowList(props) {
     {item: 'Strike', result: strike_price},
     {item: 'C/P', result: put_call},
     {item: 'Contact', result: CONTRACT_AND_PRICE},
-    {item: 'type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
+    {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
     {item: 'price', result: `$${REF}`},
   ]
 
