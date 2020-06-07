@@ -16,6 +16,7 @@ import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
 import MobileFlowList from './MobileFlowList'
+import Loading from '../../components/Loading'
 
 export default function Flow() {
   const [options, setOptions] = useState([])
@@ -92,7 +93,7 @@ export default function Flow() {
   }, [])
 
   if (loadingR) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (errorR) {
@@ -117,7 +118,6 @@ export default function Flow() {
   }
 
   const LAST_100_OPTIONS = _.takeRight(options, 200)
-
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
