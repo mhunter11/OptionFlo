@@ -47,7 +47,13 @@ export default function FlowList(props) {
       })}
     >
       <div className={styles.time}>{formatTime(updated)}</div>
-      <div className={styles.ticker} onClick={onClick}>
+      <div
+        className={cx(styles.desktop_ticker, {
+          [styles.mobile_ticker_call]: put_call === 'CALL',
+          [styles.mobile_ticker_put]: put_call === 'PUT',
+        })}
+        onClick={onClick}
+      >
         {ticker}
       </div>
       <div className={styles.date_expiration}>{date_expiration}</div>
@@ -66,8 +72,8 @@ export default function FlowList(props) {
       <div className={styles.description}>{CONTRACT_AND_PRICE}</div>
       <div className={styles.sentiment}>{formatSentiment(sentiment)}</div>
       <div className={styles.cost_basis}>${OPTION_COST}</div>
-      <div className={styles.OI}>Open Interest: {OI}</div>
-      <div>Ref {REF}</div>
+      <div className={styles.OI}>{OI}</div>
+      <div>{REF}</div>
     </div>
   )
 }

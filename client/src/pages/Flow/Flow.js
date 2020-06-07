@@ -6,6 +6,8 @@ import io from 'socket.io-client'
 
 import styles from './Flow.module.scss'
 
+import {FLOW_ROW_NAME} from './flow-data'
+
 import {GET_USER_INFO} from '../../util/gql'
 
 // import {socket} from '../../util/socket'
@@ -119,21 +121,47 @@ export default function Flow() {
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
-        <div className={styles.input_search}>
-          <input
-            type="text"
-            value={searchInput}
-            onChange={e => setSearchInput(e.target.value)}
-            onKeyPress={e =>
-              e.key === 'Enter' ? filterData(searchInput) : null
-            }
-            placeholder="SPY"
-          />
-          <button onClick={() => filterData(searchInput)}>Filter</button>
-        </div>
-        <button onClick={() => setFilteredOptions(false)}>Reset</button>
         <div>
           <ul className={styles.ul_list}>
+            <div className={styles.row_list}>
+              {FLOW_ROW_NAME.map(data => {
+                return (
+                  <div
+                    className={styles.row_name}
+                    style={{
+                      width: `${data.className}%`,
+                      paddingLeft: `${data.padding}rem`,
+                    }}
+                  >
+                    {data.name}
+                  </div>
+                )
+              })}
+              <div className={styles.input_search}>
+                <input
+                  className={styles.input}
+                  type="text"
+                  value={searchInput}
+                  onChange={e => setSearchInput(e.target.value)}
+                  onKeyPress={e =>
+                    e.key === 'Enter' ? filterData(searchInput) : null
+                  }
+                  placeholder="SPY"
+                />
+                <button
+                  className={styles.button}
+                  onClick={() => filterData(searchInput)}
+                >
+                  Filter
+                </button>
+                <button
+                  className={styles.button}
+                  onClick={() => setFilteredOptions(false)}
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
             {!filteredOptions &&
               LAST_100_OPTIONS.map((data, index) => (
                 <FlowList
@@ -185,9 +213,19 @@ export default function Flow() {
               }
               placeholder="SPY"
             />
-            <button onClick={() => filterData(searchInput)}>Filter</button>
+            <button
+              className={styles.button}
+              onClick={() => filterData(searchInput)}
+            >
+              Filter
+            </button>
+            <button
+              className={styles.button}
+              onClick={() => setFilteredOptions(false)}
+            >
+              Reset
+            </button>
           </div>
-          <button onClick={() => setFilteredOptions(false)}>Reset</button>
         </div>
         <ul className={styles.ul_list}>
           {!filteredOptions &&
