@@ -50,7 +50,6 @@ export default function Flow() {
   })
 
   if (data !== undefined) {
-    console.log(loading, error, data)
     todayOptionsTraded = data.getOptionsByDate
   }
 
@@ -89,7 +88,6 @@ export default function Flow() {
       x => x.ticker === ticker.toUpperCase()
     )
 
-    console.log(filteredDatabaseData)
     const filteredData = [
       ...filteredOptionData,
       ...filteredDatabaseData.reverse(),
@@ -126,7 +124,6 @@ export default function Flow() {
   }
 
   if (errorR) {
-    console.error(errorR)
     return <Redirect to="/" />
   }
 
