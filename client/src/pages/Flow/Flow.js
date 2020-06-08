@@ -8,7 +8,7 @@ import styles from './Flow.module.scss'
 
 import {FLOW_ROW_NAME} from './flow-data'
 
-import {GET_USER_INFO} from '../../util/gql'
+import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
 // import {socket} from '../../util/socket'
 import {AuthContext} from '../../context/auth'
@@ -26,7 +26,13 @@ export default function Flow() {
   const {user} = useContext(AuthContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL)
   // let todayOptionData = []
+  let todayOptionsTraded = []
+  let today = new Date()
+  let dd = String(today.getDate()).padStart(2, '0')
+  let mm = String(today.getMonth() + 1).padStart(2, '0')
+  let yyyy = today.getFullYear()
 
+  today = yyyy + '-' + mm + '-' + dd
   const {loading: loadingR, error: errorR, data: dataR} = useQuery(
     GET_USER_INFO,
     {
@@ -36,13 +42,24 @@ export default function Flow() {
     }
   )
 
-  // const {loading, error, data} = useQuery(GET_OPTIONS)
+  const {loading, error, data} = useQuery(GETS_OPTIONS_BY_DATE, {
+    variables: {
+      inputDate: today,
+      // inputTicker: searchInput,
+    },
+  })
+
+  if (data !== undefined) {
+    todayOptionsTraded = data.getOptionsByDate
+  }
+
   function filterData(ticker) {
     if (!ticker || ticker.length === 0) {
       setFilteredOptions(false)
       setSearchInput('')
       return
     }
+
     // setSearchInput(ticker)
     // ticker = ticker.toUpperCase()
     // let today = new Date()
@@ -67,7 +84,14 @@ export default function Flow() {
     const filteredOptionData = options.filter(
       x => x.ticker === ticker.toUpperCase()
     )
-    setSaveOptions(filteredOptionData)
+    const filteredDatabaseData = todayOptionsTraded.filter(
+      x => x.ticker === ticker.toUpperCase()
+    )
+    const filteredData = [
+      ...filteredOptionData,
+      ...filteredDatabaseData.reverse(),
+    ]
+    setSaveOptions(filteredData)
 
     setFilteredOptions(true)
   }

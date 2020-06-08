@@ -51,6 +51,14 @@ module.exports = {
         throw new Error(err)
       }
     },
+    async getOptionsByDate(_, {date}, context) {
+      try {
+        const Options = await Option.find({date: date})
+        return Options
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
   },
   Mutation: {
     async login(_, {username, password}, {req}) {
