@@ -119,8 +119,6 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
-  console.log(filteredOptions, saveOptions)
-
   const LAST_100_OPTIONS = _.takeRight(options, 200)
   return (
     <div className={styles.flow_background_color}>
