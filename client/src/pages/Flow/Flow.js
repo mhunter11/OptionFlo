@@ -64,7 +64,9 @@ export default function Flow() {
     // }
 
     // socket data
-    const filteredOptionData = options.filter(x => x.ticker === ticker)
+    const filteredOptionData = options.filter(
+      x => x.ticker === ticker.toUpperCase()
+    )
     setSaveOptions(filteredOptionData)
 
     setFilteredOptions(true)
@@ -117,6 +119,8 @@ export default function Flow() {
     return <Redirect to="/subscription">Please subscribe</Redirect>
   }
 
+  console.log(filteredOptions, saveOptions)
+
   const LAST_100_OPTIONS = _.takeRight(options, 200)
   return (
     <div className={styles.flow_background_color}>
@@ -130,6 +134,7 @@ export default function Flow() {
                   width: `${data.className}%`,
                   paddingLeft: `${data.padding}rem`,
                 }}
+                key={data.name}
               >
                 {data.name}
               </div>
@@ -162,6 +167,11 @@ export default function Flow() {
         </div>
         <div>
           <ul className={styles.ul_list}>
+            {filteredOptions && saveOptions.length === 0 && (
+              <div className={styles.no_options_found}>
+                Whatever you're looking for it ain't here
+              </div>
+            )}
             {!filteredOptions &&
               LAST_100_OPTIONS.map((data, index) => (
                 <FlowList
@@ -228,6 +238,11 @@ export default function Flow() {
           </div>
         </div>
         <ul className={styles.ul_list}>
+          {filteredOptions && saveOptions.length === 0 && (
+            <div className={styles.no_options_found}>
+              Whatever you're looking for it ain't here
+            </div>
+          )}
           {!filteredOptions &&
             LAST_100_OPTIONS.map((data, index) => (
               <MobileFlowList

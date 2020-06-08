@@ -15,7 +15,6 @@ export default function MenuBar() {
   const [activeItem, setActiveItem] = useState(path)
 
   const handleItemClick = (e, {name}) => setActiveItem(name)
-  console.log(user)
   const menuBar = user ? (
     <Menu
       pointing
