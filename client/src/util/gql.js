@@ -55,6 +55,7 @@ export const GETS_OPTIONS_BY_DATE = gql`
       strike_price
       updated
       volume
+      option_id
     }
   }
 `
@@ -78,6 +79,7 @@ export const GET_OPTIONS = gql`
       strike_price
       updated
       volume
+      option_id
     }
   }
 `

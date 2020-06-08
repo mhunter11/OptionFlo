@@ -100,6 +100,7 @@ module.exports = gql`
     ask: String!
     midpoint: String!
     updated: String
+    option_id: String!
   }
 
   type Query {

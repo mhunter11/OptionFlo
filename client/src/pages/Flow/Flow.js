@@ -88,10 +88,12 @@ export default function Flow() {
       x => x.ticker === ticker.toUpperCase()
     )
 
-    const filteredData = [
-      ...filteredOptionData,
-      ...filteredDatabaseData.reverse(),
-    ]
+    _.uniqBy(filteredOptionData, 'id').map(x => (x.option_id = x.id))
+
+    const filteredData = _.uniqBy(
+      [...filteredOptionData, ...filteredDatabaseData.reverse()],
+      'option_id'
+    )
     setSaveOptions(filteredData)
 
     setFilteredOptions(true)
