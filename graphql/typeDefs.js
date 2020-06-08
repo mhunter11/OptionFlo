@@ -42,6 +42,14 @@ module.exports = gql`
     email: String!
   }
 
+  input OptionFilterInput {
+    date: OptionStringFilterInput
+  }
+
+  input OptionStringFilterInput {
+    contains: String!
+  }
+
   input OptionData {
     id: String!
     date: String!

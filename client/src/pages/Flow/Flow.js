@@ -74,7 +74,7 @@ export default function Flow() {
 
   useEffect(() => {
     socket.on('all_options', function (data) {
-      setOptions([...data])
+      setOptions(options => [...options, ...data])
     })
 
     socket.on('options', data => {
