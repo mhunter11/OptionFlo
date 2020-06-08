@@ -50,6 +50,7 @@ export default function Flow() {
   })
 
   if (data !== undefined) {
+    console.log(loading, error, data)
     todayOptionsTraded = data.getOptionsByDate
   }
 
@@ -87,6 +88,8 @@ export default function Flow() {
     const filteredDatabaseData = todayOptionsTraded.filter(
       x => x.ticker === ticker.toUpperCase()
     )
+
+    console.log(filteredDatabaseData)
     const filteredData = [
       ...filteredOptionData,
       ...filteredDatabaseData.reverse(),
