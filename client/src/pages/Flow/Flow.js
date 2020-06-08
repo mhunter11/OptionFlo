@@ -121,47 +121,47 @@ export default function Flow() {
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
+        <div className={styles.row_list}>
+          {FLOW_ROW_NAME.map(data => {
+            return (
+              <div
+                className={styles.row_name}
+                style={{
+                  width: `${data.className}%`,
+                  paddingLeft: `${data.padding}rem`,
+                }}
+              >
+                {data.name}
+              </div>
+            )
+          })}
+          <div className={styles.input_search}>
+            <input
+              className={styles.input}
+              type="text"
+              value={searchInput}
+              onChange={e => setSearchInput(e.target.value)}
+              onKeyPress={e =>
+                e.key === 'Enter' ? filterData(searchInput) : null
+              }
+              placeholder="SPY"
+            />
+            <button
+              className={styles.button}
+              onClick={() => filterData(searchInput)}
+            >
+              Filter
+            </button>
+            <button
+              className={styles.button}
+              onClick={() => setFilteredOptions(false)}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
         <div>
           <ul className={styles.ul_list}>
-            <div className={styles.row_list}>
-              {FLOW_ROW_NAME.map(data => {
-                return (
-                  <div
-                    className={styles.row_name}
-                    style={{
-                      width: `${data.className}%`,
-                      paddingLeft: `${data.padding}rem`,
-                    }}
-                  >
-                    {data.name}
-                  </div>
-                )
-              })}
-              <div className={styles.input_search}>
-                <input
-                  className={styles.input}
-                  type="text"
-                  value={searchInput}
-                  onChange={e => setSearchInput(e.target.value)}
-                  onKeyPress={e =>
-                    e.key === 'Enter' ? filterData(searchInput) : null
-                  }
-                  placeholder="SPY"
-                />
-                <button
-                  className={styles.button}
-                  onClick={() => filterData(searchInput)}
-                >
-                  Filter
-                </button>
-                <button
-                  className={styles.button}
-                  onClick={() => setFilteredOptions(false)}
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
             {!filteredOptions &&
               LAST_100_OPTIONS.map((data, index) => (
                 <FlowList

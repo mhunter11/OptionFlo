@@ -25,9 +25,11 @@
 }
 
 .row_list {
-  margin-top: 4rem;
+  max-width: 1260px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  padding-top: 1.5rem;
 }
 
 .row_name {
