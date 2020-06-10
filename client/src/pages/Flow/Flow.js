@@ -165,7 +165,6 @@ export default function Flow() {
           })}
           <div className={styles.input_search}>
             <input
-              className={styles.input}
               type="text"
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
@@ -238,6 +237,7 @@ export default function Flow() {
           )}
           <div className={styles.input_search}>
             <input
+              className={styles.input}
               type="text"
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}

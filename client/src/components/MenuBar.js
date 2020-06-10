@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react'
-import cx from 'classnames'
 import {Menu} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Logo from '../logo-02.png'
 
 import {AuthContext} from '../context/auth'
+import MobileMenu from './MobileMenu'
 
 import styles from './Menu.module.scss'
 
@@ -22,55 +22,34 @@ export default function MenuBar() {
     {name: 'Account', url: '/account'},
     {name: 'Logout', onClick: logout},
   ]
+
   const menuBar = user ? (
-    <div className={styles.container_menu}>
-      <div className={styles.menu}>
-        <div>
+    <div>
+      <div className={styles.mobile_view}>
+        <MobileMenu data={MENU_BAR_DATA} />
+      </div>
+      <div className={styles.desktop_view}>
+        <Menu
+          pointing
+          secondary
+          size="massive"
+          color="teal"
+          className={styles.menu_bar}
+        >
           <Link to="/">
             <img className={styles.logo} src={Logo} alt="logo" />
           </Link>
-        </div>
-        <div>
-          <button
-            className={cx(styles.hamburger_button, styles.js_menu, {
-              [styles.active]: openMenu === true,
-            })}
-            type="button"
-            onClick={() => setOpenMenu(!openMenu)}
-          >
-            <span className={styles.bar}></span>
-          </button>
-        </div>
+          <Menu.Menu position="right">
+            <Link className="item" to="/flow">
+              Flow
+            </Link>
+            <Link className="item" to="/account">
+              {user.username}
+            </Link>
+            <Menu.Item name="logout" onClick={logout} />
+          </Menu.Menu>
+        </Menu>
       </div>
-      {openMenu && (
-        <ul className={styles.list}>
-          {MENU_BAR_DATA.map(item => {
-            if (item.url) {
-              return (
-                <li
-                  key={item.name}
-                  className={styles.list_item}
-                  onClick={() => setOpenMenu(false)}
-                >
-                  <Link className={styles.menu_link} to={item.url}>
-                    {item.name}
-                  </Link>
-                </li>
-              )
-            }
-
-            return (
-              <li
-                key={item.name}
-                onClick={item.onClick}
-                className={styles.list_item}
-              >
-                {item.name}
-              </li>
-            )
-          })}
-        </ul>
-      )}
     </div>
   ) : (
     <>

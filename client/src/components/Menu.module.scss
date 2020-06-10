@@ -16,6 +16,20 @@
   }
 }
 
+.desktop_view {
+  display: none;
+  @include --large {
+    display: block;
+  }
+}
+
+.mobile_view {
+  display: block;
+  @include --large {
+    display: none;
+  }
+}
+
 .container_menu {
   position: relative;
 }
@@ -147,13 +161,14 @@
   }
 }
 
-.menu {
+.mobile_menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1rem;
   margin: 0;
+  font-size: 1rem;
   border-radius: 0;
   border: none;
   box-shadow: none;
+  max-height: 55px;
 }
