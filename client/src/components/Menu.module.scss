@@ -1,15 +1,27 @@
 @import '../styles/breakpoint.scss';
+@import '../styles/color.scss';
+@import '../styles/positioning.scss';
 
 :root {
   --short-stuff: 3rem;
 }
 
 .logo {
-  height: var(--short-stuff);
+  height: 2.5rem;
   margin-top: 0.5rem;
+  margin-left: 1.5rem;
+  @include --large {
+    height: var(--short-stuff);
+    margin-left: 0;
+  }
+}
+
+.container_menu {
+  position: relative;
 }
 
 .menu_bar {
+  @extend %center-children;
   margin: auto !important;
   margin-bottom: 0 !important;
   margin-left: 5rem;
@@ -23,6 +35,27 @@
   }
 }
 
+.list {
+  @extend %center-children;
+  flex-direction: column;
+  position: absolute;
+  background: white;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  z-index: 9999;
+
+  .list_item {
+    padding: 1rem 0;
+    font-weight: 900;
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid grey;
+  }
+}
+
 .page_container {
   margin-top: 4rem;
 
@@ -33,4 +66,94 @@
   @include --large {
     margin-top: 7.5rem;
   }
+}
+
+.menu_link {
+  color: black;
+}
+
+.destop_menu {
+  display: none !important;
+}
+
+.hamburger_button {
+  transition: 0.1s transform linear;
+  position: relative;
+  background: 0;
+  margin: 1rem 2rem;
+  height: 2.5rem;
+  width: 3.5rem;
+  z-index: 1;
+  outline: 0;
+  padding: 0;
+  border: 0;
+}
+
+.bar {
+  &,
+  &::before,
+  &::after {
+    transition: 0.2s background linear 0.1s, 0.2s top linear 0.2s,
+      0.2s transform linear;
+    position: absolute;
+    background: #000;
+    margin: auto;
+    width: 100%;
+    height: 0.3rem;
+    content: '';
+    top: 50%;
+    left: 0;
+  }
+
+  & {
+    margin-top: -0.2rem;
+  }
+
+  &::before {
+    top: -1rem;
+  }
+
+  &::after {
+    top: 1rem;
+  }
+
+  &::before,
+  &::after {
+    transform: rotate(0deg);
+  }
+
+  .active & {
+    background: 0;
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+
+    &::before,
+    &::after {
+      top: 0;
+    }
+
+    &,
+    &::before,
+    &::after {
+      transition: 0.2s background linear 0.1s, 0.2s top linear,
+        0.2s transform linear 0.2s;
+    }
+  }
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
 }

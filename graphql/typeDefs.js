@@ -108,6 +108,7 @@ module.exports = gql`
     getUser(userId: String!): User
     getPost(postId: ID!): Post
     getOptions: [Option]
+    getAllUsers: [User]
     getOptionsByDate(date: String): [Option]!
     # getOptionsByDate(date: String, ticker: String): [Option]!
   }

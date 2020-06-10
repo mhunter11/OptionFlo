@@ -46,6 +46,7 @@
 .ticker {
   width: 5%;
   margin-left: 1.5rem;
+  cursor: pointer;
 }
 
 .date_expiration {
@@ -215,6 +216,7 @@
 }
 
 .desktop_ticker {
+  cursor: pointer;
   margin: 1rem;
   color: #cfd6d9;
   padding: 0.25rem 0.5rem;
@@ -232,6 +234,7 @@
   width: 5rem;
   height: 3rem;
   border-radius: 15px;
+  cursor: pointer;
   @extend %center-children;
 }
 .mobile_ticker_call {

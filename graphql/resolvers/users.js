@@ -51,6 +51,14 @@ module.exports = {
         throw new Error(err)
       }
     },
+    async getAllUsers() {
+      try {
+        const Users = await User.find()
+        return Users
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
     async getOptionsByDate(_, {date}, context) {
       try {
         const Options = await Option.find({date: date})
