@@ -5,8 +5,8 @@ export const SUBSCRIPTION_BENEFITS = [
   'Trader Chatroom',
   'Access to our Top Traders',
   'Option Alerts',
-  'Equity Block (soon coming)',
-  'Dark Pool Order Data (soon coming)',
+  'Equity Block (coming soon)',
+  'Dark Pool Order Data (coming soon)',
 ]
 
 export const SubscriptionCardData = {
