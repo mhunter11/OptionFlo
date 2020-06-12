@@ -21,6 +21,29 @@ var backlog = []
 
 var lastResetTime = new Date()
 
+class Backlog {
+  constructor() {
+    this.data = []
+    this.size = 0
+  }
+
+  append() {
+    // something
+    this.size++
+    return []
+  }
+
+  getBatch() {
+    // something
+    this.size--
+    return []
+  }
+
+  getStats() {
+    console.log(`Size of backlog ${this.size} size of data ${this.data.length}`)
+  }
+}
+
 function formatData(data) {
   data = data.map(e => {
     const keys = Object.keys(e)

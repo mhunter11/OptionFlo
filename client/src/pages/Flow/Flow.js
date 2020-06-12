@@ -10,7 +10,6 @@ import {FLOW_ROW_NAME} from './flow-data'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
-// import {socket} from '../../util/socket'
 import {AuthContext} from '../../context/auth'
 import {ENVIRONMENT} from '../../env'
 
@@ -97,6 +96,7 @@ export default function Flow() {
     setSaveOptions(filteredData)
 
     setFilteredOptions(true)
+    setSearchInput(ticker)
   }
 
   useEffect(() => {
@@ -109,9 +109,7 @@ export default function Flow() {
 
       data.map(dataOption => {
         if (dataOption.ticker === searchInput) {
-          setSaveOptions(prevState =>
-            _.uniqBy([dataOption, ...prevState], 'id')
-          )
+          setSaveOptions(prevState => _.uniqBy([dataOption, ...prevState]))
         }
       })
     })
@@ -119,7 +117,7 @@ export default function Flow() {
     socket.on('clear', function () {
       setOptions([])
     })
-  }, [])
+  }, [searchInput])
 
   if (loadingR) {
     return <Loading />
@@ -191,7 +189,7 @@ export default function Flow() {
           <ul className={styles.ul_list}>
             {filteredOptions && saveOptions.length === 0 && (
               <div className={styles.no_options_found}>
-                Whatever you're looking for it ain't here
+                No Items Found
               </div>
             )}
             {!filteredOptions &&

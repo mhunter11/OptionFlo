@@ -44,7 +44,7 @@ export default function MenuBar() {
               Flow
             </Link>
             <Link className="item" to="/account">
-              {user.username}
+              Account
             </Link>
             <Menu.Item name="logout" onClick={logout} />
           </Menu.Menu>
