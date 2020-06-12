@@ -96,7 +96,7 @@ export default function Flow() {
     setSaveOptions(filteredData)
 
     setFilteredOptions(true)
-    setSearchInput(ticker)
+    // setSearchInput(ticker)
   }
 
   useEffect(() => {
@@ -117,7 +117,7 @@ export default function Flow() {
     socket.on('clear', function () {
       setOptions([])
     })
-  }, [searchInput])
+  }, [])
 
   if (loadingR) {
     return <Loading />
