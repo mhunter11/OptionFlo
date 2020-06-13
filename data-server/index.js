@@ -167,7 +167,7 @@ class OptionCollection {
     /**
      * Trim the beginning of the data array if it exceeds the limit set in the constructor
      */
-    if (this.size() > this.limit) {
+    if (this.size() > this.sizeLimit) {
       let deleteCount = this.size() - this.limit;
 
       this.data.splice(0, deleteCount);
