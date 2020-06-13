@@ -13,37 +13,6 @@ const date_pattern = date.compile('YYYY-MM-DD HH:mm:ss')
 //API Config
 const API = process.env.BENZINGA_API_KEY
 
-//Data
-var lastOptionID = null
-var allData = []
-
-var backlog = []
-
-var lastResetTime = new Date()
-
-class Backlog {
-  constructor() {
-    this.data = []
-    this.size = 0
-  }
-
-  append() {
-    // something
-    this.size++
-    return []
-  }
-
-  getBatch() {
-    // something
-    this.size--
-    return []
-  }
-
-  getStats() {
-    console.log(`Size of backlog ${this.size} size of data ${this.data.length}`)
-  }
-}
-
 function formatData(data) {
   data = data.map(e => {
     const keys = Object.keys(e)
@@ -79,87 +48,145 @@ function formatData(data) {
   return data
 }
 
-async function fetchLatest() {
-  let now = new Date()
+class OptionCollection {
+  constructor(limit = 500) {
+    this.data = []
+    this.new_options = []
+    this.backlog = [];
+    this.lastOptionID = null;
 
-  if (now.getHours() == 9 && (now - lastResetTime) / 1000 / 60 / 60 > 23) {
-    lastResetTime = now
-
-    allData = [] //Clear options
-
-    console.log('clear')
-
-    io.emit('clear') //Tell connected clients to clear
+    this.sizeLimit = limit;
   }
 
-  console.log('Checking for updates..')
-  const response = await fetch(API)
-  const xml = await response.text()
-
-  const parsedData = await parser.parseStringPromise(xml)
-  let all_options = parsedData.result.option_activity[0].item
-
-  all_options = formatData(all_options)
-
-  console.log('Got ' + all_options.length + ' options')
-
-  let new_options = []
-  if (lastOptionID != null) {
-    for (let i = 0; i < all_options.length; i++) {
-      let id = all_options[i].id
-
-      if (id == lastOptionID) {
-        break
-      }
-
-      new_options.push(all_options[i])
-    }
-  } else {
-    new_options = all_options
+  size() {
+    /**
+     * The current size of the data array
+     */
+    return this.data.length;
   }
 
-  console.log('Got ' + new_options.length + ' new options')
+  async update() {
+    /**
+     * Pull the latest options from the API and push new 
+     * options to the database. 
+     * To grab the new options, you can use this.new_options
+     */
+    let now = new Date()
 
-  if (new_options.length == 0) {
-    return false
-  } else {
-    lastOptionID = new_options[0].id
-
-    allData.unshift(...new_options)
-
-    let toReturn = new_options
-
-    try {
-      //If there are items that failed last time
-      //Include in this call
-      if (backlog.length > 0) {
-        //We need to clone it if the backlog isn't empty
-        //Otherwise, unshift will change toReturn
-        toReturn = [...new_options]
-      }
-
-      new_options.unshift(...backlog)
-
-      //Push new options
-      await saveOptions(new_options)
-
-      //If we are successful, clear the backlog
-      backlog = []
-    } catch (e) {
-      console.log(e)
-
-      //If we error, add the items we wanted to push to the backlog
-      //so it will be included next time
-      backlog.unshift(...new_options)
+    if (now.getHours() == 9 && (now - this.lastResetTime) / 1000 / 60 / 60 > 23) {
+      this.lastResetTime = now
+  
+      this.allData = [] //Clear options
+  
+      console.log('clear')
+  
+      io.emit('clear') //Tell connected clients to clear
     }
 
-    return toReturn
+    console.log('Checking for updates..')
+    
+    //Grab all options from the API
+    let all_options = await this.grabFromAPI();
+
+    //update new_options to only contain new items
+    this.addNewOptions(all_options);
+
+    //Push the contents of backlog + new_options
+    await this.pushNewOptions();
+
+    //Trim the beginning of data if it exceeds the limit
+    trimData();
+  }
+
+  async grabFromAPI() {
+    /**
+     * Grab all options from the API
+     */
+    const response = await fetch(API)
+    const xml = await response.text()
+
+    const parsedData = await parser.parseStringPromise(xml)
+    let all_options = parsedData.result.option_activity[0].item
+
+    all_options = formatData(all_options)
+
+    return all_options;
+  }
+
+  addNewOptions(options) {
+    /**
+     * Only add new options to the this.data field. 
+     */
+    this.new_options = []
+    if (this.lastOptionID != null) {
+      for (let i = 0; i < options.length; i++) {
+        let id = options[i].id
+
+        if (id == this.lastOptionID) {
+          break
+        }
+
+        this.new_options.push(options[i])
+      }
+    } else {
+      this.new_options = options
+    }
+
+    this.lastOptionID = new_options[0].id
+  }
+
+  async pushNewOptions() {
+    /**
+     * Push the contents of new_options + backlog to the database.
+     * If this function errors, then the backlog is updated to include the contents of new_options.
+     * 
+     * This function does nothing if new_option is empty (even if backlog isn't)
+     */
+    if (this.new_options.length > 0) {
+      this.allData.unshift(...this.new_options)
+
+      try {
+        this.new_options.unshift(...this.backlog)
+  
+        //Push new options
+        await saveOptions(this.new_options)
+  
+        //If we are successful, clear the backlog
+        this.backlog = []
+      } catch (e) {
+        console.log(e)
+  
+        //If we error, add the items we wanted to push to the backlog
+        //so it will be included next time
+        this.backlog.unshift(...this.new_options)
+      }
+    }
+  }
+
+  trimData() {
+    /**
+     * Trim the beginning of the data array if it exceeds the limit set in the constructor
+     */
+    if (this.size() > this.limit) {
+      let deleteCount = this.size() - this.limit;
+
+      this.data.splice(0, deleteCount);
+    }
+  }
+
+  getStats() {
+    console.log(`Size of backlog ${this.size} size of data ${this.data.length}`)
   }
 }
 
+//Data
+var options = new OptionCollection();
+
+//Routine
 setInterval(function () {
-  fetchLatest()
-    .then(function (result) {
+  options.update()
+    .then(function () {
+      let result = options.new_options;
       if (result) {
         console.log('Emitting event with ' + result.length + ' new results')
         io.emit('options', result)
@@ -169,6 +196,8 @@ setInterval(function () {
     .catch(error => console.error(error))
 }, 5 * 1000)
 
+
+//Handle new IO connection
 io.on('connection', function (socket) {
-  socket.emit('all_options', allData)
+  socket.emit('all_options', options.data)
 })
