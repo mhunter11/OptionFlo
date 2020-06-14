@@ -9,6 +9,9 @@ import {
   getGoldenSweep,
   getBuy,
   getBigBuy,
+  getFormattedExpirationDate,
+  getContractAndPrice,
+  getTicker,
 } from './FlowListFunction'
 
 import styles from './Flow.module.scss'
@@ -40,10 +43,10 @@ export default function MobileFlowList(props) {
   }
 
   const MobileOptionData = [
-    {item: 'Expiration', result: date_expiration},
+    {item: 'Expiration', result: getFormattedExpirationDate(date_expiration)},
     {item: 'Strike', result: strike_price},
-    {item: 'C/P', result: put_call},
-    {item: 'Contract', result: CONTRACT_AND_PRICE},
+    {item: 'C/P', result: getTicker(put_call)},
+    {item: 'Contract', result: getContractAndPrice(CONTRACT_AND_PRICE)},
     {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
     {item: 'price', result: `${REF}`},
   ]
