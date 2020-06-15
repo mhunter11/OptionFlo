@@ -199,7 +199,7 @@
 .display_flex {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 }
 
 .mobile_time {
@@ -240,8 +240,8 @@
   color: #cfd6d9;
   padding: 0.25rem 0.5rem;
   font-size: 16px;
-  width: 5rem;
-  height: 3rem;
+  width: 4rem;
+  height: 2.5rem;
   border-radius: 15px;
   cursor: pointer;
   @extend %center-children;
@@ -273,7 +273,7 @@
   font-size: 14px;
   color: #807774;
   margin-top: 0.5rem;
-  margin-right: 0.75rem;
+  margin-right: 0.5rem;
 }
 
 .mobile_cost_basis {
@@ -289,6 +289,9 @@
 .flow_result {
   margin-top: 0.5rem;
   color: white;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .mobile_cost_call {
