@@ -248,13 +248,7 @@ export default function Flow() {
               className={styles.button}
               onClick={() => filterData(searchInput)}
             >
-              Filter
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => setFilteredOptions(false)}
-            >
-              Reset
+              Search
             </button>
           </div>
         </div>
