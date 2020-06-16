@@ -73,3 +73,28 @@ export function getTicker(ticker) {
 
   return 'P'
 }
+
+export function getBidOrAskOrder(contact) {
+  if (contact.split('near').length === 2) {
+    const firstCharacter = contact
+      .split('near')[1]
+      .split(':')[0]
+      .split('the')[1]
+      .trim()
+      .charAt(0)
+    return firstCharacter
+  } else {
+    if (contact.split('near')[0].split(':')[1].split('the').length === 2) {
+      const firstCharacter = contact
+        .split('near')[0]
+        .split(':')[1]
+        .split('the')[1]
+        .trim()
+        .charAt(0)
+
+      return firstCharacter
+    }
+
+    return 'BB'
+  }
+}

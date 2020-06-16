@@ -12,6 +12,7 @@ import {
   getFormattedExpirationDate,
   getContractAndPrice,
   getTicker,
+  getBidOrAskOrder,
 } from './FlowListFunction'
 
 import styles from './Flow.module.scss'
@@ -42,11 +43,16 @@ export default function MobileFlowList(props) {
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
   }
 
+  // console.log(`${getContractAndPrice(CONTRACT_AND_PRICE)}`)
+
+  const contract = `${getContractAndPrice(
+    CONTRACT_AND_PRICE
+  ).trim()}${getBidOrAskOrder(description)}`
   const MobileOptionData = [
     {item: 'Expiration', result: getFormattedExpirationDate(date_expiration)},
     {item: 'Strike', result: strike_price},
     {item: 'C/P', result: getTicker(put_call)},
-    {item: 'Contract', result: getContractAndPrice(CONTRACT_AND_PRICE)},
+    {item: 'Contract', result: contract},
     {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
     {item: 'price', result: `${REF}`},
   ]
