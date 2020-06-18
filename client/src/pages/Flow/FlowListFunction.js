@@ -27,7 +27,7 @@ export function getOI(oi) {
 }
 
 export function getBuy(buy) {
-  return buy.split('@')[0].split(':')[2]
+  return buy.split('@')[0].split(':')[2].trim()
 }
 
 export function getContractPrice(contract_price) {
