@@ -188,9 +188,7 @@ export default function Flow() {
         <div>
           <ul className={styles.ul_list}>
             {filteredOptions && saveOptions.length === 0 && (
-              <div className={styles.no_options_found}>
-                No Items Found
-              </div>
+              <div className={styles.no_options_found}>No Items Found</div>
             )}
             {!filteredOptions &&
               options.map((data, index) => (
