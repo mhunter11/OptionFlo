@@ -35,7 +35,11 @@ export function getContractPrice(contract_price) {
 }
 
 export function getGoldenSweep(cost_basis, type, buy, oi) {
-  return parseInt(cost_basis) >= 1000000 && type === 'SWEEP' && buy > oi
+  return (
+    parseInt(cost_basis) >= 1000000 &&
+    type === 'SWEEP' &&
+    parseInt(buy) > parseInt(oi)
+  )
 }
 
 export function getBigBuy(buy) {
