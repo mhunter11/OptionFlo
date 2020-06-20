@@ -13,9 +13,24 @@ import Home from './pages/Homepage/Home'
 import LandingPage from './pages/Homepage/LandingPage'
 import Subscription from './pages/Subscription/Subscription'
 import Account from './pages/Account/Account'
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import VerifyEmail from './pages/Account/VerifyEmail'
 
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAgutAAgyrONuxJ0vx1NeF2f_MXZuDRoVE",
+  authDomain: "optionflo.firebaseapp.com",
+  databaseURL: "https://optionflo.firebaseio.com",
+  projectId: "optionflo",
+  storageBucket: "optionflo.appspot.com",
+  messagingSenderId: "670216300705",
+  appId: "1:670216300705:web:a23eb05e655d5ee31fa8e0",
+  measurementId: "G-XWZW8XQ52E"
+};
+var firebaseInstance = firebase.initializeApp(firebaseConfig);
 
 export default function App() {
   return (
@@ -24,8 +39,9 @@ export default function App() {
         <MenuBar />
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/home" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/email" component={() => <VerifyEmail firebase={firebaseInstance} />} />
+        <Route exact path="/login" component={() => <Login firebase={firebaseInstance} />} />
+        <Route exact path="/register" component={() => <Register firebase={firebaseInstance} />}/>
         <Route exact path="/flow" component={Flow} />
         <Route exact path="/subscription" component={Subscription} />
         <Route exact path="/account" component={Account} />
