@@ -24,18 +24,23 @@
 }
 
 .h3 {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 600;
   line-height: 1.15;
   color: var(--light-green);
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: 0rem;
 
   span {
     @include --large {
       line-height: 1.15;
       text-align: center;
     }
+  }
+
+  @include --large {
+    font-size: 3rem;
+    margin-bottom: 5rem;
   }
 }
 
