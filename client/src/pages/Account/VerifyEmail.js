@@ -3,6 +3,8 @@ import swal from 'sweetalert';
 import { Redirect } from 'react-router';
 import {FirebaseContext} from '../../context/auth'
 
+import ResetPassword from './ResetPassword'
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
     var regexS = "[\\?&]"+name+"=([^&#]*)";
