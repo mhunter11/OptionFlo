@@ -1,6 +1,8 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import swal from 'sweetalert'
 import {Redirect} from 'react-router'
+
+import ResetPassword from './ResetPassword'
 
 function getParameterByName(name) {
   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]')
@@ -70,7 +72,7 @@ function VerifyEmail(props) {
   } else if (signIn) {
     return <Redirect to="/login" />
   } else if (resetPassword) {
-    return <Redirect to="/reset" />
+    return <ResetPassword actionCode={actionCode} firebase={firebase} />
   } else {
     return <div></div>
   }

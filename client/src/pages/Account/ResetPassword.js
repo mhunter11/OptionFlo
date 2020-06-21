@@ -6,7 +6,8 @@ import UserView from '../../components/UserView'
 import {useForm} from '../../util/hooks'
 
 export default function ResetPassword(props) {
-  let firebase = props.firebase
+  const firebase = props.firebase
+  const actionCode = props.actionCode
   // const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
 
@@ -41,7 +42,7 @@ export default function ResetPassword(props) {
       return
     }
     // do firebase stuff
-    firebase.auth().confirmPasswordReset(this.state.actionCode, values.password).then((data) => {
+    firebase.auth().confirmPasswordReset(actionCode, values.password).then((data) => {
       if (data == null) {
         swal('Reset Password Failed', 'Invalid password!', 'error')
           return
