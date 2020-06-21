@@ -19,13 +19,16 @@ function VerifyEmail(props) {
   const [home, setHome] = useState(false)
   const [signIn, setSignIn] = useState(false)
   const [resetPassword, setResetPassword] = useState(false)
+  let mode
+  let actionCode
 
   useEffect(() => {
-    var mode = getParameterByName('mode')
-    var actionCode = getParameterByName('oobCode')
+    mode = getParameterByName('mode')
+    actionCode = getParameterByName('oobCode')
 
     var auth = firebase.auth()
 
+    console.log(mode)
     switch (mode) {
       case 'verifyEmail': {
         auth
@@ -53,16 +56,21 @@ function VerifyEmail(props) {
       case 'resetPassword': {
         auth
           .verifyPasswordResetCode(actionCode)
-          .then(() => {
+          .then(e => {
             swal('Success', 'Your password has successfully changed', 'success')
+            console.log(e)
 
             setResetPassword(true)
           })
-          .catch(() => {
-            'Error',
+          .catch(e => {
+            console.log(e)
+            swal(
+              'Error',
               'Invalid or expired code, please try resetting your passoword again. If you have already reset your password, then no futher action is needed.',
               'error'
+            )
           })
+        break
       }
     }
   })
@@ -74,7 +82,7 @@ function VerifyEmail(props) {
   } else if (resetPassword) {
     return <ResetPassword actionCode={actionCode} firebase={firebase} />
   } else {
-    return <div></div>
+    return <ResetPassword actionCode={actionCode} firebase={firebase} />
   }
 }
 

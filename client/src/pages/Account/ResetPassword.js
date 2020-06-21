@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import swal from 'sweetalert'
 import {Button, Form} from 'semantic-ui-react'
 
 import UserView from '../../components/UserView'
@@ -42,49 +43,53 @@ export default function ResetPassword(props) {
       return
     }
     // do firebase stuff
-    firebase.auth().confirmPasswordReset(actionCode, values.password).then((data) => {
-      if (data == null) {
-        swal('Reset Password Failed', 'Invalid password!', 'error')
+    firebase
+      .auth()
+      .confirmPasswordReset(actionCode, values.password)
+      .then(data => {
+        if (data == null) {
+          swal('Reset Password Failed', 'Invalid password!', 'error')
           return
-      }
-    })
-  return (
-    <UserView>
-      <div>
-        <Form onSubmit={onSubmit}>
-          <h2>Set up a new password</h2>
-          <Form.Input
-            label="New Password"
-            placeholder="Password"
-            name="password"
-            type="text"
-            value={values.password}
-            error={errors.password ? true : false}
-            onChange={onChange}
-          />
-          <Form.Input
-            label="Confirm Password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
-            type="text"
-            value={values.confirmPassword}
-            error={errors.confirmPassword ? true : false}
-            onChange={onChange}
-          />
-          <Button type="submit" primary>
-            Login
-          </Button>
-        </Form>
-        {Object.keys(errors).length > 0 && (
-          <div className="ui error message">
-            <ul className="list">
-              {Object.values(errors).map(value => (
-                <li key={value}>{value}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    </UserView>
-  )
+        }
+      })
+    return (
+      <UserView>
+        <div>
+          <Form onSubmit={onSubmit}>
+            <h2>Set up a new password</h2>
+            <Form.Input
+              label="New Password"
+              placeholder="Password"
+              name="password"
+              type="text"
+              value={values.password}
+              error={errors.password ? true : false}
+              onChange={onChange}
+            />
+            <Form.Input
+              label="Confirm Password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              type="text"
+              value={values.confirmPassword}
+              error={errors.confirmPassword ? true : false}
+              onChange={onChange}
+            />
+            <Button type="submit" primary>
+              Login
+            </Button>
+          </Form>
+          {Object.keys(errors).length > 0 && (
+            <div className="ui error message">
+              <ul className="list">
+                {Object.values(errors).map(value => (
+                  <li key={value}>{value}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </UserView>
+    )
+  }
 }
