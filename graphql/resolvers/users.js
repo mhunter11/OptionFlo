@@ -2,6 +2,15 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {AuthenticationError, UserInputError} = require('apollo-server')
 
+var admin = require('firebase-admin')
+
+var serviceAccount = require('../../config.json')
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_URL,
+})
+
 const {
   validateRegisterInput,
   validateLoginInput,
@@ -54,6 +63,43 @@ module.exports = {
     async getAllUsers() {
       try {
         const Users = await User.find()
+        for (let index = 0; index < Users.length; index++) {
+          const e = Users[index]
+          const password = e.password
+          const email = e.email
+          const username = e.username
+
+          admin
+            .auth()
+            .generatePasswordResetLink(userEmail, actionCodeSettings)
+            .then(link => {
+              // Construct password reset email template, embed the link and send
+              // using custom SMTP server.
+              return sendCustomPasswordResetEmail(email, displayName, link)
+            })
+            .catch(error => {
+              // Some error occurred.
+            })
+
+          // admin
+          //   .auth()
+          //   .createUser({
+          //     email: email,
+          //     emailVerified: false,
+          //     password: password,
+          //     displayName: username,
+          //   })
+          //   .then(function (userRecord) {
+          //     // See the UserRecord reference doc for the contents of userRecord.
+          //     console.log('Successfully created new user:', userRecord.uid)
+          //   })
+          //   .catch(function (error) {
+          //     console.log('Error creating new user:', error)
+          //   })
+
+          // await admin.auth().createUserWithEmailAndPassword(email, password)
+          // admin.auth().sendPasswordResetEmail(email)
+        }
         return Users
       } catch (err) {
         throw new Error(err)
