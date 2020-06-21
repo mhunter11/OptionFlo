@@ -1,55 +1,79 @@
 import React, {useContext, useState, useEffect} from 'react'
-import swal from 'sweetalert';
-import { Redirect } from 'react-router';
+import swal from 'sweetalert'
+import {Redirect} from 'react-router'
 
 function getParameterByName(name) {
-    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-    var regexS = "[\\?&]"+name+"=([^&#]*)";
-    var regex = new RegExp(regexS);
-    var results = regex.exec(window.location.href);
-    if( results == null )
-      return "";
-    else
-      return decodeURIComponent(results[1].replace(/\+/g, " "));
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]')
+  var regexS = '[\\?&]' + name + '=([^&#]*)'
+  var regex = new RegExp(regexS)
+  var results = regex.exec(window.location.href)
+  if (results == null) return ''
+  else return decodeURIComponent(results[1].replace(/\+/g, ' '))
 }
 
 function VerifyEmail(props) {
-    let firebase = props.firebase;
+  let firebase = props.firebase
 
-    const [goHome, setHome] = useState(false);
-    const [goSignIn, setSignIn] = useState(false);
+  const [home, setHome] = useState(false)
+  const [signIn, setSignIn] = useState(false)
+  const [resetPassword, setResetPassword] = useState(false)
 
-    useEffect(() => {
-        var mode = getParameterByName('mode');
-        var actionCode = getParameterByName('oobCode');
-        
-        var auth = firebase.auth();
+  useEffect(() => {
+    var mode = getParameterByName('mode')
+    var actionCode = getParameterByName('oobCode')
 
-        switch (mode) {
-            case 'verifyEmail': {
-                auth.applyActionCode(actionCode).then(function(resp) {
-                    swal("Success", "Your email has successfully been verified", "success");
+    var auth = firebase.auth()
 
-                    setSignIn(true);
-                }).catch(function(error) {
-                    swal("Error", "Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed.", "error");
+    switch (mode) {
+      case 'verifyEmail': {
+        auth
+          .applyActionCode(actionCode)
+          .then(() => {
+            swal(
+              'Success',
+              'Your email has successfully been verified',
+              'success'
+            )
 
-                    setHome(true);
-                });
-                break;
-            }
-        }
-    })
+            setSignIn(true)
+          })
+          .catch(() => {
+            swal(
+              'Error',
+              'Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed.',
+              'error'
+            )
 
-    if (goHome) {
-        return <Redirect to='/' />
-    } else if (goSignIn) {
-        return <Redirect to='/login' />
-    } else {
-        return (
-            <div></div>
-        )
+            setHome(true)
+          })
+        break
+      }
+      case 'resetPassword': {
+        auth
+          .verifyPasswordResetCode(actionCode)
+          .then(() => {
+            swal('Success', 'Your password has successfully changed', 'success')
+
+            setResetPassword(true)
+          })
+          .catch(() => {
+            'Error',
+              'Invalid or expired code, please try resetting your passoword again. If you have already reset your password, then no futher action is needed.',
+              'error'
+          })
+      }
     }
+  })
+
+  if (home) {
+    return <Redirect to="/" />
+  } else if (signIn) {
+    return <Redirect to="/login" />
+  } else if (resetPassword) {
+    return <Redirect to="/reset" />
+  } else {
+    return <div></div>
+  }
 }
 
-export default VerifyEmail;
+export default VerifyEmail

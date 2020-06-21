@@ -3,19 +3,19 @@ import cx from 'classnames'
 import {Button, Form} from 'semantic-ui-react'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import { Redirect } from 'react-router';
+import {Redirect} from 'react-router'
 
 import styles from './Register.module.scss'
 
 import {AuthContext} from '../../context/auth'
 import {useForm} from '../../util/hooks'
-import swal from 'sweetalert';
+import swal from 'sweetalert'
 
 function Register(props) {
-  const firebase = props.firebase;
+  const firebase = props.firebase
   const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
-  const [goHome, setHome] = useState(false);
+  const [goHome, setHome] = useState(false)
 
   const {onChange, onSubmit, values} = useForm(registerUser, {
     username: '',
@@ -37,36 +37,61 @@ function Register(props) {
 
   function registerUser() {
     if (values.password != values.confirmPassword) {
-      swal("Mismatched Passwords", "The passwords entered do not match, please try again", "warning");
-      return;
+      swal(
+        'Mismatched Passwords',
+        'The passwords entered do not match, please try again',
+        'warning'
+      )
+      return
     }
 
     if (!(/\d/.test(values.password) && /[a-zA-Z]/.test(values.password))) {
-      swal("Password Requirement", "Your password must include at least one letter and one number", "error");
-      return;
+      swal(
+        'Password Requirement',
+        'Your password must include at least one letter and one number',
+        'error'
+      )
+      return
     }
 
     if (values.password.length < 6) {
-      swal("Password Requirement", "Your password must be at least 6 characters long", "error");
-      return;
+      swal(
+        'Password Requirement',
+        'Your password must be at least 6 characters long',
+        'error'
+      )
+      return
     }
 
-    firebase.auth().createUserWithEmailAndPassword(values.email, values.password).then(function(data) {
-      let user = data.user;
-      user.sendEmailVerification();
-      return user.updateProfile({
-        displayName: values.username
-      });
-    }).then(function() {
-      swal('Created', "Your account has been created\nPlease check your email for a verification link", "success");
-      setHome(true);
-    }).catch(function(error) {
-      swal("Error", "There was an error creating your account\n" + error, "error");
-    });
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(values.email, values.password)
+      .then(function (data) {
+        let user = data.user
+        user.sendEmailVerification()
+        return user.updateProfile({
+          displayName: values.username,
+        })
+      })
+      .then(function () {
+        swal(
+          'Created',
+          'Your account has been created\nPlease check your email for a verification link',
+          'success'
+        )
+        setHome(true)
+      })
+      .catch(function (error) {
+        swal(
+          'Error',
+          'There was an error creating your account\n' + error,
+          'error'
+        )
+      })
   }
 
   if (goHome) {
-    return <Redirect to='/' />
+    return <Redirect to="/" />
   }
 
   return (
