@@ -20,15 +20,26 @@ import 'firebase/auth'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
 
+import {ENVIRONMENT} from './env'
+
+const {
+  API,
+  APP_ID,
+  DB_URL,
+  DOMAIN,
+  SENDER_ID,
+  MEASURE_ID,
+} = ENVIRONMENT.FIREBASE_INFO
+
 var firebaseConfig = {
-  apiKey: 'AIzaSyAgutAAgyrONuxJ0vx1NeF2f_MXZuDRoVE',
-  authDomain: 'optionflo.firebaseapp.com',
-  databaseURL: 'https://optionflo.firebaseio.com',
+  apiKey: API,
+  authDomain: DOMAIN,
+  databaseURL: DB_URL,
   projectId: 'optionflo',
   storageBucket: 'optionflo.appspot.com',
-  messagingSenderId: '670216300705',
-  appId: '1:670216300705:web:a23eb05e655d5ee31fa8e0',
-  measurementId: 'G-XWZW8XQ52E',
+  messagingSenderId: SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASURE_ID,
 }
 var firebaseInstance = firebase.initializeApp(firebaseConfig)
 
