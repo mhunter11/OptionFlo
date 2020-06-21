@@ -15,6 +15,21 @@ export default function ResetPassword() {
   })
 
   function newPasswordCallback() {
+    // if (values.password != values.confirmPassword) {
+    //   swal("Mismatched Passwords", "The passwords entered do not match, please try again", "warning");
+    //   return;
+    // }
+
+    // if (!(/\d/.test(values.password) && /[a-zA-Z]/.test(values.password))) {
+    //   swal("Password Requirement", "Your password must include at least one letter and one number", "error");
+    //   return;
+    // }
+
+    // if (values.password.length <= 6) {
+    //   swal("Password Requirement", "Your password must be at least 6 characters long", "error");
+    //   return;
+    // }
+
     // do firebase stuff
   }
   return (
