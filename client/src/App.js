@@ -14,6 +14,7 @@ import Subscription from './pages/Subscription/Subscription'
 import Account from './pages/Account/Account'
 import Admin from './pages/Account/Admin'
 import VerifyEmail from './pages/Account/VerifyEmail'
+import ResetPassword from './pages/Account/ResetPassword'
 
 import 'firebase/auth'
 import 'semantic-ui-css/semantic.min.css'
