@@ -16,6 +16,7 @@ import Account from './pages/Account/Account'
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import VerifyEmail from './pages/Account/VerifyEmail'
+import ResetPassword from './pages/Account/ResetPassword'
 
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
@@ -45,6 +46,7 @@ export default function App() {
         <Route exact path="/flow" component={Flow} />
         <Route exact path="/subscription" component={Subscription} />
         <Route exact path="/account" component={Account} />
+        <Route exact path="/reset" component={ResetPassword} />
         <Footer />
       </Router>
     </AuthProvider>
