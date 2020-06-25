@@ -1,4 +1,5 @@
 import React from 'react'
+import swal from 'sweetalert'
 import StripeCheckout from 'react-stripe-checkout'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -30,10 +31,15 @@ export default function Subscription() {
                 const response = await createSub({
                   variables: {source: token.id},
                 })
+                swal(
+                  `Welcome to the team`,
+                  `Click on 'flow' on the top to see option flow`,
+                  'success'
+                )
                 console.log(response)
               }}
               stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
-              amount={ENVIRONMENT.STRIPE_PRICE}
+              amount={3000}
             >
               <button className={styles.stripe_checkout_button}>
                 Pay with Card
