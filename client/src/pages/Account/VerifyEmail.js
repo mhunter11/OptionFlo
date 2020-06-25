@@ -28,7 +28,6 @@ function VerifyEmail(props) {
 
     var auth = firebase.auth()
 
-    console.log(mode)
     switch (mode) {
       case 'verifyEmail': {
         auth
@@ -38,9 +37,9 @@ function VerifyEmail(props) {
               'Success',
               'Your email has successfully been verified',
               'success'
-            )
-
-            setSignIn(true)
+            ).then(() => {
+              setSignIn(true)
+            })
           })
           .catch(() => {
             swal(
@@ -57,9 +56,7 @@ function VerifyEmail(props) {
         auth
           .verifyPasswordResetCode(actionCode)
           .then(e => {
-            swal('Success', 'Your password has successfully changed', 'success')
-            console.log(e)
-
+            swal('Success', 'Redirecting to reset password', 'success')
             setResetPassword(true)
           })
           .catch(e => {
@@ -74,15 +71,15 @@ function VerifyEmail(props) {
       }
     }
   })
-
+  if (resetPassword) {
+    return <ResetPassword actionCode={actionCode} firebase={firebase} />
+  }
   if (home) {
     return <Redirect to="/" />
   } else if (signIn) {
     return <Redirect to="/login" />
-  } else if (resetPassword) {
-    return <ResetPassword actionCode={actionCode} firebase={firebase} />
   } else {
-    return <ResetPassword actionCode={actionCode} firebase={firebase} />
+    return null
   }
 }
 
