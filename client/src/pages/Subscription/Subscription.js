@@ -33,7 +33,7 @@ export default function Subscription() {
                 console.log(response)
               }}
               stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
-              amount={6000}
+              amount={ENVIRONMENT.STRIPE_PRICE}
             >
               <button className={styles.stripe_checkout_button}>
                 Pay with Card
