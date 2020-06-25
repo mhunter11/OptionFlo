@@ -1,14 +1,18 @@
 import React, {useState} from 'react'
 import swal from 'sweetalert'
 import {Button, Form} from 'semantic-ui-react'
+import {Redirect} from 'react-router'
 
 import UserView from '../../components/UserView'
 
 import {useForm} from '../../util/hooks'
 
 export default function ResetPassword(props) {
+  const [resetPasswordTrue, setResetPasswordTrue] = useState(false)
   const firebase = props.firebase
   const actionCode = props.actionCode
+
+  console.log(firebase)
   // const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
 
@@ -47,49 +51,61 @@ export default function ResetPassword(props) {
       .auth()
       .confirmPasswordReset(actionCode, values.password)
       .then(data => {
+        console.log(data)
         if (data == null) {
           swal('Reset Password Failed', 'Invalid password!', 'error')
           return
         }
+
+        setResetPasswordTrue(true)
+        console.log('Reset Password Success')
       })
-    return (
-      <UserView>
-        <div>
-          <Form onSubmit={onSubmit}>
-            <h2>Set up a new password</h2>
-            <Form.Input
-              label="New Password"
-              placeholder="Password"
-              name="password"
-              type="text"
-              value={values.password}
-              error={errors.password ? true : false}
-              onChange={onChange}
-            />
-            <Form.Input
-              label="Confirm Password"
-              placeholder="Confirm Password"
-              name="confirmPassword"
-              type="text"
-              value={values.confirmPassword}
-              error={errors.confirmPassword ? true : false}
-              onChange={onChange}
-            />
-            <Button type="submit" primary>
-              Login
-            </Button>
-          </Form>
-          {Object.keys(errors).length > 0 && (
-            <div className="ui error message">
-              <ul className="list">
-                {Object.values(errors).map(value => (
-                  <li key={value}>{value}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      </UserView>
-    )
+      .catch(err => {
+        swal('Error', 'An error has occured: "' + err + '"', 'error')
+      })
+
+    if (resetPasswordTrue) {
+      return <Redirect to="/" />
+    }
   }
+
+  return (
+    // <UserView>
+      <div>
+        <Form onSubmit={onSubmit}>
+          <h2>Set up a new password</h2>
+          <Form.Input
+            label="New Password"
+            placeholder="Password"
+            name="password"
+            type="text"
+            value={values.password}
+            error={errors.password ? true : false}
+            onChange={onChange}
+          />
+          <Form.Input
+            label="Confirm Password"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            type="text"
+            value={values.confirmPassword}
+            error={errors.confirmPassword ? true : false}
+            onChange={onChange}
+          />
+          <Button type="submit" primary>
+            Login
+          </Button>
+        </Form>
+        {Object.keys(errors).length > 0 && (
+          <div className="ui error message">
+            <ul className="list">
+              {Object.values(errors).map(value => (
+                <li key={value}>{value}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    // </UserView>
+  )
 }
