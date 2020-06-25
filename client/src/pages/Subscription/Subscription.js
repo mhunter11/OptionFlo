@@ -14,7 +14,7 @@ import styles from './Subscription.module.scss'
 
 export default function Subscription() {
   const [createSub] = useMutation(CREATE_SUBSCRIPTION)
-  const MONTHLY_PLAN = '$60/ Monthly Plan'
+  const MONTHLY_PLAN = '$30 / Monthly Plan'
   return (
     <div className={styles.bg_color}>
       <div className={styles.bg_color_container}>
@@ -42,7 +42,7 @@ export default function Subscription() {
           </div>
         </div>
         <div className={styles.subscription_benefit_list}>
-          <div>{MONTHLY_PLAN}</div>
+          <div className={styles.monthly_plan}>{MONTHLY_PLAN}</div>
           {SUBSCRIPTION_BENEFITS.map((data, i) => {
             return (
               <li className={styles.list_item} key={i}>
