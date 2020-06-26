@@ -185,6 +185,28 @@ module.exports = {
 
       return user
     },
+    async updateUserType(_, {username}, context) {
+      // const admin = checkAuth(context)
+      const updateUser = await User.findOne({username})
+
+      // if (!admin) {
+      //   throw new AuthenticationError('Not authenticated')
+      // }
+
+      if (!updateUser) {
+        errors.general = 'User not found'
+        throw new UserInputError('User not found')
+      }
+      if (updateUser.type === 'standard') {
+        updateUser.type = ''
+        const result = await updateUser.save()
+        return result
+      } else {
+        updateUser.type = 'standard'
+        const result = await updateUser.save()
+        return result
+      }
+    },
     async saveOption(_, {options}, context) {
       let results = []
 

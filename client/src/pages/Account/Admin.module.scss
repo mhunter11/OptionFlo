@@ -1,0 +1,45 @@
+@import '../../styles/color.scss';
+@import '../../styles/breakpoint.scss';
+@import '../../styles/positioning.scss';
+
+.container {
+  display: flex;
+  border-top: 1px solid black;
+  padding: 1.5rem 0;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+
+  @include --large {
+    max-width: 1260px;
+    margin: 0 auto;
+    flex-direction: initial;
+  }
+}
+
+.user_content {
+  @include --large {
+    margin: 0 1rem;
+  }
+}
+
+.account_content {
+  @include --large {
+    margin: 0 1rem;
+  }
+}
+
+.account_type {
+  margin-right: 1.5rem;
+}
+
+.button_container {
+  text-align: center;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.ban_hammer_button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}

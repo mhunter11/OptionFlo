@@ -33,6 +33,7 @@ module.exports = gql`
     createdAt: String!
     type: String
     stripeId: String
+    admin: Boolean
   }
 
   input RegisterInput {
@@ -124,6 +125,7 @@ module.exports = gql`
     createSubscription(source: String!): User
     changeCreditCard(source: String!): User
     saveOption(options: [OptionData]): [Option]!
+    updateUserType(username: String): User!
   }
 
   type Subscription {

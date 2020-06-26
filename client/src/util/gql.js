@@ -9,6 +9,7 @@ export const GET_USER_INFO = gql`
       createdAt
       username
       email
+      admin
     }
   }
 `
@@ -80,6 +81,18 @@ export const GET_OPTIONS = gql`
       updated
       volume
       option_id
+    }
+  }
+`
+
+export const GET_ALL_USERS = gql`
+  {
+    getAllUsers {
+      email
+      username
+      createdAt
+      type
+      stripeId
     }
   }
 `

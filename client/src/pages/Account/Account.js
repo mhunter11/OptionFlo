@@ -1,25 +1,12 @@
 import React, {useContext} from 'react'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout'
-import {useMutation} from '@apollo/react-hooks'
-import {useQuery} from '@apollo/react-hooks'
+import {useMutation, useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
+import {GET_USER_INFO} from '../../util/gql'
 import {ENVIRONMENT} from '../../env'
 import {AuthContext} from '../../context/auth'
-
-const GET_USER_INFO = gql`
-  query getUserInfo($myUserId: String!) {
-    getUser(userId: $myUserId) {
-      type
-      stripeId
-      id
-      createdAt
-      username
-      email
-    }
-  }
-`
 
 const CHANGE_CREDIT_CARD = gql`
   mutation changeCreditCard($source: String!) {
@@ -56,7 +43,12 @@ export default function Account() {
 
   return (
     <div>
-      {data.getUser.email}
+      {data.getUser.admin === true && (
+        <div>
+          <Link to="/admin">Admin Panel</Link>
+        </div>
+      )}
+      <div>{data.getUser.email}</div>
       <StripeCheckout
         name="OptionFlo"
         currency="USD"
