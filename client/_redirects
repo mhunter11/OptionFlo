@@ -1,9 +1,2 @@
-[[redirects]]
-  from = '/flow'
-  to = '/flow/index.html'
-  status = 200
-
-[[redirects]]
-  from = '/test/*'
-  to = '/test'
-  status = 200
+# Rewrite a path
+/flow /index.html                  200
