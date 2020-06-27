@@ -1,0 +1,9 @@
+[[redirects]]
+  from = '/flow'
+  to = '/flow/index.html'
+  status = 200
+
+[[redirects]]
+  from = '/test/*'
+  to = '/test'
+  status = 200
