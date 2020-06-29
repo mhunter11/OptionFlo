@@ -2,9 +2,6 @@ import React from 'react'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import * as firebase from 'firebase/app'
 
-import {AuthProvider} from './context/auth'
-// import AuthRoute from './util/AuthRoute'
-
 import Footer from './components/Footer'
 import MenuBar from './components/MenuBar'
 import Flow from './pages/Flow/Flow'
@@ -36,33 +33,31 @@ var firebaseInstance = firebase.initializeApp(firebaseConfig)
 
 export default function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <MenuBar />
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/home" component={Home} />
-        <Route
-          exact
-          path="/email"
-          component={() => <VerifyEmail firebase={firebaseInstance} />}
-        />
-        <Route
-          exact
-          path="/login"
-          component={() => <Login firebase={firebaseInstance} />}
-        />
-        <Route
-          exact
-          path="/register"
-          component={() => <Register firebase={firebaseInstance} />}
-        />
-        <Route exact path="/flow" component={Flow} />
-        <Route exact path="/subscription" component={Subscription} />
-        <Route exact path="/account" component={Account} />
-        <Route exact path="/historical-flow" component={HistoricalFlow} />
-        <Route exact path="/admin" component={Admin} />
-        <Footer />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <MenuBar />
+      <Route exact path="/" component={LandingPage} />
+      <Route exact path="/home" component={Home} />
+      <Route
+        exact
+        path="/email"
+        component={() => <VerifyEmail firebase={firebaseInstance} />}
+      />
+      <Route
+        exact
+        path="/login"
+        component={() => <Login firebase={firebaseInstance} />}
+      />
+      <Route
+        exact
+        path="/register"
+        component={() => <Register firebase={firebaseInstance} />}
+      />
+      <Route exact path="/flow" component={Flow} />
+      <Route exact path="/subscription" component={Subscription} />
+      <Route exact path="/account" component={Account} />
+      <Route exact path="/historical-flow" component={HistoricalFlow} />
+      <Route exact path="/admin" component={Admin} />
+      <Footer />
+    </Router>
   )
 }

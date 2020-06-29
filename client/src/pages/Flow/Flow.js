@@ -10,7 +10,7 @@ import {FLOW_ROW_NAME} from './flow-data'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
@@ -22,7 +22,7 @@ export default function Flow() {
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL)
   // let todayOptionData = []
   let todayOptionsTraded = []

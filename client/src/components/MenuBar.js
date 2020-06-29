@@ -3,13 +3,13 @@ import {Menu} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Logo from '../logo-02.png'
 
-import {AuthContext} from '../context/auth'
+import {FirebaseContext} from '../context/auth'
 import MobileMenu from './MobileMenu'
 
 import styles from './Menu.module.scss'
 
 export default function MenuBar() {
-  const {user, logout} = useContext(AuthContext)
+  const {firebase} = useContext(FirebaseContext)
   const pathname = window.location.pathname
 
   const path = pathname === '/' ? 'home' : pathname.substr(1)
@@ -20,10 +20,10 @@ export default function MenuBar() {
   const MENU_BAR_DATA = [
     {name: 'Flow', url: '/flow'},
     {name: 'Account', url: '/account'},
-    {name: 'Logout', onClick: logout},
+    {name: 'Logout', onClick: firebase.auth.signOut},
   ]
 
-  const menuBar = user ? (
+  const menuBar = firebase.user ? (
     <div>
       <div className={styles.mobile_view}>
         <MobileMenu data={MENU_BAR_DATA} />
@@ -49,7 +49,7 @@ export default function MenuBar() {
             <Link className="item" to="/account">
               Account
             </Link>
-            <Menu.Item name="logout" onClick={logout} />
+            <Menu.Item name="logout" onClick={firebase.auth.signOut} />
           </Menu.Menu>
         </Menu>
       </div>

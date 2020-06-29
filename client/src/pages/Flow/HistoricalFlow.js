@@ -11,7 +11,7 @@ import FlowList from './FlowList'
 import MobileFlowList from './MobileFlowList'
 import Loading from '../../components/Loading'
 import {AuthContext} from '../../context/auth'
-import { set } from 'lodash'
+import {set} from 'lodash'
 
 export default function HistoricalFlow() {
   const {user} = useContext(AuthContext)

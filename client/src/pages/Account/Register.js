@@ -7,13 +7,12 @@ import { Redirect } from 'react-router';
 
 import styles from './Register.module.scss'
 
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 import {useForm} from '../../util/hooks'
 import swal from 'sweetalert';
 
 function Register(props) {
-  const firebase = props.firebase;
-  const context = useContext(AuthContext)
+  const {firebase} = useContext(FirebaseContext)
   const [errors, setErrors] = useState({})
   const [goHome, setHome] = useState(false);
 
@@ -24,7 +23,7 @@ function Register(props) {
     confirmPassword: '',
   })
 
-  const [addUser, {loading}] = useMutation(REGISTER_USER, {
+  /*const [addUser, {loading}] = useMutation(REGISTER_USER, {
     update(_, {data: {register: userData}}) {
       context.login(userData)
       props.history.push('/')
@@ -33,7 +32,7 @@ function Register(props) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
     variables: values,
-  })
+  })*/
 
   function registerUser() {
     if (values.password != values.confirmPassword) {
@@ -51,9 +50,10 @@ function Register(props) {
       return;
     }
 
-    firebase.auth().createUserWithEmailAndPassword(values.email, values.password).then(function(data) {
+    firebase.auth.createUserWithEmailAndPassword(values.email, values.password).then(function(data) {
       let user = data.user;
       user.sendEmailVerification();
+
       return user.updateProfile({
         displayName: values.username
       });
@@ -74,7 +74,6 @@ function Register(props) {
       <Form
         onSubmit={onSubmit}
         noValidate
-        className={cx(loading ? 'loading' : '', styles.container)}
       >
         <h1>Register</h1>
         <Form.Input
@@ -130,7 +129,7 @@ function Register(props) {
   )
 }
 
-const REGISTER_USER = gql`
+/*const REGISTER_USER = gql`
   mutation register(
     $username: String!
     $email: String!
@@ -152,6 +151,6 @@ const REGISTER_USER = gql`
       token
     }
   }
-`
+`*/
 
 export default Register

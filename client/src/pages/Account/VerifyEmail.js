@@ -1,6 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react'
 import swal from 'sweetalert';
 import { Redirect } from 'react-router';
+import {FirebaseContext} from '../../context/auth'
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
@@ -14,7 +15,7 @@ function getParameterByName(name) {
 }
 
 function VerifyEmail(props) {
-    let firebase = props.firebase;
+    const {firebase} = useContext(FirebaseContext)
 
     const [goHome, setHome] = useState(false);
     const [goSignIn, setSignIn] = useState(false);
@@ -23,7 +24,7 @@ function VerifyEmail(props) {
         var mode = getParameterByName('mode');
         var actionCode = getParameterByName('oobCode');
         
-        var auth = firebase.auth();
+        var auth = firebase.auth;
 
         switch (mode) {
             case 'verifyEmail': {
