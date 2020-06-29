@@ -43,11 +43,6 @@ export default function Account() {
 
   return (
     <div>
-      {data.getUser.admin === true && (
-        <div>
-          <Link to="/admin">Admin Panel</Link>
-        </div>
-      )}
       <div>{data.getUser.email}</div>
       <StripeCheckout
         name="OptionFlo"
