@@ -1,12 +1,8 @@
-export const TYPING_ANIMATION_ARRAY = [
-  'Option Flow',
-  'Option Alert',
-  'Dark Pool(coming soon)',
-]
+export const TYPING_ANIMATION_ARRAY = ['Option Flow', 'Option Alert']
 
 export const CANCEL_ANYTIME = 'You can cancel anytime'
 
-export const START_TRIAL = 'Try out now!'
+export const START_TRIAL = 'Try it out now!'
 
 export const HOW_WILL_YOU_BENEFIT = 'How do we benefit you?'
 
