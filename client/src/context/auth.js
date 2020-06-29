@@ -2,7 +2,7 @@ import React, {useReducer, createContext} from 'react'
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
-import {ENVIRONMENT} from './env'
+import {ENVIRONMENT} from '../env'
 
 const {
   API,
@@ -30,12 +30,15 @@ class Firebase {
     firebase.initializeApp(firebaseConfig);
 
     this.auth = firebase.auth();
-    this.database = firebase.database();
 
     this.user = null;
     this.idToken = null;
 
+    this.authStateChanged = this.authStateChanged.bind(this);
+
     this.auth.onAuthStateChanged(this.authStateChanged);
+    this.onAuthStateChanged = null;
+
   }
 
   authStateChanged(newUser) {
@@ -50,18 +53,22 @@ class Firebase {
         self.idToken = null;
       })
     } else {
-      self.idToken = null;
+      this.idToken = null;
+    }
+
+    if (this.onAuthStateChanged != null) {
+      this.onAuthStateChanged(newUser);
     }
   }
 }
 
 const FirebaseContext = createContext({
-  firebase: null
+  firebase: null,
+  currentUser: null
 });
 
 function FirebaseProvider(props) {
   let firebaseInstance = new Firebase();
-  //let firebaseInstance = null;
 
   return <FirebaseContext.Provider value={{firebase: firebaseInstance}} />
 }

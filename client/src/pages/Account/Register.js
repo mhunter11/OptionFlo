@@ -23,16 +23,14 @@ function Register(props) {
     confirmPassword: '',
   })
 
-  /*const [addUser, {loading}] = useMutation(REGISTER_USER, {
+  const [addUser, {loading}] = useMutation(REGISTER_USER, {
     update(_, {data: {register: userData}}) {
-      context.login(userData)
-      props.history.push('/')
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
     variables: values,
-  })*/
+  })
 
   function registerUser() {
     if (values.password != values.confirmPassword) {
@@ -68,6 +66,8 @@ function Register(props) {
       .then(function (data) {
         let user = data.user
         user.sendEmailVerification()
+        values.uid = user.uid;
+        addUser();
         return user.updateProfile({
           displayName: values.username,
         })
@@ -153,28 +153,21 @@ function Register(props) {
   )
 }
 
-/*const REGISTER_USER = gql`
+const REGISTER_USER = gql`
   mutation register(
-    $username: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
+    $uid: String!
   ) {
     register(
       registerInput: {
-        username: $username
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
+        uid: $uid
       }
     ) {
       id
       email
       username
       createdAt
-      token
     }
   }
-`*/
+`
 
 export default Register

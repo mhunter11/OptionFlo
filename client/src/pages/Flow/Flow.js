@@ -22,8 +22,9 @@ export default function Flow() {
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
-  const {user} = useContext(FirebaseContext)
+  const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL)
+  const user = currentUser;
   // let todayOptionData = []
   let todayOptionsTraded = []
   let today = new Date()
@@ -36,7 +37,7 @@ export default function Flow() {
     GET_USER_INFO,
     {
       variables: {
-        myUserId: user ? user.id : null,
+        myUserId: user ? user.uid : null,
       },
     }
   )

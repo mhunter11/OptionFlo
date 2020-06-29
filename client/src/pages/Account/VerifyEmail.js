@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import swal from 'sweetalert'
 import {Redirect} from 'react-router'
 import {FirebaseContext} from '../../context/auth'
@@ -14,7 +14,7 @@ function getParameterByName(name) {
 }
 
 function VerifyEmail(props) {
-  let firebase = useContext(FirebaseContext);
+  const {firebase} = useContext(FirebaseContext);
 
   const [home, setHome] = useState(false)
   const [signIn, setSignIn] = useState(false)
@@ -26,7 +26,7 @@ function VerifyEmail(props) {
     mode = getParameterByName('mode')
     actionCode = getParameterByName('oobCode')
 
-    var auth = firebase.auth()
+    var auth = firebase.auth
 
     switch (mode) {
       case 'verifyEmail': {
