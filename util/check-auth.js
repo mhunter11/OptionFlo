@@ -1,8 +1,14 @@
 const {AuthenticationError} = require('apollo-server')
+var admin = require('firebase-admin')
 
-const jwt = require('jsonwebtoken')
+var serviceAccount = require('../config.json')
 
-module.exports = context => {
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_URL,
+})
+
+module.exports.checkAuth = async context => {
   // context = { ... headers }
   const authHeader = context.req.headers.authorization
   if (authHeader) {
@@ -10,7 +16,9 @@ module.exports = context => {
     const token = authHeader.split('Bearer ')[1]
     if (token) {
       try {
-        const user = jwt.verify(token, process.env.SECRET_KEY)
+        const decodedToken = await admin.auth().verifyIdToken(token)
+        const uid = decodedToken.uid
+        const user = await admin.auth().getUser(uid)
         return user
       } catch (err) {
         throw new AuthenticationError('Invalid/Expired token')
@@ -20,3 +28,5 @@ module.exports = context => {
   }
   throw new Error('Authorization header must be provided')
 }
+
+module.exports.admin = admin

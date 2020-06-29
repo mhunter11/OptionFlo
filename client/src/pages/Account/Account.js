@@ -22,19 +22,20 @@ const CHANGE_CREDIT_CARD = gql`
 `
 
 export default function Account() {
-  const {firebase} = useContext(FirebaseContext)
-  /*const {loading, error, data} = useQuery(GET_USER_INFO, {
-    variables: {myUserId: user ? user.id : null},
+  const {firebase, currentUser} = useContext(FirebaseContext)
+  const user = currentUser;
+  const {loading, error, data} = useQuery(GET_USER_INFO, {
+    variables: {myUserId: user ? user.uid : null},
   })
-  const [changeCreditCard] = useMutation(CHANGE_CREDIT_CARD)*/
+  const [changeCreditCard] = useMutation(CHANGE_CREDIT_CARD)
 
-  /*if (loading) {
+  if (loading) {
     return <div>Loading...</div>
   }
 
   if (!data && !loading) {
     return <div>data is undefined</div>
-  }*/
+  }
 
   if (!firebase.user) {
     return <Redirect to="/login">Please login</Redirect>

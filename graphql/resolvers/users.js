@@ -2,44 +2,24 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {AuthenticationError, UserInputError} = require('apollo-server')
 
-var admin = require('firebase-admin')
-
-var serviceAccount = require('../../config.json')
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.FIREBASE_URL,
-})
-
 const {
   validateRegisterInput,
   validateLoginInput,
 } = require('../../util/validators')
-const checkAuth = require('../../util/check-auth')
+const {checkAuth, admin} = require('../../util/check-auth')
 const User = require('../../models/User')
 const Option = require('../../models/Option')
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 const NEW_OPTION = 'NEW_OPTION'
 
-function generateToken(user) {
-  return jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    },
-    process.env.SECRET_KEY,
-    {expiresIn: '7d'}
-  )
-}
-
 module.exports = {
   Query: {
     async getUser(_, args, context) {
-      const user = checkAuth(context)
-      if (user.id === args.userId) {
+      const user = await checkAuth(context)
+      if (user.uid === args.userId) {
         try {
-          const newUser = await User.findById(args.userId)
+          const username = args.userId;
+          const newUser = await User.findOne({username})
           if (newUser) {
             return newUser
           } else {
@@ -63,7 +43,7 @@ module.exports = {
     async getAllUsers() {
       try {
         const Users = await User.find()
-        for (let index = 0; index < Users.length; index++) {
+        /*for (let index = 0; index < Users.length; index++) {
           const e = Users[index]
           const password = e.password
           const email = e.email
@@ -99,7 +79,7 @@ module.exports = {
 
           // await admin.auth().createUserWithEmailAndPassword(email, password)
           // admin.auth().sendPasswordResetEmail(email)
-        }
+        }*/
         return Users
       } catch (err) {
         throw new Error(err)
@@ -115,7 +95,7 @@ module.exports = {
     },
   },
   Mutation: {
-    async login(_, {username, password}, {req}) {
+    /*async login(_, {username, password}, {req}) {
       const {errors, valid} = validateLoginInput(username, password) //email
       const user = await User.findOne({username})
       // const email = await User.findOne({ email })
@@ -144,21 +124,18 @@ module.exports = {
         id: user.id,
         token,
       }
-    },
+    },*/
     async register(
       parent,
-      {registerInput: {username, email, password, confirmPassword}}
+      {registerInput: {uid}}
     ) {
-      const {valid, errors} = validateRegisterInput(
-        username,
-        email,
-        password,
-        confirmPassword
-      )
-
-      if (!valid) {
-        throw new UserInputError('Errors', {errors})
+      const user = await admin.auth().getUser(uid);
+      if (!user) {
+        throw new AuthenticationError('Not authenticated')
       }
+
+      const username = user.uid;
+      const email = user.email;
 
       const userUsername = await User.findOne({username})
       const userEmail = await User.findOne({email})
@@ -179,12 +156,9 @@ module.exports = {
         })
       }
 
-      password = await bcrypt.hash(password, 12)
-
       const newUser = new User({
         username,
         email,
-        password,
         createdAt: new Date().toISOString(),
         type: '',
         stripeId: '',
@@ -193,21 +167,18 @@ module.exports = {
 
       const result = await newUser.save()
 
-      const token = generateToken(result)
-
       return {
         ...result._doc,
-        id: result.id,
-        token,
+        id: result.id
       }
     },
-    async createSubscription(_, {source, ccLast4}, context) {
-      const user = checkAuth(context)
+    async createSubscription(_, {source}, context) {
+      const user = await checkAuth(context)
       if (!user) {
         throw new AuthenticationError('Not authenticated')
       }
-
-      const updateUser = await User.findOne({username: user.username})
+      const username = user.uid
+      const updateUser = await User.findOne({username})
 
       const userEmail = user.email
       const customer = await stripe.customers.create({
@@ -222,8 +193,8 @@ module.exports = {
       const result = await updateUser.save()
       return result
     },
-    async changeCreditCard(_, {source, ccLast4}, context) {
-      const user = checkAuth(context)
+    async changeCreditCard(_, {source}, context) {
+      const user = await checkAuth(context)
 
       if (!user || !user.stripeId || user.type === 'free') {
         throw new AuthenticationError('Not authenticated')

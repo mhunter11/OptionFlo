@@ -23,6 +23,10 @@ export default function MenuBar() {
     {name: 'Logout', onClick: firebase.auth.signOut},
   ]
 
+  function performSignout(e) {
+    firebase.auth.signOut();
+  }
+
   const menuBar = firebase.user ? (
     <div>
       <div className={styles.mobile_view}>
@@ -49,7 +53,7 @@ export default function MenuBar() {
             <Link className="item" to="/account">
               Account
             </Link>
-            <Menu.Item name="logout" onClick={firebase.auth.signOut} />
+            <Menu.Item name="logout" onClick={performSignout} />
           </Menu.Menu>
         </Menu>
       </div>

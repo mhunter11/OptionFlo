@@ -5,15 +5,16 @@ import {useQuery} from '@apollo/react-hooks'
 import Loading from './Loading'
 
 import {GET_USER_INFO} from '../util/gql'
-import {AuthContext} from '../context/auth'
+import {FirebaseContext} from '../context/auth'
 
 import styles from './UserView.module.scss'
 
 export default function UserView({children}) {
-  const {user} = useContext(AuthContext)
+  const {firebase} = useContext(FirebaseContext)
+  const user = firebase.user;
   const {loading, error, data} = useQuery(GET_USER_INFO, {
     variables: {
-      myUserId: user ? user.id : null,
+      myUserId: user ? user.uid : null,
     },
   })
 
