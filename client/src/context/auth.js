@@ -2,16 +2,27 @@ import React, {useReducer, createContext} from 'react'
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
+import {ENVIRONMENT} from './env'
+
+const {
+  API,
+  APP_ID,
+  DB_URL,
+  DOMAIN,
+  SENDER_ID,
+  MEASURE_ID,
+} = ENVIRONMENT.FIREBASE_INFO
+
 var firebaseConfig = {
-  apiKey: "AIzaSyAgutAAgyrONuxJ0vx1NeF2f_MXZuDRoVE",
-  authDomain: "optionflo.firebaseapp.com",
-  databaseURL: "https://optionflo.firebaseio.com",
-  projectId: "optionflo",
-  storageBucket: "optionflo.appspot.com",
-  messagingSenderId: "670216300705",
-  appId: "1:670216300705:web:a23eb05e655d5ee31fa8e0",
-  measurementId: "G-XWZW8XQ52E"
-};
+  apiKey: API,
+  authDomain: DOMAIN,
+  databaseURL: DB_URL,
+  projectId: 'optionflo',
+  storageBucket: 'optionflo.appspot.com',
+  messagingSenderId: SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASURE_ID,
+}
 
 
 class Firebase {
@@ -22,12 +33,25 @@ class Firebase {
     this.database = firebase.database();
 
     this.user = null;
+    this.idToken = null;
 
     this.auth.onAuthStateChanged(this.authStateChanged);
   }
 
   authStateChanged(newUser) {
     this.user = newUser;
+
+    if (this.user) {
+      let self = this;
+      this.user.getIdToken(/* forceRefresh */ true).then(function(token) {
+        self.idToken = token;
+      }).catch(function(error) {
+        console.log(error);
+        self.idToken = null;
+      })
+    } else {
+      self.idToken = null;
+    }
   }
 }
 

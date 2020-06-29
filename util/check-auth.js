@@ -2,7 +2,7 @@ const {AuthenticationError} = require('apollo-server')
 
 const jwt = require('jsonwebtoken')
 
-module.exports = context => {
+module.exports = async context => {
   // context = { ... headers }
   const authHeader = context.req.headers.authorization
   if (authHeader) {

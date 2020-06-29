@@ -1,0 +1,10 @@
+@import '../styles/breakpoint.scss';
+
+.container {
+  margin: 0 1.5rem;
+  @include --large {
+    max-width: 1260px;
+    margin: 0 auto;
+    height: 90vh;
+  }
+}

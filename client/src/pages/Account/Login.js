@@ -3,7 +3,7 @@ import cx from 'classnames'
 import {Button, Form} from 'semantic-ui-react'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import swal from 'sweetalert';
+import swal from 'sweetalert'
 import styles from './Login.module.scss'
 import { Redirect } from 'react-router';
 import {FirebaseContext} from '../../context/auth'
@@ -16,7 +16,7 @@ function Login(props) {
   //const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
 
-  const [goHome, setHome] = useState(false);
+  const [goHome, setHome] = useState(false)
 
   const {onChange, onSubmit, values} = useForm(loginUserCallback, {
     username: '',
@@ -35,26 +35,35 @@ function Login(props) {
   })*/
 
   function loginUserCallback() {
-    firebase.auth.signInWithEmailAndPassword(values.username, values.password).then(function(data) {
-      if (data == null) {
-        swal("Login Failed", "Invalid email or password!", "error");
-        return;
-      }
+    //loginUser()
 
-      if (!data.user.emailVerified) {
-        swal("Not Verified", "Your account has not been verified. Please check your email for instructions to verify your email.\nIf you just verified your account, try logging out and logging back in.", "error")
-        return;
-      }
+    firebase
+      .auth
+      .signInWithEmailAndPassword(values.username, values.password)
+      .then(function (data) {
+        if (data == null) {
+          swal('Login Failed', 'Invalid email or password!', 'error')
+          return
+        }
 
-      setHome(true);
+        if (!data.user.emailVerified) {
+          swal(
+            'Not Verified',
+            'Your account has not been verified. Please check your email for instructions to verify your email.\nIf you just verified your account, try logging out and logging back in.',
+            'error'
+          )
+          return
+        }
 
-    }).catch(function(error) {
-      swal("Error", "An error has occured: \"" + error + "\"", "error");
-    })
+        setHome(true)
+      })
+      .catch(function (error) {
+        swal('Error', 'An error has occured: "' + error + '"', 'error')
+      })
   }
 
   if (goHome) {
-    return <Redirect to='/' />
+    return <Redirect to="/" />
   }
 
   return (
