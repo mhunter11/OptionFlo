@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import gql from 'graphql-tag'
 
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 
 const GET_USER_INFO = gql`
   query getUserInfo($myUserId: String!) {
@@ -17,7 +17,7 @@ const GET_USER_INFO = gql`
 `
 
 export default function Home() {
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(FirebaseContext)
   // const {loading, error, data} = useQuery(GET_USER_INFO, {
   //   variables: {myUserId: user ? user.id : null},
   // })

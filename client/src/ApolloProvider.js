@@ -5,7 +5,7 @@ import {InMemoryCache} from 'apollo-cache-inmemory'
 import {createHttpLink} from 'apollo-link-http'
 import {ApolloProvider} from '@apollo/react-hooks'
 import {setContext} from 'apollo-link-context'
-
+import {FirebaseContext, Firebase} from './context/auth'
 import {ENVIRONMENT} from './env'
 
 const httpLink = createHttpLink({
@@ -27,7 +27,9 @@ const client = new ApolloClient({
 })
 
 export default (
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
+  <FirebaseContext.Provider value={{firebase: new Firebase()}}>
+    <ApolloProvider client={client}>
+        <App />
+    </ApolloProvider>
+  </FirebaseContext.Provider>
 )

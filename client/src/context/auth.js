@@ -1,65 +1,45 @@
 import React, {useReducer, createContext} from 'react'
-import jwtDecode from 'jwt-decode'
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
-const initialState = {
-  user: null,
-}
+var firebaseConfig = {
+  apiKey: "AIzaSyAgutAAgyrONuxJ0vx1NeF2f_MXZuDRoVE",
+  authDomain: "optionflo.firebaseapp.com",
+  databaseURL: "https://optionflo.firebaseio.com",
+  projectId: "optionflo",
+  storageBucket: "optionflo.appspot.com",
+  messagingSenderId: "670216300705",
+  appId: "1:670216300705:web:a23eb05e655d5ee31fa8e0",
+  measurementId: "G-XWZW8XQ52E"
+};
 
-if (localStorage.getItem('jwtToken')) {
-  const decodedToken = jwtDecode(localStorage.getItem('jwtToken'))
 
-  if (decodedToken.exp * 1000 < Date.now()) {
-    localStorage.removeItem('jwtToken')
-  } else {
-    initialState.user = decodedToken
+class Firebase {
+  constructor() {
+    firebase.initializeApp(firebaseConfig);
+
+    this.auth = firebase.auth();
+    this.database = firebase.database();
+
+    this.user = null;
+
+    this.auth.onAuthStateChanged(this.authStateChanged);
+  }
+
+  authStateChanged(newUser) {
+    this.user = newUser;
   }
 }
 
-const AuthContext = createContext({
-  user: null,
-  login: userData => {},
-  logout: () => {},
-})
+const FirebaseContext = createContext({
+  firebase: null
+});
 
-function authReducer(state, action) {
-  switch (action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        user: action.payload,
-      }
-    case 'LOGOUT':
-      return {
-        ...state,
-        user: null,
-      }
-    default:
-      return state
-  }
+function FirebaseProvider(props) {
+  let firebaseInstance = new Firebase();
+  //let firebaseInstance = null;
+
+  return <FirebaseContext.Provider value={{firebase: firebaseInstance}} />
 }
 
-function AuthProvider(props) {
-  const [state, dispatch] = useReducer(authReducer, initialState)
-
-  function login(userData) {
-    localStorage.setItem('jwtToken', userData.token)
-    dispatch({
-      type: 'LOGIN',
-      payload: userData,
-    })
-  }
-
-  function logout() {
-    localStorage.removeItem('jwtToken')
-    dispatch({type: 'LOGOUT'})
-  }
-
-  return (
-    <AuthContext.Provider
-      value={{user: state.user, login, logout}}
-      {...props}
-    />
-  )
-}
-
-export {AuthContext, AuthProvider}
+export {FirebaseContext, FirebaseProvider, Firebase}

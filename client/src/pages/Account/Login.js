@@ -6,14 +6,14 @@ import gql from 'graphql-tag'
 import swal from 'sweetalert';
 import styles from './Login.module.scss'
 import { Redirect } from 'react-router';
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 
 import {useForm} from '../../util/hooks'
 
 function Login(props) {
-  let firebase = props.firebase;
+  const {firebase} = useContext(FirebaseContext)
 
-  const context = useContext(AuthContext)
+  //const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
 
   const [goHome, setHome] = useState(false);
@@ -23,7 +23,7 @@ function Login(props) {
     password: '',
   })
 
-  const [loginUser, {loading}] = useMutation(LOGIN_USER, {
+  /*const [loginUser, {loading}] = useMutation(LOGIN_USER, {
     update(_, result) {
       context.login(result.data.login) // getting user data
       props.history.push('/')
@@ -32,12 +32,10 @@ function Login(props) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
     variables: values,
-  })
+  })*/
 
   function loginUserCallback() {
-    //loginUser()
-
-    firebase.auth().signInWithEmailAndPassword(values.username, values.password).then(function(data) {
+    firebase.auth.signInWithEmailAndPassword(values.username, values.password).then(function(data) {
       if (data == null) {
         swal("Login Failed", "Invalid email or password!", "error");
         return;
@@ -64,7 +62,6 @@ function Login(props) {
       <Form
         onSubmit={onSubmit}
         noValidate
-        className={cx(loading ? 'loading' : '', styles.container)}
       >
         <h1>Login</h1>
         <Form.Input
@@ -102,7 +99,7 @@ function Login(props) {
   )
 }
 
-const LOGIN_USER = gql`
+/*const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       id
@@ -114,6 +111,6 @@ const LOGIN_USER = gql`
       stripeId
     }
   }
-`
+`*/
 
 export default Login
