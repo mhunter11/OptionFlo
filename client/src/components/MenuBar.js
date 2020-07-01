@@ -43,6 +43,9 @@ export default function MenuBar() {
             <Link className="item" to="/flow">
               Flow
             </Link>
+            <Link className="item" to="historical-flow">
+              Historical Flow
+            </Link>
             <Link className="item" to="/account">
               Account
             </Link>

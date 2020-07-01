@@ -7,6 +7,7 @@ import {AuthProvider} from './context/auth'
 import Footer from './components/Footer'
 import MenuBar from './components/MenuBar'
 import Flow from './pages/Flow/Flow'
+import HistoricalFlow from './pages/Flow/HistoricalFlow'
 import Register from './pages/Account/Register'
 import Login from './pages/Account/Login'
 import Home from './pages/Homepage/Home'
@@ -30,6 +31,7 @@ export default function App() {
         <Route exact path="/flow" component={Flow} />
         <Route exact path="/subscription" component={Subscription} />
         <Route exact path="/account" component={Account} />
+        <Route exact path="/historical-flow" component={HistoricalFlow} />
         <Route exact path="/admin" component={Admin} />
         <Footer />
       </Router>

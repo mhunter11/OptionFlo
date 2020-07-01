@@ -3,7 +3,6 @@ import cx from 'classnames'
 
 import {
   formatTime,
-  formatSentiment,
   getRef,
   getOI,
   getContractPrice,
@@ -24,10 +23,10 @@ export default function FlowList(props) {
     put_call,
     option_activity_type,
     description,
-    sentiment,
     cost_basis,
     onClick,
     updated,
+    date,
   } = props
 
   let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
@@ -51,7 +50,8 @@ export default function FlowList(props) {
         [styles.big_buy]: BIG_BUY,
       })}
     >
-      <div className={styles.time}>{formatTime(updated)}</div>
+      {updated && <div className={styles.time}>{formatTime(updated)}</div>}
+      {date && <div className={styles.time}>{date}</div>}
       <div
         className={cx(styles.desktop_ticker, {
           [styles.mobile_ticker_call]: put_call === 'CALL',
