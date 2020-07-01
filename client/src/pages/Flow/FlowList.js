@@ -10,6 +10,8 @@ import {
   getGoldenSweep,
   getBuy,
   getBigBuy,
+  getBidOrAskOrder,
+  getContractAndPrice,
 } from './FlowListFunction'
 
 import styles from './Flow.module.scss'
@@ -39,6 +41,9 @@ export default function FlowList(props) {
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
   }
   const BIG_BUY = getBigBuy(BUY)
+  const contract = `${getContractAndPrice(
+    CONTRACT_AND_PRICE
+  ).trim()}${getBidOrAskOrder(description)}`
   return (
     <div
       className={cx(styles.flow_list, {
@@ -69,8 +74,7 @@ export default function FlowList(props) {
       <div className={styles.option_activity_type}>
         {option_activity_type === 'SWEEP' ? 'SWEEP' : 'BLOCK'}
       </div>
-      <div className={styles.description}>{CONTRACT_AND_PRICE}</div>
-      <div className={styles.sentiment}>{formatSentiment(sentiment)}</div>
+      <div className={styles.description}>{contract}</div>
       <div className={styles.cost_basis}>${OPTION_COST}</div>
       <div className={styles.OI}>{OI}</div>
       <div>{REF}</div>

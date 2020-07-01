@@ -152,7 +152,6 @@ export default function Flow() {
               <div
                 className={styles.row_name}
                 style={{
-                  width: `${data.className}%`,
                   paddingLeft: `${data.padding}rem`,
                 }}
                 key={data.name}
