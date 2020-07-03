@@ -164,6 +164,7 @@ module.exports = {
         createdAt: new Date().toISOString(),
         type: '',
         stripeId: '',
+        ccLast4: '',
       })
 
       const result = await newUser.save()
@@ -173,7 +174,7 @@ module.exports = {
         id: result.id
       }
     },
-    async createSubscription(_, {source}, context) {
+    async createSubscription(_, {source, ccLast4}, context) {
       const user = await checkAuth(context)
       if (!user) {
         throw new AuthenticationError('Not authenticated')
@@ -190,10 +191,12 @@ module.exports = {
 
       updateUser.stripeId = customer.id
       updateUser.type = 'standard'
+      updateUser.ccLast4 = ccLast4
       const result = await updateUser.save()
       return result
     },
-    async changeCreditCard(_, {source}, context) {
+
+    async changeCreditCard(_, {source, ccLast4}, context) {
       const user = await checkAuth(context)
       const firebaseId = user.uid
       const mongoUser = await User.findOne({firebaseId})
@@ -202,9 +205,36 @@ module.exports = {
         throw new AuthenticationError('Not authenticated')
       }
 
-      await stripe.customers.update(mongoUser.stripeId, {source})
+      const firebaseId = user.uid
 
-      return mongoUser
+      const updateUser = await User.findOne({firebaseId})
+
+      await stripe.customers.update(user.stripeId, {source})
+      updateUser.ccLast4 = ccLast4
+      const result = await updateUser.save()
+      return {user, result}
+    },
+    async updateUserType(_, {username}, context) {
+      // const admin = checkAuth(context)
+      const updateUser = await User.findOne({username})
+
+      // if (!admin) {
+      //   throw new AuthenticationError('Not authenticated')
+      // }
+
+      if (!updateUser) {
+        errors.general = 'User not found'
+        throw new UserInputError('User not found')
+      }
+      if (updateUser.type === 'standard') {
+        updateUser.type = ''
+        const result = await updateUser.save()
+        return result
+      } else {
+        updateUser.type = 'standard'
+        const result = await updateUser.save()
+        return result
+      }
     },
     async saveOption(_, {options}, context) {
       let results = []

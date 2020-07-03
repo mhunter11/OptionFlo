@@ -67,12 +67,12 @@ function Register(props) {
         let user = data.user
         user.sendEmailVerification()
         values.uid = user.uid;
-        addUser();
         return user.updateProfile({
           displayName: values.username,
         })
       })
       .then(function () {
+        addUser();
         swal(
           'Created',
           'Your account has been created\nPlease check your email for a verification link',

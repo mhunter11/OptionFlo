@@ -7,6 +7,8 @@ const userSchema = new Schema({
   createdAt: String,
   type: String,
   stripeId: String,
+  admin: Boolean,
+  ccLast4: {type: String, default: ''},
 })
 
 module.exports = model('User', userSchema)

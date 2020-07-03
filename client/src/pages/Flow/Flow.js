@@ -128,6 +128,11 @@ export default function Flow() {
     return <Redirect to="/" />
   }
 
+  if (dataR == null) {
+    //firebase.auth.signOut(); //Just sign the user out
+    return <Redirect to="/" />
+  }
+
   if (!user && !loadingR) {
     return <Redirect to="/login">Please login</Redirect>
   }
@@ -153,7 +158,6 @@ export default function Flow() {
               <div
                 className={styles.row_name}
                 style={{
-                  width: `${data.className}%`,
                   paddingLeft: `${data.padding}rem`,
                 }}
                 key={data.name}
@@ -253,9 +257,7 @@ export default function Flow() {
         </div>
         <ul className={styles.ul_list}>
           {filteredOptions && saveOptions.length === 0 && (
-            <div className={styles.no_options_found}>
-              Whatever you're looking for it ain't here
-            </div>
+            <div className={styles.no_options_found}>No Items Found</div>
           )}
           {!filteredOptions &&
             options.map((data, index) => (

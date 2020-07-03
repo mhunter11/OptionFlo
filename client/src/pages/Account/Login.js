@@ -52,6 +52,7 @@ function Login(props) {
             'Your account has not been verified. Please check your email for instructions to verify your email.\nIf you just verified your account, try logging out and logging back in.',
             'error'
           )
+          firebase.auth.signOut();
           return
         }
 

@@ -40,10 +40,10 @@ function VerifyEmail(props) {
               setSignIn(true)
             })
           })
-          .catch(() => {
+          .catch((e) => {
             swal(
               'Error',
-              'Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed.',
+              'Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed. Error Code:\n' + e,
               'error'
             )
 

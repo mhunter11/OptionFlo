@@ -1,4 +1,5 @@
 import React from 'react'
+import swal from 'sweetalert'
 import StripeCheckout from 'react-stripe-checkout'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -14,7 +15,7 @@ import styles from './Subscription.module.scss'
 
 export default function Subscription() {
   const [createSub] = useMutation(CREATE_SUBSCRIPTION)
-  const MONTHLY_PLAN = '$60/ Monthly Plan'
+  const MONTHLY_PLAN = '$30 / Monthly Plan'
   return (
     <div className={styles.bg_color}>
       <div className={styles.bg_color_container}>
@@ -28,12 +29,17 @@ export default function Subscription() {
               image={OPTIONFLO_ICON}
               token={async token => {
                 const response = await createSub({
-                  variables: {source: token.id},
+                  variables: {source: token.id, ccLast4: token.card.last4},
                 })
+                swal(
+                  `Welcome to the team`,
+                  `Click on 'flow' on the top to see option flow`,
+                  'success'
+                )
                 console.log(response)
               }}
               stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
-              amount={6000}
+              amount={3000}
             >
               <button className={styles.stripe_checkout_button}>
                 Pay with Card
@@ -42,7 +48,7 @@ export default function Subscription() {
           </div>
         </div>
         <div className={styles.subscription_benefit_list}>
-          <div>{MONTHLY_PLAN}</div>
+          <div className={styles.monthly_plan}>{MONTHLY_PLAN}</div>
           {SUBSCRIPTION_BENEFITS.map((data, i) => {
             return (
               <li className={styles.list_item} key={i}>
@@ -57,11 +63,12 @@ export default function Subscription() {
 }
 
 const CREATE_SUBSCRIPTION = gql`
-  mutation createSubscription($source: String!) {
-    createSubscription(source: $source) {
+  mutation createSubscription($source: String!, $ccLast4: String!) {
+    createSubscription(source: $source, ccLast4: $ccLast4) {
       id
       email
       type
+      ccLast4
     }
   }
 `

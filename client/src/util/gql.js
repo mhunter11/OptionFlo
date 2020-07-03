@@ -9,32 +9,11 @@ export const GET_USER_INFO = gql`
       createdAt
       username
       email
+      ccLast4
+      admin
     }
   }
 `
-
-// export const GETS_OPTIONS_BY_DATE = gql`
-//   query getOptionsByDate($inputDate: String!, $inputTicker: String!) {
-//     getOptionsByDate(date: $inputDate, ticker: $inputTicker) {
-//       ticker
-//       put_call
-//       time
-//       sentiment
-//       option_symbol
-//       option_activity_type
-//       open_interest
-//       date_expiration
-//       date
-//       description
-//       ask
-//       cost_basis
-//       trade_count
-//       strike_price
-//       updated
-//       volume
-//     }
-//   }
-// `
 
 export const GETS_OPTIONS_BY_DATE = gql`
   query getOptionsByDate($inputDate: String!) {
@@ -80,6 +59,19 @@ export const GET_OPTIONS = gql`
       updated
       volume
       option_id
+    }
+  }
+`
+
+export const GET_ALL_USERS = gql`
+  {
+    getAllUsers {
+      email
+      username
+      createdAt
+      type
+      stripeId
+      ccLast4
     }
   }
 `

@@ -31,8 +31,18 @@ class Firebase {
 
     this.auth = firebase.auth();
 
-    this.user = null;
+    this.user = firebase.user;
     this.idToken = null;
+
+    if (this.user != null) {
+      let self = this;
+      this.user.getIdToken().then(function(token) {
+        self.idToken = token;
+      }).catch(function(error) {
+        console.log(error);
+        self.idToken = null;
+      });
+    }
 
     this.authStateChanged = this.authStateChanged.bind(this);
 

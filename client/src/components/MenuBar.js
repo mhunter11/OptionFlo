@@ -9,7 +9,7 @@ import MobileMenu from './MobileMenu'
 import styles from './Menu.module.scss'
 
 export default function MenuBar() {
-  const {firebase} = useContext(FirebaseContext)
+  const {firebase, currentUser} = useContext(FirebaseContext)
   const pathname = window.location.pathname
 
   const path = pathname === '/' ? 'home' : pathname.substr(1)
@@ -27,7 +27,7 @@ export default function MenuBar() {
     firebase.auth.signOut();
   }
 
-  const menuBar = firebase.user ? (
+  const menuBar = currentUser ? (
     <div>
       <div className={styles.mobile_view}>
         <MobileMenu data={MENU_BAR_DATA} />
@@ -46,6 +46,9 @@ export default function MenuBar() {
           <Menu.Menu position="right">
             <Link className="item" to="/flow">
               Flow
+            </Link>
+            <Link className="item" to="historical-flow">
+              Historical Flow
             </Link>
             <Link className="item" to="/account">
               Account
