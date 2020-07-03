@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import swal from 'sweetalert'
 import {Button, Form} from 'semantic-ui-react'
 import {Redirect} from 'react-router'
-
+import {FirebaseContext} from '../../context/auth'
 import UserView from '../../components/UserView'
-
+import styles from './Login.module.scss'
 import {useForm} from '../../util/hooks'
 
 export default function ResetPassword(props) {
   const [resetPasswordTrue, setResetPasswordTrue] = useState(false)
-  const firebase = props.firebase
+  const {firebase} = useContext(FirebaseContext);
   const actionCode = props.actionCode
 
   console.log(firebase)
@@ -48,17 +48,11 @@ export default function ResetPassword(props) {
     }
     // do firebase stuff
     firebase
-      .auth()
+      .auth
       .confirmPasswordReset(actionCode, values.password)
-      .then(data => {
-        console.log(data)
-        if (data == null) {
-          swal('Reset Password Failed', 'Invalid password!', 'error')
-          return
-        }
-
+      .then(_ => {
         setResetPasswordTrue(true)
-        console.log('Reset Password Success')
+        swal("Password Reset", "Your password has been reset, you can now login with your new password", "success");
       })
       .catch(err => {
         swal('Error', 'An error has occured: "' + err + '"', 'error')
@@ -69,16 +63,20 @@ export default function ResetPassword(props) {
     }
   }
 
+  if (resetPasswordTrue) {
+    return <Redirect to="/login" />
+  }
+
   return (
     // <UserView>
-      <div>
+      <div className={styles.form_container}>
         <Form onSubmit={onSubmit}>
           <h2>Set up a new password</h2>
           <Form.Input
             label="New Password"
             placeholder="Password"
             name="password"
-            type="text"
+            type="password"
             value={values.password}
             error={errors.password ? true : false}
             onChange={onChange}
@@ -87,13 +85,13 @@ export default function ResetPassword(props) {
             label="Confirm Password"
             placeholder="Confirm Password"
             name="confirmPassword"
-            type="text"
+            type="password"
             value={values.confirmPassword}
             error={errors.confirmPassword ? true : false}
             onChange={onChange}
           />
           <Button type="submit" primary>
-            Login
+            Change
           </Button>
         </Form>
         {Object.keys(errors).length > 0 && (

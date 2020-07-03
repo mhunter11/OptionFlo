@@ -20,11 +20,10 @@ function VerifyEmail(props) {
   const [signIn, setSignIn] = useState(false)
   const [resetPassword, setResetPassword] = useState(false)
   let mode
-  let actionCode
+  let actionCode = getParameterByName('oobCode')
 
   useEffect(() => {
     mode = getParameterByName('mode')
-    actionCode = getParameterByName('oobCode')
 
     var auth = firebase.auth
 
@@ -56,7 +55,6 @@ function VerifyEmail(props) {
         auth
           .verifyPasswordResetCode(actionCode)
           .then(e => {
-            swal('Success', 'Redirecting to reset password', 'success')
             setResetPassword(true)
           })
           .catch(e => {
@@ -66,6 +64,7 @@ function VerifyEmail(props) {
               'Invalid or expired code, please try resetting your passoword again. If you have already reset your password, then no futher action is needed.',
               'error'
             )
+            setHome(true)
           })
         break
       }
