@@ -60,19 +60,34 @@ function Register(props) {
       return
     }
 
-    firebase.auth.createUserWithEmailAndPassword(values.email, values.password).then(function(data) {
-      let user = data.user;
-      user.sendEmailVerification();
-
-      return user.updateProfile({
-        displayName: values.username
-      });
-    }).then(function() {
-      swal('Created', "Your account has been created\nPlease check your email for a verification link", "success");
-      setHome(true);
-    }).catch(function(error) {
-      swal("Error", "There was an error creating your account\n" + error, "error");
-    });
+    firebase
+      .auth
+      .createUserWithEmailAndPassword(values.email, values.password)
+      .then(function (data) {
+        let user = data.user
+        user.sendEmailVerification()
+        values.uid = user.uid;
+        return user.updateProfile({
+          displayName: values.username,
+        })
+      })
+      .then(function () {
+        addUser();
+        firebase.auth.signOut();
+        swal(
+          'Created',
+          'Your account has been created\nPlease check your email for a verification link',
+          'success'
+        )
+        setHome(true)
+      })
+      .catch(function (error) {
+        swal(
+          'Error',
+          'There was an error creating your account\n' + error,
+          'error'
+        )
+      })
   }
 
   if (goHome) {
