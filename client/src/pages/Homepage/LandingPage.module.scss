@@ -68,18 +68,17 @@
   justify-content: center;
   align-items: center;
   padding: 1rem 2.5rem;
-  border: 1px solid var(--light-green);
-  background-color: var(--light-green);
+  border: 1px solid #24a0ed;
+  background-color: #24a0ed;
   max-width: 17.625rem;
   margin: auto;
-  color: var(--blue);
+  color: #fff;
   font-weight: 800;
   font-size: 1.25rem;
   margin-top: 2.5rem;
   filter: brightness(90%);
 
   &:hover {
-    color: var(--blue);
     filter: brightness(110%);
   }
 }
