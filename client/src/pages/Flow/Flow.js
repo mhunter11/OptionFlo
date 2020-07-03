@@ -125,7 +125,12 @@ export default function Flow() {
   }
 
   if (errorR) {
-    return <Redirect to="/" />
+    if (!firebase.user) {
+      return <Redirect to="/" />
+    } else {
+      //Keep loading if we're waiting for a user that is logged in
+      return <Loading />
+    }
   }
 
   if (!user && !loadingR) {
