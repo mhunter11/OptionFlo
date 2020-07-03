@@ -27,6 +27,7 @@ module.exports = gql`
 
   type User {
     id: ID!
+    firebaseId: String!
     email: String!
     username: String!
     createdAt: String!

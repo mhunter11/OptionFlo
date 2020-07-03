@@ -18,8 +18,8 @@ module.exports = {
       const user = await checkAuth(context)
       if (user.uid === args.userId) {
         try {
-          const username = args.userId;
-          const newUser = await User.findOne({username})
+          const firebaseId = args.userId;
+          const newUser = await User.findOne({firebaseId})
           if (newUser) {
             return newUser
           } else {
@@ -134,16 +134,17 @@ module.exports = {
         throw new AuthenticationError('Not authenticated')
       }
 
-      const username = user.uid;
+      const firebaseId = user.uid;
+      const username = user.displayName;
       const email = user.email;
 
-      const userUsername = await User.findOne({username})
+      const userFirebaseId = await User.findOne({firebaseId})
       const userEmail = await User.findOne({email})
 
-      if (userUsername) {
+      if (userFirebaseId) {
         throw new UserInputError('User already exists', {
           errors: {
-            username: 'This user is taken',
+            firebaseId: 'This user is taken',
           },
         })
       }
@@ -157,6 +158,7 @@ module.exports = {
       }
 
       const newUser = new User({
+        firebaseId,
         username,
         email,
         createdAt: new Date().toISOString(),
@@ -177,8 +179,8 @@ module.exports = {
       if (!user) {
         throw new AuthenticationError('Not authenticated')
       }
-      const username = user.uid
-      const updateUser = await User.findOne({username})
+      const firebaseId = user.uid
+      const updateUser = await User.findOne({firebaseId})
 
       const userEmail = user.email
       const customer = await stripe.customers.create({
@@ -195,6 +197,8 @@ module.exports = {
     },
     async changeCreditCard(_, {source}, context) {
       const user = await checkAuth(context)
+      const firebaseId = user.uid
+      const mongoUser = await User.findOne({firebaseId})
 
       if (!user || !user.stripeId || user.type === 'free') {
         throw new AuthenticationError('Not authenticated')
