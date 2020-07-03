@@ -33,11 +33,15 @@ function ColumnView(props) {
           <div className={styles.account_content}>Email:</div>
           <div className={styles.account_content}>Username:</div>
           <div className={styles.account_content}>Type:</div>
+          <div className={styles.account_content}>stripeId:</div>
+          <div className={styles.account_content}>ccLast4:</div>
         </div>
         <div>
           <div className={styles.user_content}>{props.email}</div>
           <div className={styles.user_content}>{props.username}</div>
           <div className={styles.user_content}>{updatedType}</div>
+          <div className={styles.user_content}>{props.stripeId}</div>
+          <div className={styles.user_content}>{props.ccLast4}</div>
         </div>
       </div>
       <div className={styles.ban_hammer_button}>
@@ -90,6 +94,8 @@ function AdminView() {
               email={user.email}
               username={user.username}
               type={user.type}
+              ccLast4={user.ccLast4}
+              stripeId={user.stripeId}
             />
           )
         })}
@@ -101,6 +107,8 @@ function AdminView() {
               email={user.email}
               username={user.username}
               type={user.type}
+              ccLast4={user.ccLast4}
+              stripeId={user.stripeId}
             />
           )
         })}

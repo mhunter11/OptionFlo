@@ -33,6 +33,7 @@ module.exports = gql`
     createdAt: String!
     type: String
     stripeId: String
+    ccLast4: String
     admin: Boolean
   }
 
@@ -122,8 +123,8 @@ module.exports = gql`
     createComment(postId: String!, body: String): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
-    createSubscription(source: String!): User
-    changeCreditCard(source: String!): User
+    createSubscription(source: String!, ccLast4: String!): User
+    changeCreditCard(source: String!, ccLast4: String!): User
     saveOption(options: [OptionData]): [Option]!
     updateUserType(username: String): User!
   }

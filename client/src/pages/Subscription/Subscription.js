@@ -29,7 +29,7 @@ export default function Subscription() {
               image={OPTIONFLO_ICON}
               token={async token => {
                 const response = await createSub({
-                  variables: {source: token.id},
+                  variables: {source: token.id, ccLast4: token.card.last4},
                 })
                 swal(
                   `Welcome to the team`,
@@ -63,11 +63,12 @@ export default function Subscription() {
 }
 
 const CREATE_SUBSCRIPTION = gql`
-  mutation createSubscription($source: String!) {
-    createSubscription(source: $source) {
+  mutation createSubscription($source: String!, $ccLast4: String!) {
+    createSubscription(source: $source, ccLast4: $ccLast4) {
       id
       email
       type
+      ccLast4
     }
   }
 `

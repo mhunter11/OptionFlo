@@ -8,6 +8,7 @@
     "serve": "node index",
     "start": "node index",
     "dev": "concurrently \"nodemon index.js\" \"cd client && npm run start\" \"cd data-server && node index.js\"",
+    "fullstack": "concurrently \"nodemon index.js\" \"cd client && npm run start\"",
     "format": "prettier --ignore-path  .lintignore --write \".*.js\" \"**/*.js\" \"**/*.css\" \"**/*.scss\""
   },
   "keywords": [],

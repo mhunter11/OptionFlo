@@ -8,6 +8,7 @@ const userSchema = new Schema({
   type: String,
   stripeId: String,
   admin: Boolean,
+  ccLast4: {type: String, default: ''},
 })
 
 module.exports = model('User', userSchema)

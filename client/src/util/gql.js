@@ -9,6 +9,7 @@ export const GET_USER_INFO = gql`
       createdAt
       username
       email
+      ccLast4
       admin
     }
   }
@@ -70,6 +71,7 @@ export const GET_ALL_USERS = gql`
       createdAt
       type
       stripeId
+      ccLast4
     }
   }
 `
