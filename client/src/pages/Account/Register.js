@@ -73,6 +73,7 @@ function Register(props) {
       })
       .then(function () {
         addUser();
+        firebase.auth.signOut();
         swal(
           'Created',
           'Your account has been created\nPlease check your email for a verification link',
