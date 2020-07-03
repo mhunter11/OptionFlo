@@ -32,12 +32,16 @@ class Firebase {
     this.auth = firebase.auth();
 
     this.user = firebase.user;
-    this.idToken = null;
+    this.idToken = localStorage.getItem('firebaseToken');
 
-    if (this.user != null) {
+    //If we don't have a token, but the user is logged in
+    if (this.user != null && this.idToken == null) {
       let self = this;
       this.user.getIdToken().then(function(token) {
-        self.idToken = token;
+        if (self.idToken != token) {
+          self.idToken = token;
+          localStorage.setItem('firebaseToken', token);
+        }
       }).catch(function(error) {
         console.log(error);
         self.idToken = null;
@@ -56,14 +60,19 @@ class Firebase {
 
     if (this.user) {
       let self = this;
-      this.user.getIdToken(/* forceRefresh */ true).then(function(token) {
-        self.idToken = token;
+      this.user.getIdToken().then(function(token) {
+        if (self.token != token) {
+          self.idToken = token;
+          localStorage.setItem('firebaseToken', token);
+        }
       }).catch(function(error) {
         console.log(error);
+        localStorage.removeItem('firebaseToken')
         self.idToken = null;
       })
     } else {
       this.idToken = null;
+      localStorage.removeItem('firebaseToken')
     }
 
     if (this.onAuthStateChanged != null) {

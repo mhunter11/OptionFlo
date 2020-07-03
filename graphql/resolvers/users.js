@@ -199,20 +199,16 @@ module.exports = {
     async changeCreditCard(_, {source, ccLast4}, context) {
       const user = await checkAuth(context)
       const firebaseId = user.uid
-      const mongoUser = await User.findOne({firebaseId})
+      const updateUser = await User.findOne({firebaseId})
 
-      if (!user || !user.stripeId || user.type === 'free') {
+      if (!user || !updateUser || !updateUser.stripeId || updateUser.type === '') {
         throw new AuthenticationError('Not authenticated')
       }
 
-      const firebaseId = user.uid
-
-      const updateUser = await User.findOne({firebaseId})
-
-      await stripe.customers.update(user.stripeId, {source})
+      await stripe.customers.update(updateUser.stripeId, {source})
       updateUser.ccLast4 = ccLast4
       const result = await updateUser.save()
-      return {user, result}
+      return result
     },
     async updateUserType(_, {username}, context) {
       // const admin = checkAuth(context)

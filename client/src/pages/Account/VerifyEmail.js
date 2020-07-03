@@ -23,6 +23,9 @@ function VerifyEmail(props) {
   let actionCode = getParameterByName('oobCode')
 
   useEffect(() => {
+    if (signIn || home || resetPassword)
+      return;
+
     mode = getParameterByName('mode')
 
     var auth = firebase.auth
@@ -41,11 +44,12 @@ function VerifyEmail(props) {
             })
           })
           .catch((e) => {
-            swal(
+            /*swal(
               'Error',
               'Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed. Error Code:\n' + e,
               'error'
-            )
+            )*/
+            console.log(e);
 
             setHome(true)
           })
@@ -59,11 +63,11 @@ function VerifyEmail(props) {
           })
           .catch(e => {
             console.log(e)
-            swal(
+            /*swal(
               'Error',
               'Invalid or expired code, please try resetting your passoword again. If you have already reset your password, then no futher action is needed.',
               'error'
-            )
+            )*/
             setHome(true)
           })
         break

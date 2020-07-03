@@ -15,7 +15,10 @@ const httpLink = createHttpLink({
 const firebaseInstance = new Firebase();
 
 const authLink = setContext(() => {
-  const token = firebaseInstance.idToken;
+  let token = firebaseInstance.idToken;
+  if (token == null) {
+    token = localStorage.getItem('firebaseToken');
+  }
   return {
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
