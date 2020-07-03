@@ -58,6 +58,7 @@ export default function Account() {
           console.log(response)
         }}
         stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
+        panelLabel="Change card"
       >
         <button className={styles.stripe_checkout_button}>
           Change credit card
