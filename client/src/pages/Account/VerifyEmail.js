@@ -17,41 +17,60 @@ function getParameterByName(name) {
 }
 
 function VerifyEmail(props) {
-    const {firebase} = useContext(FirebaseContext)
+  const {firebase} = useContext(FirebaseContext);
 
-    const [goHome, setHome] = useState(false);
-    const [goSignIn, setSignIn] = useState(false);
+  const [home, setHome] = useState(false)
+  const [signIn, setSignIn] = useState(false)
+  const [resetPassword, setResetPassword] = useState(false)
+  let mode
+  let actionCode = getParameterByName('oobCode')
 
-    useEffect(() => {
-        var mode = getParameterByName('mode');
-        var actionCode = getParameterByName('oobCode');
-        
-        var auth = firebase.auth;
+  useEffect(() => {
+    mode = getParameterByName('mode')
 
-        switch (mode) {
-            case 'verifyEmail': {
-                auth.applyActionCode(actionCode).then(function(resp) {
-                    swal("Success", "Your email has successfully been verified", "success");
+    var auth = firebase.auth
 
-                    setSignIn(true);
-                }).catch(function(error) {
-                    swal("Error", "Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed.", "error");
+    switch (mode) {
+      case 'verifyEmail': {
+        auth
+          .applyActionCode(actionCode)
+          .then(() => {
+            swal(
+              'Success',
+              'Your email has successfully been verified',
+              'success'
+            ).then(() => {
+              setSignIn(true)
+            })
+          })
+          .catch(() => {
+            swal(
+              'Error',
+              'Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed.',
+              'error'
+            )
 
-                    setHome(true);
-                });
-                break;
-            }
-        }
-    })
-
-    if (goHome) {
-        return <Redirect to='/' />
-    } else if (goSignIn) {
-        return <Redirect to='/login' />
-    } else {
-        return (
-            <div></div>
-        )
+            setHome(true)
+          })
+        break
+      }
+      case 'resetPassword': {
+        auth
+          .verifyPasswordResetCode(actionCode)
+          .then(e => {
+            setResetPassword(true)
+          })
+          .catch(e => {
+            console.log(e)
+            swal(
+              'Error',
+              'Invalid or expired code, please try resetting your passoword again. If you have already reset your password, then no futher action is needed.',
+              'error'
+            )
+            setHome(true)
+          })
+        break
+      }
     }
 }
 

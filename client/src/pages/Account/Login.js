@@ -57,6 +57,30 @@ function Login(props) {
       })
   }
 
+  function resetPassword(e) {
+    e.preventDefault();
+
+    if (values.username == "") {
+      swal("No Email", "You must enter an email to do a password reset", "warning");
+      return;
+    }
+
+    swal({
+      title: 'Reset Password',
+      text: "Would you like to send a password reset to " + values.username + "?",
+      icon: 'info',
+      buttons: true
+    }).then((willReset) => {
+      if (willReset) {
+        return firebase.auth.sendPasswordResetEmail(values.username)
+      }
+    }).then(function() {
+      swal("Success", "An email has been sent to " + values.username + ". Please look for instructions to reset your password.", "success");
+    }).catch(function (error) {
+      swal('Error', 'An error has occured: "' + error + '"', 'error')
+    });
+  }
+
   if (goHome) {
     return <Redirect to="/" />
   }
@@ -88,6 +112,9 @@ function Login(props) {
         />
         <Button type="submit" primary>
           Login
+        </Button>
+        <Button onClick={resetPassword}  secondary>
+          Reset Password
         </Button>
       </Form>
       {Object.keys(errors).length > 0 && (
