@@ -142,6 +142,7 @@ module.exports = {
         createdAt: new Date().toISOString(),
         type: '',
         stripeId: '',
+        ccLast4: '',
       })
 
       const result = await newUser.save()
@@ -154,13 +155,13 @@ module.exports = {
         token,
       }
     },
-    async createSubscription(_, {source}, context) {
+    async createSubscription(_, {source, ccLast4}, context) {
       const user = checkAuth(context)
       if (!user) {
         throw new AuthenticationError('Not authenticated')
       }
-      const username = user.username
-      const updateUser = await User.findOne({username})
+
+      const updateUser = await User.findOne({username: user.username})
 
       const userEmail = user.email
       const customer = await stripe.customers.create({
@@ -171,19 +172,25 @@ module.exports = {
 
       updateUser.stripeId = customer.id
       updateUser.type = 'standard'
+      updateUser.ccLast4 = ccLast4
       const result = await updateUser.save()
       return result
     },
-    async changeCreditCard(_, {source}, context) {
+    async changeCreditCard(_, {source, ccLast4}, context) {
       const user = checkAuth(context)
 
       if (!user || !user.stripeId || user.type === 'free') {
         throw new AuthenticationError('Not authenticated')
       }
 
-      await stripe.customers.update(user.stripeId, {source})
+      const username = user.username
 
-      return user
+      const updateUser = await User.findOne({username})
+
+      await stripe.customers.update(user.stripeId, {source})
+      updateUser.ccLast4 = ccLast4
+      const result = await updateUser.save()
+      return {user, result}
     },
     async updateUserType(_, {username}, context) {
       // const admin = checkAuth(context)

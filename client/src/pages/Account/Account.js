@@ -8,11 +8,14 @@ import {GET_USER_INFO} from '../../util/gql'
 import {ENVIRONMENT} from '../../env'
 import {AuthContext} from '../../context/auth'
 
+import styles from './Account.module.scss'
+
 const CHANGE_CREDIT_CARD = gql`
-  mutation changeCreditCard($source: String!) {
-    changeCreditCard(source: $source) {
+  mutation changeCreditCard($source: String!, $ccLast4: String!) {
+    changeCreditCard(source: $source, ccLast4: $ccLast4) {
       id
       email
+      ccLast4
       type
     }
   }
@@ -44,18 +47,22 @@ export default function Account() {
   return (
     <div>
       <div>{data.getUser.email}</div>
+      <div>your current credit card last 4 digits: {data.getUser.ccLast4}</div>
       <StripeCheckout
         name="OptionFlo"
         currency="USD"
         token={async token => {
           const response = await changeCreditCard({
-            variables: {source: token.id},
+            variables: {source: token.id, ccLast4: token.card.last4},
           })
           console.log(response)
         }}
         stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
-        amount={6000}
-      />
+      >
+        <button className={styles.stripe_checkout_button}>
+          Change credit card
+        </button>
+      </StripeCheckout>
     </div>
   )
 }
