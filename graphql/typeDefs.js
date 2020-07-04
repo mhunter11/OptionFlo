@@ -114,6 +114,7 @@ module.exports = gql`
 
   type Mutation {
     register(registerInput: RegisterInput): User!
+    giveExistingUsersFirebaseId(email: String!, firebaseId: String!): User!
     createPost(body: String!): Post!
     deletePost(postId: ID!): String!
     createComment(postId: String!, body: String): Post!

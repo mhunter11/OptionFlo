@@ -14,7 +14,6 @@ export default function MenuBar() {
 
   const path = pathname === '/' ? 'home' : pathname.substr(1)
   const [activeItem, setActiveItem] = useState(path)
-  const [openMenu, setOpenMenu] = useState(false)
 
   const handleItemClick = (e, {name}) => setActiveItem(name)
   const MENU_BAR_DATA = [

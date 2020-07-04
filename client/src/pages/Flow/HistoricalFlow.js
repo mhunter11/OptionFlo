@@ -10,12 +10,11 @@ import {HISTORICAL_FLOW_ROW_NAME} from './flow-data'
 import FlowList from './FlowList'
 import MobileFlowList from './MobileFlowList'
 import Loading from '../../components/Loading'
-import {AuthContext} from '../../context/auth'
-import {set} from 'lodash'
+import {FirebaseContext} from '../../context/auth'
 
 export default function HistoricalFlow() {
-  const {user} = useContext(AuthContext)
-  const [options, setOptions] = useState([])
+  const {currentUser} = useContext(FirebaseContext)
+  const user = currentUser;
   const [date, setDate] = useState(todayDate)
   const [searchInput, setSearchInput] = useState('')
   const [saveOptions, setSaveOptions] = useState([])
