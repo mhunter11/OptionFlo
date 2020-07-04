@@ -26,3 +26,9 @@ export const HISTORICAL_FLOW_ROW_NAME = [
   {className: 'row_ref', name: 'Ref'},
 ]
 
+export const MIN_DATE = new Date('2020-05-29')
+
+export const HEIGHT = 900
+export const WIDTH = 1280
+export const ITEM_SIZE = 45
+export const CLASSNAME = 'List'

@@ -13,8 +13,21 @@ import {SUBSCRIPTION_BENEFITS, SubscriptionCardData} from './subscription-data'
 
 import styles from './Subscription.module.scss'
 
-export default function Subscription() {
-  const [createSub] = useMutation(CREATE_SUBSCRIPTION)
+export default function Subscription(props) {
+  const [createSub] = useMutation(CREATE_SUBSCRIPTION, {
+    update(_, result) {
+      props.history.push('/flow')
+    },
+    onError(err) {
+      swal(
+        `Something went wrong`,
+        `Message Mel on discord with the following error, ${JSON.stringify(
+          err
+        )}`,
+        'error'
+      )
+    },
+  })
   const MONTHLY_PLAN = '$30 / Monthly Plan'
   return (
     <div className={styles.bg_color}>
@@ -33,7 +46,7 @@ export default function Subscription() {
                 })
                 swal(
                   `Welcome to the team`,
-                  `Click on 'flow' on the top to see option flow`,
+                  `Check out 'flow' and 'Historical Flow on the top nav`,
                   'success'
                 )
                 console.log(response)
