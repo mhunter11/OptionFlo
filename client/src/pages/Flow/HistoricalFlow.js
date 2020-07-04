@@ -11,17 +11,10 @@ import FlowList from './FlowList'
 import MobileFlowList from './MobileFlowList'
 import Loading from '../../components/Loading'
 import {FirebaseContext} from '../../context/auth'
-import { set } from 'lodash'
 
 export default function HistoricalFlow() {
-  const {firebase, currentUser} = useContext(FirebaseContext)
+  const {currentUser} = useContext(FirebaseContext)
   const user = currentUser;
-  console.log(user);
-  if (user != null) {
-    console.log(user ? "yes" : "no");
-    console.log("AFDSFSDFD " + user.uid);
-  }
-  const [options, setOptions] = useState([])
   const [date, setDate] = useState(todayDate)
   const [searchInput, setSearchInput] = useState('')
   const [saveOptions, setSaveOptions] = useState([])

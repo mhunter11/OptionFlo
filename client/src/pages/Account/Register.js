@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react'
-import cx from 'classnames'
 import {Button, Form} from 'semantic-ui-react'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -23,9 +22,7 @@ function Register(props) {
     confirmPassword: '',
   })
 
-  const [addUser, {loading}] = useMutation(REGISTER_USER, {
-    update(_, {data: {register: userData}}) {
-    },
+  const [addUser] = useMutation(REGISTER_USER, {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },

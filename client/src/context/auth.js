@@ -1,4 +1,4 @@
-import React, {useReducer, createContext} from 'react'
+import React, {createContext} from 'react'
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
@@ -38,7 +38,7 @@ class Firebase {
     if (this.user != null && this.idToken == null) {
       let self = this;
       this.user.getIdToken().then(function(token) {
-        if (self.idToken != token) {
+        if (self.idToken !== token) {
           self.idToken = token;
           localStorage.setItem('firebaseToken', token);
         }
@@ -61,7 +61,7 @@ class Firebase {
     if (this.user) {
       let self = this;
       this.user.getIdToken().then(function(token) {
-        if (self.token != token) {
+        if (self.token !== token) {
           self.idToken = token;
           localStorage.setItem('firebaseToken', token);
         }
@@ -75,7 +75,7 @@ class Firebase {
       localStorage.removeItem('firebaseToken')
     }
 
-    if (this.onAuthStateChanged != null) {
+    if (this.onAuthStateChanged !== null) {
       this.onAuthStateChanged(newUser);
     }
   }

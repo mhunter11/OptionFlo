@@ -18,7 +18,7 @@ module.exports = {
       const user = await checkAuth(context)
       if (user.uid === args.userId) {
         try {
-          const firebaseId = args.userId;
+          const firebaseId = args.userId
           const newUser = await User.findOne({firebaseId})
           if (newUser) {
             return newUser
@@ -95,48 +95,32 @@ module.exports = {
     },
   },
   Mutation: {
-    /*async login(_, {username, password}, {req}) {
-      const {errors, valid} = validateLoginInput(username, password) //email
-      const user = await User.findOne({username})
-      // const email = await User.findOne({ email })
+    async giveExistingUsersFirebaseId(_, {email, firebaseId}) {
+      const user = await User.findOne({email})
 
       if (!user) {
         errors.general = 'User not found'
         throw new UserInputError('User not found', {errors})
       }
 
-      // if (!email) {
-      //   errors.general = 'Email not found'
-      //   throw new UserInputError("Email not found", { errors })
-      // }
-
-      const match = await bcrypt.compare(password, user.password)
-
-      if (!match) {
-        errors.general = 'Wrong credentials'
-        throw new UserInputError('Wrong credentials', {errors})
+      if (user.firebaseId) {
+        console.log('user already has a Firebase ID', user.firebaseId)
+        return user
       }
-      const token = generateToken(user)
-      // req.session = { token, userId: user.id }
-      // console.log(req.session)
-      return {
-        ...user._doc,
-        id: user.id,
-        token,
-      }
-    },*/
-    async register(
-      parent,
-      {registerInput: {uid}}
-    ) {
-      const user = await admin.auth().getUser(uid);
+
+      user.firebaseId = firebaseId
+      const result = await user.save()
+      return result
+    },
+    async register(parent, {registerInput: {uid}}) {
+      const user = await admin.auth().getUser(uid)
       if (!user) {
         throw new AuthenticationError('Not authenticated')
       }
 
-      const firebaseId = user.uid;
-      const username = user.displayName;
-      const email = user.email;
+      const firebaseId = user.uid
+      const username = user.displayName
+      const email = user.email
 
       const userFirebaseId = await User.findOne({firebaseId})
       const userEmail = await User.findOne({email})
@@ -171,7 +155,7 @@ module.exports = {
 
       return {
         ...result._doc,
-        id: result.id
+        id: result.id,
       }
     },
     async createSubscription(_, {source, ccLast4}, context) {
@@ -201,7 +185,12 @@ module.exports = {
       const firebaseId = user.uid
       const updateUser = await User.findOne({firebaseId})
 
-      if (!user || !updateUser || !updateUser.stripeId || updateUser.type === '') {
+      if (
+        !user ||
+        !updateUser ||
+        !updateUser.stripeId ||
+        updateUser.type === ''
+      ) {
         throw new AuthenticationError('Not authenticated')
       }
 
