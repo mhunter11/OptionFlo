@@ -112,6 +112,7 @@ module.exports = {
       if (firebaseId == user.uid) {
         updateUser.firebaseId = firebaseId
         const result = await updateUser.save()
+        console.log(result)
         return result
       }
     },

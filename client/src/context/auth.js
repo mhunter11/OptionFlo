@@ -26,7 +26,7 @@ var firebaseConfig = {
 
 class Firebase {
   constructor() {
-    // firebase.initializeApp(firebaseConfig)
+    firebase.initializeApp(firebaseConfig)
 
     this.auth = firebase.auth()
 

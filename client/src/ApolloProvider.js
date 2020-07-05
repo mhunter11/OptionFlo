@@ -14,8 +14,8 @@ const httpLink = createHttpLink({
 
 const firebaseInstance = new Firebase()
 
-const authLink = setContext(() => {
-  let token = firebaseInstance.idToken
+const authLink = setContext(async () => {
+  let token = await firebaseInstance.user.getIdToken()
   if (token == null) {
     token = localStorage.getItem('firebaseToken')
   }
@@ -32,7 +32,7 @@ const client = new ApolloClient({
 })
 
 function FirebaseApolloApp(props) {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(firebaseInstance.user)
 
   firebaseInstance.onAuthStateChanged = function (newUser) {
     setCurrentUser(newUser)
