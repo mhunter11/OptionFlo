@@ -101,7 +101,7 @@ module.exports = {
       if (!user) {
         throw new AuthenticationError('Not authenticated')
       }
-      
+
       const updateUser = await User.findOne({email})
 
       if (updateUser.firebaseId) {
@@ -161,11 +161,7 @@ module.exports = {
         id: result.id,
       }
     },
-<<<<<<< HEAD
-    async createSubscription(_, {source}, context) {
-=======
     async createSubscription(_, {source, ccLast4}, context) {
->>>>>>> 688306920d184ef922357f06153120849bf8cace
       const user = await checkAuth(context)
       if (!user) {
         throw new AuthenticationError('Not authenticated')
@@ -186,12 +182,7 @@ module.exports = {
       const result = await updateUser.save()
       return result
     },
-<<<<<<< HEAD
-    async changeCreditCard(_, {source}, context) {
-=======
-
     async changeCreditCard(_, {source, ccLast4}, context) {
->>>>>>> 688306920d184ef922357f06153120849bf8cace
       const user = await checkAuth(context)
       const firebaseId = user.uid
       const updateUser = await User.findOne({firebaseId})
