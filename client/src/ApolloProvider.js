@@ -12,12 +12,12 @@ const httpLink = createHttpLink({
   uri: ENVIRONMENT.GRAPHQL_URL,
 })
 
-const firebaseInstance = new Firebase();
+const firebaseInstance = new Firebase()
 
 const authLink = setContext(() => {
-  let token = firebaseInstance.idToken;
+  let token = firebaseInstance.idToken
   if (token == null) {
-    token = localStorage.getItem('firebaseToken');
+    token = localStorage.getItem('firebaseToken')
   }
   return {
     headers: {
@@ -31,23 +31,19 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-
-
 function FirebaseApolloApp(props) {
-<<<<<<< HEAD
-  const [currentUser, setCurrentUser] = useState(null);
-=======
-  const [currentUser, setCurrentUser] = useState(firebaseInstance.user);
->>>>>>> 688306920d184ef922357f06153120849bf8cace
+  const [currentUser, setCurrentUser] = useState(null)
 
-  firebaseInstance.onAuthStateChanged = function(newUser) {
-    setCurrentUser(newUser);
+  firebaseInstance.onAuthStateChanged = function (newUser) {
+    setCurrentUser(newUser)
   }
 
   return (
-    <FirebaseContext.Provider value={{firebase: firebaseInstance, currentUser: currentUser}}>
+    <FirebaseContext.Provider
+      value={{firebase: firebaseInstance, currentUser: currentUser}}
+    >
       <ApolloProvider client={client}>
-          <App />
+        <App />
       </ApolloProvider>
     </FirebaseContext.Provider>
   )

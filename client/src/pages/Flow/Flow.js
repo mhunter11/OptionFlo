@@ -131,14 +131,11 @@ export default function Flow() {
       //Keep loading if we're waiting for a user that is logged in
       return <Loading />
     }
-<<<<<<< HEAD
-=======
   }
 
   if (dataR == null) {
     //firebase.auth.signOut(); //Just sign the user out
     return <Redirect to="/" />
->>>>>>> 688306920d184ef922357f06153120849bf8cace
   }
 
   if (!user && !loadingR) {
