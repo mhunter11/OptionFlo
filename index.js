@@ -13,6 +13,19 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({req}) => ({req, newPubSub}),
+  cors: true,
+  corsMiddleware: {
+    credentials: true,
+    origin: (origin, callback) => {
+      const whitelist = ['https://optionflo.com']
+
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+  },
 })
 
 mongoose
