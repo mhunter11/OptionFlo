@@ -95,22 +95,25 @@ module.exports = {
     },
   },
   Mutation: {
-    async giveExistingUsersFirebaseId(_, {email, firebaseId}) {
-      const user = await User.findOne({email})
+    async giveExistingUsersFirebaseId(_, {email, firebaseId}, context) {
+      const user = await checkAuth(context)
 
       if (!user) {
-        errors.general = 'User not found'
-        throw new UserInputError('User not found', {errors})
+        throw new AuthenticationError('Not authenticated')
       }
+      
+      const updateUser = await User.findOne({email})
 
-      if (user.firebaseId) {
+      if (updateUser.firebaseId) {
         console.log('user already has a Firebase ID', user.firebaseId)
-        return user
+        return updateUser
       }
 
-      user.firebaseId = firebaseId
-      const result = await user.save()
-      return result
+      if (firebaseId == user.uid) {
+        updateUser.firebaseId = firebaseId
+        const result = await updateUser.save()
+        return result
+      }
     },
     async register(parent, {registerInput: {uid}}) {
       const user = await admin.auth().getUser(uid)
