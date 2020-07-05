@@ -3,27 +3,30 @@ import {Menu} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import Logo from '../logo-02.png'
 
-import {AuthContext} from '../context/auth'
+import {FirebaseContext} from '../context/auth'
 import MobileMenu from './MobileMenu'
 
 import styles from './Menu.module.scss'
 
 export default function MenuBar() {
-  const {user, logout} = useContext(AuthContext)
+  const {firebase, currentUser} = useContext(FirebaseContext)
   const pathname = window.location.pathname
 
   const path = pathname === '/' ? 'home' : pathname.substr(1)
   const [activeItem, setActiveItem] = useState(path)
-  const [openMenu, setOpenMenu] = useState(false)
 
   const handleItemClick = (e, {name}) => setActiveItem(name)
   const MENU_BAR_DATA = [
     {name: 'Flow', url: '/flow'},
     {name: 'Account', url: '/account'},
-    {name: 'Logout', onClick: logout},
+    {name: 'Logout', onClick: firebase.auth.signOut},
   ]
 
-  const menuBar = user ? (
+  function performSignout(e) {
+    firebase.auth.signOut();
+  }
+
+  const menuBar = currentUser ? (
     <div>
       <div className={styles.mobile_view}>
         <MobileMenu data={MENU_BAR_DATA} />
@@ -49,7 +52,7 @@ export default function MenuBar() {
             <Link className="item" to="/account">
               Account
             </Link>
-            <Menu.Item name="logout" onClick={logout} />
+            <Menu.Item name="logout" onClick={performSignout} />
           </Menu.Menu>
         </Menu>
       </div>

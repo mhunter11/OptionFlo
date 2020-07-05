@@ -10,7 +10,7 @@ import {FLOW_ROW_NAME} from './flow-data'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
@@ -22,8 +22,9 @@ export default function Flow() {
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
-  const {user} = useContext(AuthContext)
+  const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL)
+  const user = currentUser;
   // let todayOptionData = []
   let todayOptionsTraded = []
   let today = new Date()
@@ -36,7 +37,7 @@ export default function Flow() {
     GET_USER_INFO,
     {
       variables: {
-        myUserId: user ? user.id : null,
+        myUserId: user ? user.uid : null,
       },
     }
   )
@@ -124,6 +125,16 @@ export default function Flow() {
   }
 
   if (errorR) {
+    if (!firebase.user) {
+      return <Redirect to="/" />
+    } else {
+      //Keep loading if we're waiting for a user that is logged in
+      return <Loading />
+    }
+  }
+
+  if (dataR == null) {
+    //firebase.auth.signOut(); //Just sign the user out
     return <Redirect to="/" />
   }
 

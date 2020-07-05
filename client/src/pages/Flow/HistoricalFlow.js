@@ -10,12 +10,11 @@ import {HISTORICAL_FLOW_ROW_NAME} from './flow-data'
 import FlowList from './FlowList'
 import MobileFlowList from './MobileFlowList'
 import Loading from '../../components/Loading'
-import {AuthContext} from '../../context/auth'
-import { set } from 'lodash'
+import {FirebaseContext} from '../../context/auth'
 
 export default function HistoricalFlow() {
-  const {user} = useContext(AuthContext)
-  const [options, setOptions] = useState([])
+  const {currentUser} = useContext(FirebaseContext)
+  const user = currentUser;
   const [date, setDate] = useState(todayDate)
   const [searchInput, setSearchInput] = useState('')
   const [saveOptions, setSaveOptions] = useState([])
@@ -24,10 +23,12 @@ export default function HistoricalFlow() {
     GET_USER_INFO,
     {
       variables: {
-        myUserId: user ? user.id : null,
+        myUserId: user ? user.uid : null,
       },
     }
   )
+
+  console.log(dataR == undefined);
 
   const {loading, error, data} = useQuery(GETS_OPTIONS_BY_DATE, {
     variables: {
@@ -61,7 +62,10 @@ export default function HistoricalFlow() {
     setSaveOptions(() => [...filterData])
   }
 
-  if (loading) {
+  //This should always be LOADING RRRRRR
+  //Not "loading"
+  //"loadingR"
+  if (loadingR) {
     return <Loading />
   }
 

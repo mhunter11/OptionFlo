@@ -1,17 +1,19 @@
 import React, {useContext, useState} from 'react'
-import cx from 'classnames'
 import {Button, Form} from 'semantic-ui-react'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import {Redirect} from 'react-router'
 
 import styles from './Register.module.scss'
 
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 import {useForm} from '../../util/hooks'
+import swal from 'sweetalert'
 
 function Register(props) {
-  const context = useContext(AuthContext)
+  const {firebase} = useContext(FirebaseContext)
   const [errors, setErrors] = useState({})
+  const [goHome, setHome] = useState(false)
 
   const {onChange, onSubmit, values} = useForm(registerUser, {
     username: '',
@@ -20,11 +22,7 @@ function Register(props) {
     confirmPassword: '',
   })
 
-  const [addUser, {loading}] = useMutation(REGISTER_USER, {
-    update(_, {data: {register: userData}}) {
-      context.login(userData)
-      props.history.push('/')
-    },
+  const [addUser] = useMutation(REGISTER_USER, {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
@@ -32,7 +30,65 @@ function Register(props) {
   })
 
   function registerUser() {
-    addUser()
+    if (values.password != values.confirmPassword) {
+      swal(
+        'Mismatched Passwords',
+        'The passwords entered do not match, please try again',
+        'warning'
+      )
+      return
+    }
+
+    if (!(/\d/.test(values.password) && /[a-zA-Z]/.test(values.password))) {
+      swal(
+        'Password Requirement',
+        'Your password must include at least one letter and one number',
+        'error'
+      )
+      return
+    }
+
+    if (values.password.length < 6) {
+      swal(
+        'Password Requirement',
+        'Your password must be at least 6 characters long',
+        'error'
+      )
+      return
+    }
+
+    firebase
+      .auth
+      .createUserWithEmailAndPassword(values.email, values.password)
+      .then(function (data) {
+        let user = data.user
+        user.sendEmailVerification()
+        values.uid = user.uid;
+        return user.updateProfile({
+          displayName: values.username,
+        })
+      })
+      .then(function () {
+        addUser();
+        firebase.auth.signOut();
+        swal(
+          'Created',
+          'Your account has been created\nPlease check your email for a verification link',
+          'success'
+        )
+        setHome(true)
+      })
+      .catch(function (error) {
+        swal(
+          'Error',
+          'There was an error creating your account\n' + error,
+          'error'
+        )
+      })
+  }
+
+  if (goHome) {
+    return <Redirect to="/" />
   }
 
   return (
@@ -40,7 +96,6 @@ function Register(props) {
       <Form
         onSubmit={onSubmit}
         noValidate
-        className={cx(loading ? 'loading' : '', styles.container)}
       >
         <h1>Register</h1>
         <Form.Input
@@ -98,24 +153,17 @@ function Register(props) {
 
 const REGISTER_USER = gql`
   mutation register(
-    $username: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
+    $uid: String!
   ) {
     register(
       registerInput: {
-        username: $username
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
+        uid: $uid
       }
     ) {
       id
       email
       username
       createdAt
-      token
     }
   }
 `

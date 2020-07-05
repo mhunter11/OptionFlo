@@ -1,8 +1,8 @@
 const {model, Schema} = require('mongoose')
 
 const userSchema = new Schema({
+  firebaseId: String,
   username: String,
-  password: String,
   email: String,
   createdAt: String,
   type: String,

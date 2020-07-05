@@ -1,12 +1,12 @@
 import React, {useContext} from 'react'
-import {Redirect, Link} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
 import {GET_USER_INFO} from '../../util/gql'
 import {ENVIRONMENT} from '../../env'
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 
 import styles from './Account.module.scss'
 
@@ -22,9 +22,10 @@ const CHANGE_CREDIT_CARD = gql`
 `
 
 export default function Account() {
-  const {user} = useContext(AuthContext)
-  const {loading, error, data} = useQuery(GET_USER_INFO, {
-    variables: {myUserId: user ? user.id : null},
+  const {firebase, currentUser} = useContext(FirebaseContext)
+  const user = currentUser;
+  const {loading, data} = useQuery(GET_USER_INFO, {
+    variables: {myUserId: user ? user.uid : null},
   })
   const [changeCreditCard] = useMutation(CHANGE_CREDIT_CARD)
 
@@ -36,7 +37,7 @@ export default function Account() {
     return <div>data is undefined</div>
   }
 
-  if (!data.getUser) {
+  if (!firebase.user) {
     return <Redirect to="/login">Please login</Redirect>
   }
 
