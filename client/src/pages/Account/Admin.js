@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 
 import Loading from '../../components/Loading'
 
-import {AuthContext} from '../../context/auth'
+import {FirebaseContext} from '../../context/auth'
 
 import {GET_ALL_USERS, GET_USER_INFO} from '../../util/gql'
 
@@ -117,7 +117,8 @@ function AdminView() {
 }
 
 export default function Admin() {
-  const {user} = useContext(AuthContext)
+  const {firebase, currentUser} = useContext(FirebaseContext)
+  const user = currentUser;
   const {loading, error, data} = useQuery(GET_USER_INFO, {
     variables: {myUserId: user ? user.id : null},
   })

@@ -16,10 +16,17 @@ module.exports.checkAuth = async context => {
     const token = authHeader.split('Bearer ')[1]
     if (token) {
       try {
+<<<<<<< HEAD
         const decodedToken = await admin.auth().verifyIdToken(token)
         const uid = decodedToken.uid
         const user = await admin.auth().getUser(uid)
         return user
+=======
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const uid = decodedToken.uid;
+        const user = await admin.auth().getUser(uid);
+        return user;
+>>>>>>> 688306920d184ef922357f06153120849bf8cace
       } catch (err) {
         throw new AuthenticationError('Invalid/Expired token')
       }
@@ -29,4 +36,8 @@ module.exports.checkAuth = async context => {
   throw new Error('Authorization header must be provided')
 }
 
+<<<<<<< HEAD
 module.exports.admin = admin
+=======
+module.exports.admin = admin;
+>>>>>>> 688306920d184ef922357f06153120849bf8cace

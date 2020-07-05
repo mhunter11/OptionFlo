@@ -23,10 +23,12 @@ export default function HistoricalFlow() {
     GET_USER_INFO,
     {
       variables: {
-        myUserId: user ? user.id : null,
+        myUserId: user ? user.uid : null,
       },
     }
   )
+
+  console.log(dataR == undefined);
 
   const {loading, error, data} = useQuery(GETS_OPTIONS_BY_DATE, {
     variables: {
@@ -60,7 +62,10 @@ export default function HistoricalFlow() {
     setSaveOptions(() => [...filterData])
   }
 
-  if (loading) {
+  //This should always be LOADING RRRRRR
+  //Not "loading"
+  //"loadingR"
+  if (loadingR) {
     return <Loading />
   }
 

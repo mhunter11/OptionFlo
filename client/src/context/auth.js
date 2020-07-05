@@ -92,4 +92,8 @@ function FirebaseProvider(props) {
   return <FirebaseContext.Provider value={{firebase: firebaseInstance}} />
 }
 
+<<<<<<< HEAD
 export {FirebaseContext, FirebaseProvider, Firebase}
+=======
+export {FirebaseContext, FirebaseProvider, Firebase}
+>>>>>>> 688306920d184ef922357f06153120849bf8cace

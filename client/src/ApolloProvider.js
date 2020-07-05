@@ -34,7 +34,11 @@ const client = new ApolloClient({
 
 
 function FirebaseApolloApp(props) {
+<<<<<<< HEAD
   const [currentUser, setCurrentUser] = useState(null);
+=======
+  const [currentUser, setCurrentUser] = useState(firebaseInstance.user);
+>>>>>>> 688306920d184ef922357f06153120849bf8cace
 
   firebaseInstance.onAuthStateChanged = function(newUser) {
     setCurrentUser(newUser);
