@@ -10,4 +10,5 @@ export const ENVIRONMENT = {
     SENDER_ID: process.env.REACT_APP_FIREBASE_SENDER_ID,
     MEASURE_ID: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
   },
+  CORS: process.env.REACT_APP_CORS,
 }
