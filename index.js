@@ -13,13 +13,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({req}) => ({req, newPubSub}),
-  cors: {
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-    credentials: true,
-  },
+  cors: {origin: process.env.CLIENT_URL, credentials: true},
 })
 
 mongoose
