@@ -31,11 +31,20 @@ export default function Subscription() {
                 const response = await createSub({
                   variables: {source: token.id, ccLast4: token.card.last4},
                 })
-                swal(
-                  `Welcome to the team`,
-                  `Click on 'flow' on the top to see option flow`,
-                  'success'
-                )
+                const {type} = response.data.createSubscription
+                if (type === '') {
+                  swal(
+                    `Something went wrong with your payment`,
+                    `Please try again or contact us at optionflo@gmail.com`,
+                    'error'
+                  )
+                } else {
+                  swal(
+                    `Welcome to the team`,
+                    `Click on 'flow' on the top to see option flow`,
+                    'success'
+                  )
+                }
                 console.log(response)
               }}
               stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}

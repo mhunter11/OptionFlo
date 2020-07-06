@@ -171,17 +171,23 @@ module.exports = {
       const updateUser = await User.findOne({firebaseId})
 
       const userEmail = user.email
+
       const customer = await stripe.customers.create({
         email: userEmail,
         source,
         plan: process.env.PLAN,
       })
 
-      updateUser.stripeId = customer.id
-      updateUser.type = 'standard'
-      updateUser.ccLast4 = ccLast4
-      const result = await updateUser.save()
-      return result
+      const status = customer.subscriptions.data[0].status
+      if (status === 'active' || status === 'trialing') {
+        updateUser.stripeId = customer.id
+        updateUser.type = 'standard'
+        updateUser.ccLast4 = ccLast4
+        const result = await updateUser.save()
+        return result
+      }
+
+      return updateUser
     },
     async changeCreditCard(_, {source, ccLast4}, context) {
       const user = await checkAuth(context)
