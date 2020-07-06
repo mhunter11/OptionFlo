@@ -31,7 +31,7 @@ export default function Subscription() {
                 const response = await createSub({
                   variables: {source: token.id, ccLast4: token.card.last4},
                 })
-                const {type} = response.data.createSubscription
+                const type = response.data.createSubscription.type
                 if (type === '') {
                   swal(
                     `Something went wrong with your payment`,
