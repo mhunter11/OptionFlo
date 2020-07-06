@@ -13,8 +13,10 @@ function getParameterByName(name) {
   else return decodeURIComponent(results[1].replace(/\+/g, ' '))
 }
 
+var completed = false;
+
 function VerifyEmail(props) {
-  const {firebase} = useContext(FirebaseContext)
+  const {firebase, currentUser} = useContext(FirebaseContext)
 
   const [home, setHome] = useState(false)
   const [signIn, setSignIn] = useState(false)
@@ -34,6 +36,7 @@ function VerifyEmail(props) {
         auth
           .applyActionCode(actionCode)
           .then(() => {
+            completed = true;
             swal(
               'Success',
               'Your email has successfully been verified',
@@ -43,14 +46,41 @@ function VerifyEmail(props) {
             })
           })
           .catch(e => {
-            swal(
-              'Error',
-              'Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed.',
-              'error'
-            )
-            console.log(e)
+            if (currentUser != null && currentUser.emailVerified) {
+              swal(
+                'Success',
+                'Your email has successfully been verified',
+                'success'
+              ).then(() => {
+                setSignIn(true)
+              })
+            } else if (firebase.user != null && firebase.user.emailVerified) {
+              swal(
+                'Success',
+                'Your email has successfully been verified',
+                'success'
+              ).then(() => {
+                setSignIn(true)
+              })
+            } else if (firebase.auth.currentUser != null && firebase.auth.currentUser.emailVerified) {
+              swal(
+                'Success',
+                'Your email has successfully been verified',
+                'success'
+              ).then(() => {
+                setSignIn(true)
+              })
+            } else if (!completed) {
+              swal(
+                'Error',
+                'Invalid or expired code, please try verifying your email again. If you have already verified your email, then no futher action is needed.',
+                'error'
+              )
 
-            setHome(true)
+              setHome(true)
+            }
+            console.log(e)
+            
           })
         break
       }
