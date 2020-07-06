@@ -10,7 +10,7 @@ import {ENVIRONMENT} from './env'
 
 const httpLink = createHttpLink({
   uri: ENVIRONMENT.GRAPHQL_URL,
-  credentials: ENVIRONMENT.CORS,
+  // credentials: ENVIRONMENT.CORS,
 })
 
 const firebaseInstance = new Firebase()
