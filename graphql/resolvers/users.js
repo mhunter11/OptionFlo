@@ -178,7 +178,7 @@ module.exports = {
         plan: process.env.PLAN,
       })
 
-      // this catches the last current subscription status users can cancel and resubscribe
+      // this catches the last current subscription status. We do this because users can cancel and resubscribe
 
       const status =
         customer.subscriptions.data[customer.subscriptions.data.length - 1]
