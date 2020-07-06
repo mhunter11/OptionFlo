@@ -178,7 +178,11 @@ module.exports = {
         plan: process.env.PLAN,
       })
 
-      const status = customer.subscriptions.data[0].status
+      // this catches the last current subscription status users can cancel and resubscribe
+
+      const status =
+        customer.subscriptions.data[customer.subscriptions.data.length - 1]
+          .status
       if (status === 'active' || status === 'trialing') {
         updateUser.stripeId = customer.id
         updateUser.type = 'standard'
