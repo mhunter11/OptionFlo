@@ -8,13 +8,12 @@ import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 import {todayDate} from './FlowListFunction'
 import {HISTORICAL_FLOW_ROW_NAME} from './flow-data'
 import FlowList from './FlowList'
-import MobileFlowList from './MobileFlowList'
 import Loading from '../../components/Loading'
 import {FirebaseContext} from '../../context/auth'
 
 export default function HistoricalFlow() {
   const {currentUser} = useContext(FirebaseContext)
-  const user = currentUser;
+  const user = currentUser
   const [date, setDate] = useState(todayDate)
   const [searchInput, setSearchInput] = useState('')
   const [saveOptions, setSaveOptions] = useState([])
@@ -28,8 +27,6 @@ export default function HistoricalFlow() {
     }
   )
 
-  console.log(dataR == undefined);
-
   const {loading, error, data} = useQuery(GETS_OPTIONS_BY_DATE, {
     variables: {
       inputDate: date,
@@ -39,7 +36,7 @@ export default function HistoricalFlow() {
 
   let dataOptions
 
-  if (data !== undefined) {
+  if (!loading) {
     dataOptions = data.getOptionsByDate
   }
 
@@ -62,8 +59,6 @@ export default function HistoricalFlow() {
     setSaveOptions(() => [...filterData])
   }
 
-  //This should always be LOADING RRRRRR
-  //Not "loading"
   //"loadingR"
   if (loadingR) {
     return <Loading />
@@ -131,59 +126,43 @@ export default function HistoricalFlow() {
           </div>
         </div>
         <div>
-          <ul className={styles.ul_list}>
-            {filteredOptions &&
-              saveOptions.map((data, index) => (
-                <FlowList
-                  key={index}
-                  ticker={data.ticker}
-                  strike_price={data.strike_price}
-                  date_expiration={data.date_expiration}
-                  put_call={data.put_call}
-                  option_activity_type={data.option_activity_type}
-                  description={data.description}
-                  sentiment={data.sentiment}
-                  cost_basis={data.cost_basis}
-                  date={date}
-                  onClick={() => filterTicker(data.ticker)}
-                />
-              ))}
-            {!filteredOptions &&
-              dataOptions.map((data, index) => (
-                <FlowList
-                  key={index}
-                  ticker={data.ticker}
-                  strike_price={data.strike_price}
-                  date_expiration={data.date_expiration}
-                  put_call={data.put_call}
-                  option_activity_type={data.option_activity_type}
-                  description={data.description}
-                  sentiment={data.sentiment}
-                  cost_basis={data.cost_basis}
-                  date={date}
-                  onClick={() => filterTicker(data.ticker)}
-                />
-              ))}
-          </ul>
+          {filteredOptions &&
+            dataOptions !== undefined &&
+            saveOptions.map((data, index) => (
+              <FlowList
+                key={index}
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                sentiment={data.sentiment}
+                cost_basis={data.cost_basis}
+                date={date}
+                onClick={() => filterTicker(data.ticker)}
+              />
+            ))}
+          {!filteredOptions &&
+            dataOptions !== undefined &&
+            dataOptions.map((data, index) => (
+              <FlowList
+                key={index}
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                sentiment={data.sentiment}
+                cost_basis={data.cost_basis}
+                date={date}
+                onClick={() => filterTicker(data.ticker)}
+              />
+            ))}
         </div>
       </div>
-      <div className={styles.mobile_view}>
-        <ul className={styles.ul_list}>
-          {dataOptions.map((data, index) => (
-            <MobileFlowList
-              key={index}
-              ticker={data.ticker}
-              strike_price={data.strike_price}
-              date_expiration={data.date_expiration}
-              put_call={data.put_call}
-              option_activity_type={data.option_activity_type}
-              description={data.description}
-              cost_basis={data.cost_basis}
-              updated={data.updated}
-            />
-          ))}
-        </ul>
-      </div>
+      <div className={styles.mobile_view}>Mobile isn't supposted yet</div>
     </div>
   )
 }
