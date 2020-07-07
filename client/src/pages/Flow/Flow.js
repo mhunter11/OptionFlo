@@ -23,8 +23,8 @@ export default function Flow() {
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const {firebase, currentUser} = useContext(FirebaseContext)
-  const socket = io(ENVIRONMENT.DATA_SERVER_URL)
-  const user = currentUser;
+  const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
+  const user = currentUser
   // let todayOptionData = []
   let todayOptionsTraded = []
   let today = new Date()
