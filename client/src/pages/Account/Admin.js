@@ -118,16 +118,16 @@ function AdminView() {
 
 export default function Admin() {
   const {firebase, currentUser} = useContext(FirebaseContext)
-  const user = currentUser;
+  const user = currentUser
   const {loading, error, data} = useQuery(GET_USER_INFO, {
-    variables: {myUserId: user ? user.id : null},
+    variables: {myUserId: user ? user.uid : null},
   })
 
   if (loading) {
     return <div>Loading...</div>
   }
 
-  if (data.getUser.admin === true) {
+  if (data.getUser.admin === true && data && data !== undefined) {
     return <AdminView></AdminView>
   }
 

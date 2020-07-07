@@ -11,6 +11,8 @@ const User = require('../../models/User')
 const Option = require('../../models/Option')
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 const NEW_OPTION = 'NEW_OPTION'
+const EMAIL_1 = 'huntermelverton@gmail.com'
+const EMAIL_2 = 'jaim5oh@gmail.com'
 
 module.exports = {
   Query: {
@@ -213,26 +215,35 @@ module.exports = {
       return result
     },
     async updateUserType(_, {username}, context) {
-      // const admin = checkAuth(context)
-      const updateUser = await User.findOne({username})
+      const user = await checkAuth(context)
 
-      // if (!admin) {
-      //   throw new AuthenticationError('Not authenticated')
-      // }
+      if (!user) {
+        throw new AuthenticationError('Not authenticated')
+      }
+      
 
-      if (!updateUser) {
-        errors.general = 'User not found'
-        throw new UserInputError('User not found')
+      // Probably a way better way to do this like get the user and see if the user is an admin
+      if (
+        user.email === EMAIL_1 ||
+        user.email === EMAIL_2
+      ) {
+        const updateUser = await User.findOne({username})
+        if (!updateUser) {
+          errors.general = 'User not found'
+          throw new UserInputError('User not found')
+        }
+        if (updateUser.type === 'standard') {
+          updateUser.type = ''
+          const result = await updateUser.save()
+          return result
+        } else {
+          updateUser.type = 'standard'
+          const result = await updateUser.save()
+          return result
+        }
       }
-      if (updateUser.type === 'standard') {
-        updateUser.type = ''
-        const result = await updateUser.save()
-        return result
-      } else {
-        updateUser.type = 'standard'
-        const result = await updateUser.save()
-        return result
-      }
+
+      throw new AuthenticationError('Not authenticated')
     },
     async saveOption(_, {options}, context) {
       let results = []

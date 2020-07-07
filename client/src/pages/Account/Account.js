@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -23,7 +23,7 @@ const CHANGE_CREDIT_CARD = gql`
 
 export default function Account() {
   const {firebase, currentUser} = useContext(FirebaseContext)
-  const user = currentUser;
+  const user = currentUser
   const {loading, data} = useQuery(GET_USER_INFO, {
     variables: {myUserId: user ? user.uid : null},
   })
@@ -47,6 +47,7 @@ export default function Account() {
 
   return (
     <div>
+      {(data.getUser.admin === true) && <Link to="/admin">Admin Panel</Link>}
       <div>{data.getUser.email}</div>
       <div>your current credit card last 4 digits: {data.getUser.ccLast4}</div>
       <StripeCheckout
