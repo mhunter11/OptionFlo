@@ -15,7 +15,7 @@ import styles from './Subscription.module.scss'
 
 export default function Subscription() {
   const [createSub] = useMutation(CREATE_SUBSCRIPTION)
-  const MONTHLY_PLAN = '$30 / Monthly Plan'
+  const MONTHLY_PLAN = '$60 / Monthly Plan'
   return (
     <div className={styles.bg_color}>
       <div className={styles.bg_color_container}>
@@ -48,7 +48,7 @@ export default function Subscription() {
                 console.log(response)
               }}
               stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
-              amount={3000}
+              amount={6000}
             >
               <button className={styles.stripe_checkout_button}>
                 Pay with Card
