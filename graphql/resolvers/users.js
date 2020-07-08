@@ -128,6 +128,7 @@ module.exports = {
       const username = user.displayName
       const email = user.email
 
+      const userUsername = await User.findOne({username})
       const userFirebaseId = await User.findOne({firebaseId})
       const userEmail = await User.findOne({email})
 
@@ -135,6 +136,14 @@ module.exports = {
         throw new UserInputError('User already exists', {
           errors: {
             firebaseId: 'This user is taken',
+          },
+        })
+      }
+
+      if (userUsername) {
+        throw new UserInputError('Username already exists', {
+          errors: {
+            firebaseId: 'This username is taken',
           },
         })
       }
