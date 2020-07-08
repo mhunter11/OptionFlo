@@ -19,11 +19,11 @@ export default function MenuBar() {
   const MENU_BAR_DATA = [
     {name: 'Flow', url: '/flow'},
     {name: 'Account', url: '/account'},
-    {name: 'Logout', onClick: firebase.auth.signOut},
+    {name: 'Logout', onClick: performSignout},
   ]
 
   function performSignout(e) {
-    firebase.auth.signOut();
+    firebase.auth.signOut()
   }
 
   const menuBar = currentUser ? (

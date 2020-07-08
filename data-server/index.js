@@ -3,7 +3,7 @@ const port = process.env.PORT || 8080
 const xml2js = require('xml2js')
 const fetch = require('node-fetch')
 const date = require('date-and-time')
-const io = require('socket.io')(port)
+const io = require('socket.io')(port, {perMessageDeflate: false})
 const {saveOptions} = require('./upload.js')
 
 //Date Config
