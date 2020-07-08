@@ -118,6 +118,8 @@ export default function Flow() {
     socket.on('clear', function () {
       setOptions([])
     })
+
+    return () => socket.disconnect()
   }, [])
 
   if (loadingR) {
