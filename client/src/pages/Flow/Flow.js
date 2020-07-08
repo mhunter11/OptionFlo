@@ -9,6 +9,7 @@ import styles from './Flow.module.scss'
 import {FLOW_ROW_NAME} from './flow-data'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
+import {usePageVisibility} from '../../util/usePageVisiblity'
 
 import {FirebaseContext} from '../../context/auth'
 import {ENVIRONMENT} from '../../env'
@@ -22,6 +23,7 @@ export default function Flow() {
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [searchInput, setSearchInput] = useState('')
+  const isVisible = usePageVisibility()
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
   const user = currentUser
@@ -101,27 +103,31 @@ export default function Flow() {
   }
 
   useEffect(() => {
+    if (!isVisible) {
+      return () => socket.disconnect()
+    }
+
     socket.on('all_options', function (data) {
       setOptions(options => [...options, ...data])
     })
 
-    socket.on('options', data => {
-      setOptions(options => _.uniqBy([...data, ...options], 'id'))
+    if (isVisible) {
+      socket.on('options', data => {
+        setOptions(options => _.uniqBy([...data, ...options], 'id'))
 
-      data.map(dataOption => {
-        if (dataOption.ticker === searchInput) {
-          setSaveOptions(prevState => _.uniqBy([dataOption, ...prevState]))
-        }
+        data.map(dataOption => {
+          if (dataOption.ticker === searchInput) {
+            setSaveOptions(prevState => _.uniqBy([dataOption, ...prevState]))
+          }
+        })
       })
-    })
+    }
 
     socket.on('clear', function () {
       setOptions([])
     })
 
-    return () => {
-      socket.close()
-    }
+    return () => socket.disconnect()
   }, [])
 
   if (loadingR) {
