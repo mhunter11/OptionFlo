@@ -21,6 +21,7 @@ export default function Flow() {
   const [options, setOptions] = useState([])
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
+  const [searchTicker, setSearchTicker] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
@@ -51,6 +52,21 @@ export default function Flow() {
 
   if (data !== undefined) {
     todayOptionsTraded = data.getOptionsByDate
+  }
+
+  function filterInput(ticker) {
+    if (!ticker || ticker.length === 0) {
+      setSearchTicker(false)
+    }
+
+    setSearchInput(ticker)
+    setSearchTicker(true)
+  }
+
+  function clearFilter() {
+    setFilteredOptions(false)
+    setSearchInput('')
+    setSearchTicker(false)
   }
 
   function filterData(ticker) {
@@ -204,7 +220,7 @@ export default function Flow() {
             {filteredOptions && saveOptions.length === 0 && (
               <div className={styles.no_options_found}>No Items Found</div>
             )}
-            {!filteredOptions &&
+            {(!filteredOptions && !searchTicker) &&
               options.map((data, index) => (
                 <FlowList
                   key={index}
@@ -246,18 +262,27 @@ export default function Flow() {
             </div>
           )}
           <div className={styles.input_search}>
-            <input
-              className={styles.input}
-              type="text"
-              value={searchInput}
-              onChange={e => setSearchInput(e.target.value)}
-              onKeyPress={e =>
-                e.key === 'Enter' ? filterData(searchInput) : null
-              }
-              placeholder="SPY"
-            />
+            <div>
+              <input
+                className={styles.input}
+                type="text"
+                value={searchInput}
+                onChange={e => filterInput(e.target.value)}
+                onKeyPress={e =>
+                  e.key === 'Enter' ? filterData(searchInput) : null
+                }
+                placeholder="SPY"
+              />
+              {searchTicker && (
+                <button
+                  className={styles.close_icon}
+                  type="reset"
+                  onClick={clearFilter}
+                />
+              )}
+            </div>
             <button
-              className={styles.button}
+              className={styles.mobile_button}
               onClick={() => filterData(searchInput)}
             >
               Search
@@ -269,6 +294,7 @@ export default function Flow() {
             <div className={styles.no_options_found}>No Items Found</div>
           )}
           {!filteredOptions &&
+            !searchTicker &&
             options.map((data, index) => (
               <MobileFlowList
                 key={index}

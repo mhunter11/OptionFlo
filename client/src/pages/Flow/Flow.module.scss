@@ -99,14 +99,24 @@
 }
 
 .input {
-  max-height: 22px;
-  width: 10rem;
+  height: 35px;
+  width: 15rem;
   outline: none;
   border: 0;
 
   @include --large {
     width: auto;
+    height: 22px;
+    max-height: 22px;
   }
+}
+
+.mobile_button {
+  height: 35px;
+  margin-left: -14px;
+  outline: none;
+  border: none;
+  border-left: 1px solid black;
 }
 
 .button {
@@ -118,6 +128,7 @@
   justify-content: flex-end;
   max-height: 2.5rem;
   margin-bottom: 0.5rem;
+  position: relative;
 
   @include --large {
     margin-left: 4rem;
@@ -191,6 +202,9 @@
 .mobile_results {
   color: white;
   margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  max-height: 35px;
 }
 
 .mobile_results_input {
@@ -279,6 +293,36 @@
   color: #807774;
   margin-top: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.close_icon {
+  border: 1px solid transparent;
+  background-color: transparent;
+  display: inline-block;
+  vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+}
+
+.close_icon:after {
+  content: 'X';
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  background-color: grey;
+  z-index: 1;
+  right: 65px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 7px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-weight: normal;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .mobile_cost_basis {
