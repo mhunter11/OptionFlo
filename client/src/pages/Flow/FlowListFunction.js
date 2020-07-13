@@ -79,27 +79,24 @@ export function getTicker(ticker) {
 }
 
 export function getBidOrAskOrder(contract) {
-  if (contract.split('near').length === 2) {
-    const firstCharacter = contract
-      .split('near')[1]
-      .split(':')[0]
-      .split('the')[1]
-      .trim()
-      .charAt(0)
-    return firstCharacter
-  } else {
-    if (contract.split('near')[0].split(':')[1].split('the').length === 2) {
-      const firstCharacter = contract
-        .split('near')[0]
-        .split(':')[1]
-        .split('the')[1]
-        .trim()
-        .charAt(0)
-
-      return firstCharacter
+  if (contract.split(')')[1] !== undefined) {
+    const ask_bid = contract.split(')')[1].split(':')[0].trim()
+    if (ask_bid === 'near the Bid') {
+      return 'B'
+    } else if (ask_bid === 'near the Ask') {
+      return 'A'
+    } else if (ask_bid === 'above Ask!') {
+      return 'AA'
+    } else {
+      return 'BB'
     }
-
-    return 'BB'
+  } else {
+    const ask_bid = contract.split('at the')[1].split(':')[0].trim()
+    if (ask_bid === 'Ask') {
+      return 'A'
+    } else {
+      return 'B'
+    }
   }
 }
 
