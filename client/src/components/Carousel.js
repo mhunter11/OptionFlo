@@ -11,10 +11,10 @@ export default function Carousel({node}) {
   const length = node.length - 1
   const handleNext = useCallback(() => {
     index === length ? setIndex(0) : setIndex(index + 1)
-  }, [index])
+  }, [length])
   const handlePrevious = useCallback(() => {
     index === 0 ? setIndex(length) : setIndex(index - 1)
-  }, [index])
+  }, [length])
   const childrenSrc = node[index]
   return (
     <div className={styles.carousel_container}>

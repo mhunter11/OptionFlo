@@ -16,7 +16,7 @@ function ColumnView(props) {
   const [updatedType, setUpdatedType] = useState('')
   useEffect(() => {
     setUpdatedType(props.type)
-  }, [])
+  }, [props.type])
   const updateUserType = e => {
     e.preventDefault()
     updateUser({variables: {username: props.username}})
@@ -52,7 +52,7 @@ function ColumnView(props) {
 }
 
 function AdminView() {
-  const {loading, error, data} = useQuery(GET_ALL_USERS)
+  const {loading, data} = useQuery(GET_ALL_USERS)
   const [searchUser, setSearchUser] = useState('')
   const [result, setResult] = useState({})
   const [searchResult, setSearchResult] = useState(false)
@@ -117,9 +117,9 @@ function AdminView() {
 }
 
 export default function Admin() {
-  const {firebase, currentUser} = useContext(FirebaseContext)
+  const {currentUser} = useContext(FirebaseContext)
   const user = currentUser
-  const {loading, error, data} = useQuery(GET_USER_INFO, {
+  const {loading, data} = useQuery(GET_USER_INFO, {
     variables: {myUserId: user ? user.uid : null},
   })
 

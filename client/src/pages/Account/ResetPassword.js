@@ -3,7 +3,6 @@ import swal from 'sweetalert'
 import {Button, Form} from 'semantic-ui-react'
 import {Redirect} from 'react-router'
 import {FirebaseContext} from '../../context/auth'
-import UserView from '../../components/UserView'
 import styles from './Login.module.scss'
 import {useForm} from '../../util/hooks'
 
@@ -12,8 +11,6 @@ export default function ResetPassword(props) {
   const {firebase} = useContext(FirebaseContext);
   const actionCode = props.actionCode
 
-  console.log(firebase)
-  // const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
 
   const {onChange, onSubmit, values} = useForm(newPasswordCallback, {
@@ -22,7 +19,7 @@ export default function ResetPassword(props) {
   })
 
   function newPasswordCallback() {
-    if (values.password != values.confirmPassword) {
+    if (values.password !== values.confirmPassword) {
       swal(
         'Mismatched Passwords',
         'The passwords entered do not match, please try again',
@@ -55,6 +52,7 @@ export default function ResetPassword(props) {
         swal("Password Reset", "Your password has been reset, you can now login with your new password", "success");
       })
       .catch(err => {
+        setErrors(err)
         swal('Error', 'An error has occured: "' + err + '"', 'error')
       })
 

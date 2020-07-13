@@ -64,7 +64,7 @@ function Login(props) {
   function resetPassword(e) {
     e.preventDefault()
 
-    if (values.username == '') {
+    if (values.username === '') {
       swal(
         'No Email',
         'You must enter an email to do a password reset',

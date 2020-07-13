@@ -12,9 +12,6 @@ import {
   HEIGHT,
   WIDTH,
   ITEM_SIZE,
-  MOBILE_WIDTH,
-  MOBILE_HEIGHT,
-  MOBILE_ITEM_SIZE,
   CLASSNAME,
 } from './flow-data'
 
@@ -53,7 +50,7 @@ export default function Flow() {
     }
   )
 
-  const {loading, error, data} = useQuery(GETS_OPTIONS_BY_DATE, {
+  const {data} = useQuery(GETS_OPTIONS_BY_DATE, {
     variables: {
       inputDate: today,
       // inputTicker: searchInput,
@@ -123,21 +120,6 @@ export default function Flow() {
     </div>
   )
 
-  const MobileRow = ({index, style}) => (
-    <div key={index} style={style}>
-      <MobileFlowList
-        ticker={options[index].ticker}
-        strike_price={options[index].strike_price}
-        date_expiration={options[index].date_expiration}
-        put_call={options[index].put_call}
-        option_activity_type={options[index].option_activity_type}
-        description={options[index].description}
-        cost_basis={options[index].cost_basis}
-        updated={options[index].updated}
-      />
-    </div>
-  )
-
   if (data !== undefined) {
     todayOptionsTraded = data.getOptionsByDate
   }
@@ -179,7 +161,7 @@ export default function Flow() {
     return () => {
       socket.close()
     }
-  }, [])
+  }, [searchInput, socket])
 
   if (loadingR) {
     return <Loading />

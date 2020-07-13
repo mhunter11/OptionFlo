@@ -13,7 +13,7 @@ function getParameterByName(name) {
   else return decodeURIComponent(results[1].replace(/\+/g, ' '))
 }
 
-var completed = false;
+var completed = false
 
 function VerifyEmail(props) {
   const {firebase, currentUser} = useContext(FirebaseContext)
@@ -27,7 +27,9 @@ function VerifyEmail(props) {
   useEffect(() => {
     if (signIn || home || resetPassword) return
 
-    mode = getParameterByName('mode')
+    mode = getParameterByName(
+      'mode'
+    ) /* Assignments to the 'mode' variable from inside React Hook useEffect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Otherwise, you can move this variable directly inside useEffect */
 
     var auth = firebase.auth
 
@@ -36,7 +38,7 @@ function VerifyEmail(props) {
         auth
           .applyActionCode(actionCode)
           .then(() => {
-            completed = true;
+            completed = true
             swal(
               'Success',
               'Your email has successfully been verified',
@@ -62,7 +64,10 @@ function VerifyEmail(props) {
               ).then(() => {
                 setSignIn(true)
               })
-            } else if (firebase.auth.currentUser != null && firebase.auth.currentUser.emailVerified) {
+            } else if (
+              firebase.auth.currentUser != null &&
+              firebase.auth.currentUser.emailVerified
+            ) {
               swal(
                 'Success',
                 'Your email has successfully been verified',
@@ -80,7 +85,6 @@ function VerifyEmail(props) {
               setHome(true)
             }
             console.log(e)
-            
           })
         break
       }

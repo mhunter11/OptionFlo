@@ -27,7 +27,7 @@ export default function HistoricalFlow() {
     }
   )
 
-  const {loading, error, data} = useQuery(GETS_OPTIONS_BY_DATE, {
+  const {loading, data} = useQuery(GETS_OPTIONS_BY_DATE, {
     variables: {
       inputDate: date,
       // inputTicker: searchInput,
