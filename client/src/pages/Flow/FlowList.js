@@ -40,13 +40,14 @@ export default function FlowList(props) {
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
   }
   const BIG_BUY = getBigBuy(BUY)
+  const bidOrAsk = getBidOrAskOrder(description)
   const contract = `${getContractAndPrice(
     CONTRACT_AND_PRICE
-  ).trim()}${getBidOrAskOrder(description)}`
+  ).trim()}${bidOrAsk}`
   return (
     <div
       className={cx(styles.flow_list, {
-        [styles.golden_sweep]: GOLDEN_SWEEP,
+        [styles.golden_sweep]: GOLDEN_SWEEP && (bidOrAsk === 'A' || 'AA'),
         [styles.big_buy]: BIG_BUY,
       })}
     >
