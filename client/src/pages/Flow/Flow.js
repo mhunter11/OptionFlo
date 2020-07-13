@@ -330,17 +330,21 @@ export default function Flow() {
           {filteredOptions && saveOptions.length === 0 && (
             <div className={styles.no_options_found}>No Items Found</div>
           )}
-          {!filteredOptions && !searchTicker && (
-            <List
-              className={CLASSNAME}
-              height={MOBILE_HEIGHT}
-              itemCount={options.length}
-              itemSize={MOBILE_ITEM_SIZE}
-              width={MOBILE_WIDTH}
-            >
-              {MobileRow}
-            </List>
-          )}
+          {!filteredOptions &&
+            !searchTicker &&
+            options.map((data, index) => (
+              <MobileFlowList
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                cost_basis={data.cost_basis}
+                updated={data.updated}
+                key={index}
+              />
+            ))}
           {filteredOptions &&
             saveOptions.map((data, index) => (
               <MobileFlowList
