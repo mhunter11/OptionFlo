@@ -318,12 +318,6 @@ export default function Flow() {
                 />
               )}
             </div>
-            <button
-              className={styles.mobile_button}
-              onClick={() => filterData(searchInput)}
-            >
-              Search
-            </button>
           </div>
         </div>
         <ul className={styles.ul_list}>

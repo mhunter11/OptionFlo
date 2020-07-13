@@ -302,6 +302,8 @@
   vertical-align: middle;
   outline: 0;
   cursor: pointer;
+  position: absolute;
+  top: 15px;
 }
 
 .close_icon:after {
@@ -312,7 +314,7 @@
   position: absolute;
   background-color: grey;
   z-index: 1;
-  right: 65px;
+  right: 15px;
   top: 0;
   bottom: 0;
   margin: auto;
