@@ -26,9 +26,9 @@ export const HISTORICAL_FLOW_ROW_NAME = [
   {className: 'row_ref', name: 'Ref'},
 ]
 
-export const HEIGHT = 900
+export const HEIGHT = 1050
 export const WIDTH = 1250
-export const ITEM_SIZE = 45
+export const ITEM_SIZE = 42
 export const CLASSNAME = 'List'
 
 export const MOBILE_WIDTH = 530
