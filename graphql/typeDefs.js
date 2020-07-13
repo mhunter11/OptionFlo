@@ -108,8 +108,9 @@ module.exports = gql`
     getPost(postId: ID!): Post
     getOptions: [Option]
     getAllUsers: [User]
-    getOptionsByDate(date: String): [Option]!
-    # getOptionsByDate(date: String, ticker: String): [Option]!
+    getOptionsByDate(date: String!): [Option]!
+    getOptionsByTicker(ticker: String): [Option]!
+    getOptionsByDateAndTicker(date: String, ticker: String): [Option]!
   }
 
   type Mutation {

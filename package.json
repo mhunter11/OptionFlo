@@ -24,6 +24,7 @@
     "jwt-decode": "^2.2.0",
     "mongoose": "^5.5.11",
     "node-fetch": "^2.6.0",
+    "react-window": "^1.8.5",
     "stripe": "^8.29.0"
   },
   "devDependencies": {

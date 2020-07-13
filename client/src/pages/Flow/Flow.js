@@ -1,12 +1,22 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {Redirect} from 'react-router-dom'
 import {useQuery} from '@apollo/react-hooks'
+import {FixedSizeList as List} from 'react-window'
 import _ from 'lodash'
 import io from 'socket.io-client'
 
 import styles from './Flow.module.scss'
 
-import {FLOW_ROW_NAME} from './flow-data'
+import {
+  FLOW_ROW_NAME,
+  HEIGHT,
+  WIDTH,
+  ITEM_SIZE,
+  MOBILE_WIDTH,
+  MOBILE_HEIGHT,
+  MOBILE_ITEM_SIZE,
+  CLASSNAME,
+} from './flow-data'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
@@ -49,25 +59,6 @@ export default function Flow() {
       // inputTicker: searchInput,
     },
   })
-
-  if (data !== undefined) {
-    todayOptionsTraded = data.getOptionsByDate
-  }
-
-  function filterInput(ticker) {
-    if (!ticker || ticker.length === 0) {
-      setSearchTicker(false)
-    }
-
-    setSearchInput(ticker)
-    setSearchTicker(true)
-  }
-
-  function clearFilter() {
-    setFilteredOptions(false)
-    setSearchInput('')
-    setSearchTicker(false)
-  }
 
   function filterData(ticker) {
     if (!ticker || ticker.length === 0) {
@@ -114,6 +105,57 @@ export default function Flow() {
 
     setFilteredOptions(true)
     // setSearchInput(ticker)
+  }
+
+  const Row = ({index, style}) => (
+    <div key={index} style={style}>
+      <FlowList
+        ticker={options[index].ticker}
+        strike_price={options[index].strike_price}
+        date_expiration={options[index].date_expiration}
+        put_call={options[index].put_call}
+        option_activity_type={options[index].option_activity_type}
+        description={options[index].description}
+        sentiment={options[index].sentiment}
+        cost_basis={options[index].cost_basis}
+        updated={options[index].updated}
+        onClick={() => filterData(options[index].ticker)}
+      />
+    </div>
+  )
+
+  const MobileRow = ({index, style}) => (
+    <div key={index} style={style}>
+      <MobileFlowList
+        ticker={options[index].ticker}
+        strike_price={options[index].strike_price}
+        date_expiration={options[index].date_expiration}
+        put_call={options[index].put_call}
+        option_activity_type={options[index].option_activity_type}
+        description={options[index].description}
+        cost_basis={options[index].cost_basis}
+        updated={options[index].updated}
+      />
+    </div>
+  )
+
+  if (data !== undefined) {
+    todayOptionsTraded = data.getOptionsByDate
+  }
+
+  function filterInput(ticker) {
+    if (!ticker || ticker.length === 0) {
+      setSearchTicker(false)
+    }
+
+    setSearchInput(ticker)
+    setSearchTicker(true)
+  }
+
+  function clearFilter() {
+    setFilteredOptions(false)
+    setSearchInput('')
+    setSearchTicker(false)
   }
 
   useEffect(() => {
@@ -220,22 +262,17 @@ export default function Flow() {
             {filteredOptions && saveOptions.length === 0 && (
               <div className={styles.no_options_found}>No Items Found</div>
             )}
-            {(!filteredOptions && !searchTicker) &&
-              options.map((data, index) => (
-                <FlowList
-                  key={index}
-                  ticker={data.ticker}
-                  strike_price={data.strike_price}
-                  date_expiration={data.date_expiration}
-                  put_call={data.put_call}
-                  option_activity_type={data.option_activity_type}
-                  description={data.description}
-                  sentiment={data.sentiment}
-                  cost_basis={data.cost_basis}
-                  updated={data.updated}
-                  onClick={() => filterData(data.ticker)}
-                />
-              ))}
+            {!filteredOptions && !searchTicker && (
+              <List
+                className={CLASSNAME}
+                height={HEIGHT}
+                itemCount={options.length}
+                itemSize={ITEM_SIZE}
+                width={WIDTH}
+              >
+                {Row}
+              </List>
+            )}
             {filteredOptions &&
               saveOptions.map((data, index) => (
                 <FlowList
@@ -293,21 +330,17 @@ export default function Flow() {
           {filteredOptions && saveOptions.length === 0 && (
             <div className={styles.no_options_found}>No Items Found</div>
           )}
-          {!filteredOptions &&
-            !searchTicker &&
-            options.map((data, index) => (
-              <MobileFlowList
-                key={index}
-                ticker={data.ticker}
-                strike_price={data.strike_price}
-                date_expiration={data.date_expiration}
-                put_call={data.put_call}
-                option_activity_type={data.option_activity_type}
-                description={data.description}
-                cost_basis={data.cost_basis}
-                updated={data.updated}
-              />
-            ))}
+          {!filteredOptions && !searchTicker && (
+            <List
+              className={CLASSNAME}
+              height={MOBILE_HEIGHT}
+              itemCount={options.length}
+              itemSize={MOBILE_ITEM_SIZE}
+              width={MOBILE_WIDTH}
+            >
+              {MobileRow}
+            </List>
+          )}
           {filteredOptions &&
             saveOptions.map((data, index) => (
               <MobileFlowList

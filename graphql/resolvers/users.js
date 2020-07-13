@@ -89,7 +89,23 @@ module.exports = {
     },
     async getOptionsByDate(_, {date}, context) {
       try {
-        const Options = await Option.find({date: date})
+        const Options = await Option.find({date})
+        return Options
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    async getOptionsByTicker(_, {ticker}, context) {
+      try {
+        const Options = await Option.find({ticker})
+        return Options
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    async getOptionsByDateAndTicker(_, {date, ticker}, context) {
+      try {
+        const Options = await Option.find({date, ticker})
         return Options
       } catch (err) {
         throw new Error(err)
@@ -220,13 +236,9 @@ module.exports = {
       if (!user) {
         throw new AuthenticationError('Not authenticated')
       }
-      
 
       // Probably a way better way to do this like get the user and see if the user is an admin
-      if (
-        user.email === EMAIL_1 ||
-        user.email === EMAIL_2
-      ) {
+      if (user.email === EMAIL_1 || user.email === EMAIL_2) {
         const updateUser = await User.findOne({username})
         if (!updateUser) {
           errors.general = 'User not found'
