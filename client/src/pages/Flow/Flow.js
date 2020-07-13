@@ -62,8 +62,7 @@ export default function Flow() {
 
   function filterData(ticker) {
     if (!ticker || ticker.length === 0) {
-      setFilteredOptions(false)
-      setSearchInput('')
+      clearFilter()
       return
     }
 
