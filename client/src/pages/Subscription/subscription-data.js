@@ -12,7 +12,7 @@ export const SUBSCRIPTION_BENEFITS = [
 export const SubscriptionCardData = {
   header: 'Subscribe Now!',
   paragraph:
-    "Test out our Option Flow unusual activity for a week before you're charged. No commitment. Cancel at anytime.",
+    'Try out our Option Flow unusual activity for $60 a month. No commitments. Cancel anytime',
   buttonChildren: 'Sign up',
   url: '/register',
 }
