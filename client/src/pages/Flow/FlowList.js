@@ -44,10 +44,12 @@ export default function FlowList(props) {
   const contract = `${getContractAndPrice(
     CONTRACT_AND_PRICE
   ).trim()}${bidOrAsk}`
+
+  const isGoldenSweep = GOLDEN_SWEEP && (bidOrAsk === 'A' || bidOrAsk === 'AA')
   return (
     <div
       className={cx(styles.flow_list, {
-        [styles.golden_sweep]: GOLDEN_SWEEP && (bidOrAsk === 'A' || 'AA'),
+        [styles.golden_sweep]: isGoldenSweep,
         [styles.big_buy]: BIG_BUY,
       })}
     >
