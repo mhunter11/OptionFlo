@@ -2,11 +2,11 @@ export const TYPING_ANIMATION_ARRAY = ['Option Flow', 'Option Alert']
 
 export const CANCEL_ANYTIME = 'You can cancel anytime'
 
-export const START_TRIAL = 'Try it out now!'
+export const START_TRIAL = 'Try it out'
 
 export const HOW_WILL_YOU_BENEFIT = 'How do we benefit you?'
 
-export const AFFORDABLE_HEADER = 'How affordable we are compared to others?'
+export const AFFORDABLE_HEADER = 'Most Affordable Real Time Option Flo'
 
 export const BENEFITS_DATA = [
   {
