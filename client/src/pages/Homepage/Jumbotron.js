@@ -14,7 +14,7 @@ import styles from './Jumbotron.module.scss'
 export default function Jumbotron() {
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.header}>
         <h1 className={styles.h1}>{AFFORDABLE_HEADER}</h1>
         <h5 className={styles.h5}>{OPTIONFLO_DESCRIPTION}</h5>
         <Link className={styles.btn} to="/subscription">
@@ -22,7 +22,7 @@ export default function Jumbotron() {
         </Link>
       </div>
       <div>
-        <img src={IMAGE} alt="" />
+        <img className={styles.image} src={IMAGE} alt="" />
       </div>
     </div>
   )

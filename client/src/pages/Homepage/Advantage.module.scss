@@ -11,8 +11,17 @@
   border-radius: 10px;
   margin-left: 3rem;
   margin-right: 3rem;
-  width: 383px;
-  height: 361px;
+  margin-bottom: 3rem;
+  padding-bottom: 2.5rem;
+  padding-top: 2.5rem;
+
+  @include --large {
+    width: 383px;
+    height: 361px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
 }
 
 .container {
@@ -54,4 +63,8 @@
 
 .card_container {
   display: flex;
+  flex-direction: column;
+  @include --large {
+    flex-direction: initial;
+  }
 }
