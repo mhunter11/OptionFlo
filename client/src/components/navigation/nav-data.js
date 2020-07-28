@@ -1,5 +1,6 @@
 export const LOGO_ALT = 'OptionFlo Logo'
 export const SIGN_UP = 'Sign Up'
+export const LOGOUT = 'Logout'
 export const LOGGED_IN = [
   {name: 'Home', url: '/'},
   {name: 'Flow', url: '/flow'},

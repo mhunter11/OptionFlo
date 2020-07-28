@@ -7,7 +7,6 @@ import HistoricalFlow from './pages/Flow/HistoricalFlow'
 import Register from './pages/Account/Register'
 import Login from './pages/Account/Login'
 import Home from './pages/Homepage/Home'
-import LandingPage from './pages/Homepage/LandingPage'
 import Subscription from './pages/Subscription/Subscription'
 import Account from './pages/Account/Account'
 import VerifyEmail from './pages/Account/VerifyEmail'
@@ -21,8 +20,7 @@ export default function App() {
   return (
     <Router>
       <Nav />
-      <Route exact path="/" component={LandingPage} />
-      <Route exact path="/home" component={Home} />
+      <Route exact path="/" component={Home} />
       <Route exact path="/email" component={VerifyEmail} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />

@@ -8,6 +8,9 @@ export const HOW_WILL_YOU_BENEFIT = 'How do we benefit you?'
 
 export const AFFORDABLE_HEADER = 'Most Affordable Real Time Option Flo'
 
+export const OPTIONFLO_DESCRIPTION =
+  `OptionFlo empowers retail traders to track what the smart money intitutions are buying. No more blindly getting into a trade and hoping for the best result. We expert traders alerts from a wide range of trading strategies. Naked calls/puts, Credit/Debit spreads, Iron Condor, and more. Join our discord for more information.`
+
 export const BENEFITS_DATA = [
   {
     imgSrc: require('../../images/icons8-discord.svg'),
