@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import cx from 'classnames'
 
-import {LOGO_ALT, LOGGED_IN, NOT_LOGGED_IN, SIGN_UP, LOGOUT} from './nav-data'
+import {LOGO_ALT, LOGGED_IN, NOT_LOGGED_IN, SIGN_UP} from './nav-data'
 
 import OPTION_FLO_LOGO from '../images/OptionFlow_top_Logo.png'
 

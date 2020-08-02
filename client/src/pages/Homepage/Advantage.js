@@ -1,9 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 
 import {ADVANTAGE_LIST, OPTIONFLO_ADVANTAGE} from './advantage-data'
-
-import IMAGE from './images/header_image.png'
 
 import styles from './Advantage.module.scss'
 
@@ -20,9 +17,10 @@ export default function Advantage() {
                 className={styles.card}
                 href={data.url}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <div>
-                  <img src={data.image} />
+                  <img src={data.image} alt={data.name} />
                 </div>
                 <h5 className={styles.h5}>{data.name}</h5>
                 <p className={styles.p}>{data.description}</p>

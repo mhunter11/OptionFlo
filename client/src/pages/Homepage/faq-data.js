@@ -11,4 +11,11 @@ export const FAQ_ITEMS = [
     answer:
       'On contract & price column, you will see at the end of the contract either an A or B. A is asking price for a contract also sometimes you might see AA this is Above ask. B is bidding price for a contract also sometimes you might see BB this is below bid. A or AA is buying, B or BB is selling.',
   },
+  {
+    question: 'When are you coming out with dark pool?',
+    answer:
+      'Soon!',
+  },
 ]
+
+export const PLUS_IMAGE_ALT = 'Expanable Section'
