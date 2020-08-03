@@ -12,15 +12,13 @@
   margin-left: 3rem;
   margin-right: 3rem;
   margin-bottom: 3rem;
-  padding-bottom: 2.5rem;
-  padding-top: 2.5rem;
+  padding: 2.5rem 1rem;
 
   @include --large {
-    width: 383px;
-    height: 361px;
+    width: 400px;
+    height: 400px;
     margin-bottom: 0;
-    padding-bottom: 0;
-    padding-top: 0;
+    padding: 0;
   }
 
   &:hover {
@@ -50,6 +48,10 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
   color: #fff;
+
+  @include --large {
+    font-size: 35px;
+  }
 }
 
 .p {
@@ -57,7 +59,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 22px;
-  line-height: 27px;
+  line-height: 2rem;
   text-align: center;
   letter-spacing: 0.04em;
   color: #e6e6e6;

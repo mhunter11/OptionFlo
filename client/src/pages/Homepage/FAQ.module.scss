@@ -8,8 +8,8 @@
 
 .answer_open {
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 20px;
+  line-height: 30px;
   color: #e6e6e6;
   padding: 2rem;
   text-align: left;
@@ -25,10 +25,14 @@
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 35px;
+  font-size: 22px;
   line-height: 52px;
   letter-spacing: 0.04em;
   text-align: center;
+
+  @include --large {
+    font-size: 35px;
+  }
 }
 
 .faq_container {
@@ -42,8 +46,14 @@
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 28px;
   text-align: left;
+  margin-right: 1rem;
+
+  @include --large {
+    margin-right: 0;
+    line-height: 22px;
+  }
 }
 
 .question {
