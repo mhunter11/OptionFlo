@@ -1,4 +1,4 @@
-export const WHAT_PEOPLE_SAY = 'What People Say About Us'
+export const OUR_COMMUNITY = 'Our Community'
 
 export const ACES_HIGH = {
   twitterHandle: 'Aces_high84',
