@@ -8,7 +8,7 @@ import styles from './FAQ.module.scss'
 
 export default function FAQ() {
   return (
-    <div>
+    <div className={styles.container}>
       <h2 className={styles.h2}>{FAQ_TITLE}</h2>
       <div className={styles.faq_container}>
         {FAQ_ITEMS.map(item => {

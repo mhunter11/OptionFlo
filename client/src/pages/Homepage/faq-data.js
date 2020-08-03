@@ -13,8 +13,7 @@ export const FAQ_ITEMS = [
   },
   {
     question: 'When are you coming out with dark pool?',
-    answer:
-      'Soon!',
+    answer: `Very soon! it's in development and being tested`,
   },
 ]
 

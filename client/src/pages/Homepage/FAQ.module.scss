@@ -13,6 +13,12 @@
   color: #e6e6e6;
   padding: 2rem;
   text-align: left;
+  background: #2f2563;
+  border-radius: 10px;
+}
+
+.container {
+  padding: 6.25rem 0;
 }
 
 .h2 {
@@ -21,7 +27,6 @@
   font-weight: 600;
   font-size: 35px;
   line-height: 52px;
-  padding-top: 2.5rem;
   letter-spacing: 0.04em;
   text-align: center;
 }
@@ -49,6 +54,10 @@
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .faq_card {
