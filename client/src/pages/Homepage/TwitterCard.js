@@ -24,7 +24,7 @@ export default function TwitterCard({
           <img className={styles.profile} src={profileImage} alt="" />
           <div>
             <span className={styles.twitter_name}>{twitterName}</span>
-            <p className={styles.p}>{twitterHandle}</p>
+            <p className={styles.p}>@{twitterHandle}</p>
           </div>
         </div>
         <img
