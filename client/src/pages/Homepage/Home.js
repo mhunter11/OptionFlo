@@ -4,6 +4,7 @@ import Jumbotron from './Jumbotron'
 import Advantage from './Advantage'
 import WhatWeProvide from './WhatWeProvide'
 import FAQ from './FAQ'
+import Community from './Community'
 
 import styles from './Home.module.scss'
 
@@ -13,6 +14,7 @@ export default function Home() {
       <Jumbotron />
       <Advantage />
       <WhatWeProvide />
+      <Community />
       <FAQ />
     </div>
   )

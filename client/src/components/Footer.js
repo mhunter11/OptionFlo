@@ -41,7 +41,7 @@ export default function Footer() {
           })}
         </div>
         <div>
-          <p>Copyrights &copy; {new Date().getFullYear()}</p>
+          <p className={styles.p}>Copyrights &copy; {new Date().getFullYear()}. All Rights Reserved.</p>
         </div>
       </div>
     </div>
