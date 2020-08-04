@@ -28,7 +28,7 @@ export const BENEFITS_DATA = [
     imgSrc: require('../../images/icons8-money-48.png'),
     header: 'Understanding Order Flow',
     text: 'Are you ready to track what the big money is buying?',
-    url: '/flow',
+    url: '/',
     trueLink: true,
   },
 ]
