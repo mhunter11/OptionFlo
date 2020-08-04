@@ -16,6 +16,6 @@ export const PRICE = 60
 
 export const CASH_PRICE = '$' + PRICE
 
-export const PRICE_TEXT = `Price: ${CASH_PRICE}`
+export const PRICE_TEXT = `Price: ${CASH_PRICE} / Month`
 
 export const BUY_NOW = 'Buy Now'
