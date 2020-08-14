@@ -1,15 +1,128 @@
-// .stripe_checkout_button {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   padding: 1rem 2.5rem;
-//   border: 1px solid #24a0ed;
-//   background-color: #24a0ed;
-//   max-width: 15rem;
-//   color: white;
-//   font-weight: 700;
-//   font-size: 1.25rem;
-//   margin-top: 2.5rem;
-//   cursor: pointer;
-//   filter: brightness(90%);
-// }
+@import '../../styles/color.scss';
+@import '../../styles/breakpoint.scss';
+@import '../../styles/positioning.scss';
+
+.account_container {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+  height: 100vh;
+
+  @include --large {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+}
+
+.container {
+  background: linear-gradient(89deg, #1e173e 1.1%, #131127 99.4%);
+  color: #fff;
+  margin-top: 7.5rem;
+
+  @include --large {
+    height: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2.5rem;
+    padding-right: 5rem;
+  }
+}
+
+.logo_div {
+  display: flex;
+  justify-content: center;
+
+  @include --large {
+    display: block;
+  }
+}
+
+.logo {
+  height: 120px;
+  width: 120px;
+  @include --large {
+    height: 180px;
+    width: 180px;
+  }
+}
+
+.account_infomation {
+  display: flex;
+  flex-direction: column;
+  @include --large {
+    flex-direction: initial;
+  }
+}
+
+.user_info {
+  text-align: center;
+
+  @include --large {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.email {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.user {
+  margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+.paid_button {
+  border: none;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  background: #0069ed;
+  cursor: pointer;
+  background: #23eaa4;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  color: #000000;
+  outline: none;
+  margin: 0 auto;
+  max-width: 200px;
+
+  @include --large {
+    margin: 0;
+    margin-top: 1.5rem;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.button_container {
+  margin-top: 1.5rem;
+}
+
+.user_type {
+  padding-bottom: 2.5rem;
+}
