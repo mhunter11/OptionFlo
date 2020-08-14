@@ -92,7 +92,6 @@
   padding: 1rem 2rem;
   text-decoration: none;
   background: #0069ed;
-  cursor: pointer;
   background: #23eaa4;
   border-radius: 50px;
   font-family: 'Montserrat', sans-serif;
@@ -107,15 +106,12 @@
   color: #000000;
   outline: none;
   margin: 0 auto;
-  max-width: 200px;
+  max-width: 240px;
+  justify-content: center;
 
   @include --large {
     margin: 0;
     margin-top: 1.5rem;
-  }
-
-  &:hover {
-    opacity: 0.7;
   }
 }
 

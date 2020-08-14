@@ -98,12 +98,12 @@ export default function Account() {
           <div className={styles.user_type}>
             {data.getUser.type === '' && (
               <div className={styles.button_container}>
-                <a className={styles.paid_button}>Free User</a>
+                <a className={styles.paid_button}>Status: Free User</a>
               </div>
             )}
             {data.getUser.type === 'standard' && (
               <div className={styles.button_container}>
-                <a className={styles.paid_button}>Paid User</a>
+                <div className={styles.paid_button}>Status: Paid User</div>
               </div>
             )}
           </div>
