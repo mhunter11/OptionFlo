@@ -3,7 +3,6 @@
 @import '../../styles/positioning.scss';
 
 .flow_list {
-  display: flex;
   align-items: center;
   background-color: var(--c-flow-background);
   color: #ffffff;
@@ -12,6 +11,29 @@
   &:last-child {
     border-bottom: 1px solid #807774;
   }
+}
+
+.flow_table {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #2D2362;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  width: 1280px;
+  height: 50px;
+  /* identical to box height */
+
+  text-transform: uppercase;
+}
+
+.flow_header_text {
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .desktop_input {

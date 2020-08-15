@@ -18,6 +18,8 @@ import {
   CLASSNAME,
 } from './flow-data'
 
+import VirtualTable from '../../components/VirtualTable';
+
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
 import {FirebaseContext} from '../../context/auth'
@@ -107,7 +109,6 @@ export default function Flow() {
   }
 
   const Row = ({index, style}) => (
-    <div key={index} style={style}>
       <FlowList
         ticker={options[index].ticker}
         strike_price={options[index].strike_price}
@@ -120,7 +121,6 @@ export default function Flow() {
         updated={options[index].updated}
         onClick={() => filterData(options[index].ticker)}
       />
-    </div>
   )
 
   const MobileRow = ({index, style}) => (
@@ -216,6 +216,70 @@ export default function Flow() {
   }
 
   return (
+    <div>
+      <VirtualTable
+        itemCount={options.length}
+        itemSize={ITEM_SIZE}
+        width={WIDTH}
+        height={HEIGHT}
+        className={styles.flow_table}
+        header={
+            <thead>
+            <tr style={{height: '50px'}}>
+              {FLOW_ROW_NAME.map(data => {
+                return (
+                  <th
+                    className={styles.flow_header_text}
+                    key={data.name}
+                  >
+                    {data.name}
+                  </th>
+                )
+              })}
+            </tr>
+            </thead>
+        }
+        row={Row}
+      />
+
+      {/*
+      <table className={styles.flow_table}>
+        <tr>
+        
+        </tr>
+        <tr>
+          {filteredOptions && saveOptions.length === 0 && (
+            <div className={styles.no_options_found}>No Items Found</div>
+          )}
+          {!filteredOptions && !searchTicker && (
+            <List
+              className={CLASSNAME}
+              height={HEIGHT}
+              itemCount={options.length}
+              itemSize={ITEM_SIZE}
+              width={WIDTH}
+            >
+              {Row}
+            </List>
+          )}
+          {filteredOptions &&
+            saveOptions.map((data, index) => (
+              <FlowList
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                sentiment={data.sentiment}
+                cost_basis={data.cost_basis}
+                updated={data.updated}
+                key={index}
+              />
+            ))}
+        </tr>
+      </table>
+
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
         <div className={styles.row_list}>
@@ -354,6 +418,8 @@ export default function Flow() {
             ))}
         </ul>
       </div>
+    </div>
+            */}
     </div>
   )
 }
