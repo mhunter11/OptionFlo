@@ -65,8 +65,11 @@ function Login(props) {
         console.log(res, values.username, firebaseId)
         setHome(true)
       })
-      .catch(function (error) {
-        swal('Error', 'An error has occured: "' + error + '"', 'error')
+      .catch(function () {
+        swal(
+          'Error',
+          'An error has occured please try to sign in again in a few minutes'
+        )
       })
   }
 

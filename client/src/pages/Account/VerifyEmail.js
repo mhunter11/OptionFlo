@@ -13,11 +13,10 @@ function getParameterByName(name) {
   else return decodeURIComponent(results[1].replace(/\+/g, ' '))
 }
 
-var completed = false;
-
-function VerifyEmail(props) {
+function VerifyEmail() {
   const {firebase, currentUser} = useContext(FirebaseContext)
 
+  const [completed, setCompleted] = useState(false)
   const [home, setHome] = useState(false)
   const [signIn, setSignIn] = useState(false)
   const [resetPassword, setResetPassword] = useState(false)
@@ -36,7 +35,7 @@ function VerifyEmail(props) {
         auth
           .applyActionCode(actionCode)
           .then(() => {
-            completed = true;
+            setCompleted(true)
             swal(
               'Success',
               'Your email has successfully been verified',
@@ -80,7 +79,6 @@ function VerifyEmail(props) {
               setHome(true)
             }
             console.log(e)
-            
           })
         break
       }

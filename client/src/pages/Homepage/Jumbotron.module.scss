@@ -26,6 +26,7 @@
   justify-content: center;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
+
   @include --large {
     display: block;
   }
@@ -35,7 +36,7 @@
   font-family: Poppins, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 50px;
+  font-size: 2.5rem;
   line-height: 115%;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -44,6 +45,7 @@
   text-align: center;
 
   @include --large {
+    font-size: 50px;
     text-align: left;
   }
 }

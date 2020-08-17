@@ -38,7 +38,7 @@
 }
 
 .h5 {
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 22px;
@@ -48,6 +48,8 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
   color: #fff;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
 
   @include --large {
     font-size: 35px;
@@ -55,7 +57,7 @@
 }
 
 .p {
-  font-family: Montserrat, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 22px;
