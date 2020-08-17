@@ -5,6 +5,7 @@ export const LOGGED_IN = [
   {name: 'Home', url: '/'},
   {name: 'Flow', url: '/flow'},
   {name: 'Subscription', url: '/subscription'},
+  {name: 'Plan', url: '/select-a-plan'},
   {name: 'Account', url: '/account'},
 ]
 

@@ -11,6 +11,7 @@ import Subscription from './pages/Subscription/Subscription'
 import Account from './pages/Account/Account'
 import VerifyEmail from './pages/Account/VerifyEmail'
 import ResetPassword from './pages/Account/ResetPassword'
+import SelectAPlan from './pages/Plan/SelectAPlan'
 import Admin from './pages/Account/Admin'
 
 import 'semantic-ui-css/semantic.min.css'
@@ -22,6 +23,7 @@ export default function App() {
       <Nav />
       <Route exact path="/" component={Home} />
       <Route exact path="/email" component={VerifyEmail} />
+      <Route exact path="/select-a-plan" component={SelectAPlan} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
       <Route exact path="/flow" component={Flow} />
