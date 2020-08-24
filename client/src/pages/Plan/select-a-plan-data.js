@@ -5,7 +5,8 @@ export const MONTHLY_PLAN = {
   price: '$60',
   frequency: 'Monthly',
   url: '/monthly-plan',
-  billed: '$60/month, auto-renews'
+  billed: '$60/month, auto-renews',
+  intPrice: 6000
 }
 
 export const QUARTERLY_PLAN = {
@@ -13,7 +14,8 @@ export const QUARTERLY_PLAN = {
   price: '$150',
   frequency: 'Quarterly',
   url: '/quarterly-plan',
-  billed: '$150 every three months. auto-renews'
+  billed: '$150 every three months. auto-renews',
+  intPrice: 15000
 }
 
 export const YEARLY_PLAN = {
@@ -21,7 +23,8 @@ export const YEARLY_PLAN = {
   price: '$500',
   frequency: 'Yearly',
   url: '/yearly-plan',
-  billed: '$500 every year. auto-renews'
+  billed: '$500 every year. auto-renews',
+  intPrice: 50000
 }
 
 export const SUBSCRIPTION_BENEFITS = [
@@ -33,5 +36,13 @@ export const SUBSCRIPTION_BENEFITS = [
   // 'Equity Block (coming soon)',
   // 'Dark Pool Order Data (coming soon)',
 ]
+
+export const SubscriptionCardData = {
+  header: 'Subscribe Now!',
+  paragraph:
+    'Try out our Option Flow unusual activity for $60 a month. No commitments. Cancel anytime',
+  buttonChildren: 'Sign up',
+  url: '/register',
+}
 
 export const OPTIONFLO_PLANS = [MONTHLY_PLAN, QUARTERLY_PLAN, YEARLY_PLAN]
