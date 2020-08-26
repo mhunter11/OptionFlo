@@ -7,10 +7,7 @@
   background-color: var(--c-flow-background);
   color: #ffffff;
   height: 3.125rem;
-  border-top: 1px solid #807774;
-  &:last-child {
-    border-bottom: 1px solid #807774;
-  }
+  text-align: center;
 }
 
 .flow_table {
@@ -20,12 +17,13 @@
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 15px;
   width: 1280px;
   height: 50px;
   /* identical to box height */
-
+  margin-top: 5rem;
+  margin-bottom: 5rem;
   text-transform: uppercase;
 }
 
@@ -63,6 +61,7 @@
 .time {
   width: 8%;
   padding-left: 1rem;
+  color: #888888;
 }
 
 .ticker {
@@ -265,14 +264,16 @@
 
 .desktop_ticker {
   cursor: pointer;
-  margin: 1rem;
   color: #cfd6d9;
   padding: 0.25rem 0.5rem;
   font-size: 16px;
   width: 5rem;
   height: 2rem;
   border-radius: 15px;
-  margin-right: 2.25rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   @extend %center-children;
 }
 
@@ -288,20 +289,20 @@
   @extend %center-children;
 }
 .mobile_ticker_call {
-  background-color: #06420e;
+  background-color: #27AE60;
 }
 
 .mobile_ticker_put {
-  background-color: #bf220e;
+  background-color: #EB5757;
 }
 
 .mobile_ticker_green_color {
-  color: #06420e !important;
+  color: #27AE60 !important;
   filter: brightness(1.75);
 }
 
 .mobile_ticker_red_color {
-  color: #bf220e !important;
+  color: #EB5757 !important;
   filter: brightness(1.75);
 }
 
