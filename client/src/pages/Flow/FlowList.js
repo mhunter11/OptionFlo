@@ -66,14 +66,12 @@ export default function FlowList(props) {
     >
       {updated && <td className={styles.time}>{formatTime(updated)}</td>}
       {date && <td className={styles.time}>{date}</td>}
-      <td
-        className={cx(styles.desktop_ticker, {
+      <td onClick={onClick}>
+        <div className={cx(styles.desktop_ticker, {
           [styles.mobile_ticker_call]: put_call === 'CALL',
           [styles.mobile_ticker_put]: put_call === 'PUT',
-        })}
-        onClick={onClick}
-      >
-        {ticker}
+        })}>{ticker}</div>
+        
       </td>
       <td className={styles.date_expiration}>{date_expiration}</td>
       <td className={styles.strike_price}>{strike_price}</td>

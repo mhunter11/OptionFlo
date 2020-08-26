@@ -28,7 +28,7 @@ export const HISTORICAL_FLOW_ROW_NAME = [
 
 export const HEIGHT = 900
 export const WIDTH = 1250
-export const ITEM_SIZE = 45
+export const ITEM_SIZE = 80
 export const CLASSNAME = 'List'
 
 export const MOBILE_WIDTH = 530
