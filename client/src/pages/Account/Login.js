@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react'
-import {Button, Form} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
+import {Button} from 'semantic-ui-react'
 import {useMutation} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import swal from 'sweetalert'
@@ -8,6 +9,14 @@ import {Redirect} from 'react-router'
 import {FirebaseContext} from '../../context/auth'
 
 import {useForm} from '../../util/hooks'
+
+import {
+  WELCOME_BACK,
+  SIGN_UP_BUTTON,
+  SIGN_UP_UPDATES,
+  ALREADY_ACCOUNT,
+  SIGN_IN,
+} from './login-data'
 
 function Login(props) {
   const {firebase} = useContext(FirebaseContext)
@@ -56,8 +65,11 @@ function Login(props) {
         console.log(res, values.username, firebaseId)
         setHome(true)
       })
-      .catch(function (error) {
-        swal('Error', 'An error has occured: "' + error + '"', 'error')
+      .catch(function () {
+        swal(
+          'Error',
+          'An error has occured please try to sign in again in a few minutes'
+        )
       })
   }
 
@@ -105,42 +117,60 @@ function Login(props) {
 
   return (
     <div className={styles.form_container}>
-      <Form onSubmit={onSubmit} noValidate>
-        <h1>Login</h1>
-        <Form.Input
-          label="Email"
-          placeholder="Email.."
-          name="username"
-          type="text"
-          value={values.username}
-          error={errors.username ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label="Password"
-          placeholder="Password.."
-          name="password"
-          type="password"
-          value={values.password}
-          error={errors.password ? true : false}
-          onChange={onChange}
-        />
-        <Button type="submit" primary>
-          Login
-        </Button>
-        <Button onClick={resetPassword} secondary>
-          Reset Password
-        </Button>
-      </Form>
-      {Object.keys(errors).length > 0 && (
-        <div className="ui error message">
-          <ul className="list">
-            {Object.values(errors).map(value => (
-              <li key={value}>{value}</li>
-            ))}
-          </ul>
+      <div className={styles.container}>
+        <div className={styles.welcome_back_container}>
+          <h3 className={styles.h3}>{WELCOME_BACK}</h3>
+          <h5 className={styles.h5}>{SIGN_UP_UPDATES}</h5>
+          <h5 className={styles.h5}>{ALREADY_ACCOUNT}</h5>
+          <Link to="/register" className={styles.sign_up_button}>
+            {SIGN_UP_BUTTON}
+          </Link>
         </div>
-      )}
+        <div className={styles.form}>
+          <h2 className={styles.h2}>{SIGN_IN}</h2>
+          <form onSubmit={onSubmit} noValidate className={styles.form_submit}>
+            <div className={styles.input_container}>
+              <input
+                className={styles.input}
+                label="Email"
+                placeholder="Email"
+                name="username"
+                type="text"
+                value={values.username}
+                error={errors.username ? true : false}
+                onChange={onChange}
+              />
+              <input
+                className={styles.input}
+                label="Password"
+                placeholder="Password"
+                name="password"
+                type="password"
+                value={values.password}
+                error={errors.password ? true : false}
+                onChange={onChange}
+              />
+            </div>
+            <div className={styles.submit_buttons}>
+              <Button type="submit" primary className={styles.primary}>
+                Login
+              </Button>
+              <Button onClick={resetPassword} secondary>
+                Reset Password
+              </Button>
+            </div>
+          </form>
+          {Object.keys(errors).length > 0 && (
+            <div className="ui error message">
+              <ul className="list">
+                {Object.values(errors).map(value => (
+                  <li key={value}>{value}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,13 @@
+@import '../../styles/breakpoint.scss';
+@import '../../styles/color.scss';
+@import '../../styles/positioning.scss';
+
+.bg_color {
+  background-color: #19143d;
+  color: #ffffff;
+}
+
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+}

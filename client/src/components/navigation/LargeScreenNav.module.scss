@@ -1,0 +1,82 @@
+@import '../../styles/breakpoint.scss';
+@import '../../styles/color.scss';
+@import '../../styles/positioning.scss';
+
+.nav_container {
+  display: none;
+
+  @include --large {
+    background: linear-gradient(77.57deg, #1e173e 1.1%, #131127 99.4%);
+    color: #ffffff;
+    display: block;
+  }
+}
+
+.container {
+  @include --large {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1260px;
+    margin: 0 auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.logo {
+  align-self: center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.logged_in_name {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.04em;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  list-style-type: none;
+  &:hover {
+    color: #23eaa4;
+  }
+}
+
+.logged_out_name {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.04em;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.link_white {
+  color: #ffff;
+  font-weight: 600;
+
+  &:hover {
+    color: #23eaa4;
+  }
+}
+
+.sign_up {
+  background: #2e3047;
+  border-radius: 3.125rem;
+  padding: 1rem 2rem;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

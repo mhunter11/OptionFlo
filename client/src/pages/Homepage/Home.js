@@ -1,30 +1,21 @@
-import React, {useContext} from 'react'
-import gql from 'graphql-tag'
+import React from 'react'
 
-import {FirebaseContext} from '../../context/auth'
+import Jumbotron from './Jumbotron'
+import Advantage from './Advantage'
+import WhatWeProvide from './WhatWeProvide'
+import FAQ from './FAQ'
+import Community from './Community'
 
-const GET_USER_INFO = gql`
-  query getUserInfo($myUserId: String!) {
-    getUser(userId: $myUserId) {
-      type
-      stripeId
-      id
-      createdAt
-      username
-      email
-    }
-  }
-`
+import styles from './Home.module.scss'
 
 export default function Home() {
-  const {user} = useContext(FirebaseContext)
-  // const {loading, error, data} = useQuery(GET_USER_INFO, {
-  //   variables: {myUserId: user ? user.id : null},
-  // })
-
   return (
-    <div>
-      <h1>Home</h1>
+    <div className={styles.bg_color}>
+      <Jumbotron />
+      <Advantage />
+      <WhatWeProvide />
+      <Community />
+      <FAQ />
     </div>
   )
 }

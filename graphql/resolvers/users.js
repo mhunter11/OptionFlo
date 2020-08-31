@@ -1,11 +1,4 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const {AuthenticationError, UserInputError} = require('apollo-server')
-
-const {
-  validateRegisterInput,
-  validateLoginInput,
-} = require('../../util/validators')
 const {checkAuth, admin} = require('../../util/check-auth')
 const User = require('../../models/User')
 const Option = require('../../models/Option')
@@ -180,20 +173,31 @@ module.exports = {
         id: result.id,
       }
     },
-    async createSubscription(_, {source, ccLast4}, context) {
+    async createSubscription(_, args, context) {
       const user = await checkAuth(context)
+      const {source, ccLast4, subPlan} = args
       if (!user) {
         throw new AuthenticationError('Not authenticated')
       }
+
       const firebaseId = user.uid
       const updateUser = await User.findOne({firebaseId})
-
       const userEmail = user.email
+
+      var userPlan
+
+      if (subPlan === 'Monthly Plan') {
+        userPlan = process.env.PLAN
+      } else if (subPlan === 'Quarterly Plan') {
+        userPlan = process.env.QUARTERLY_PLAN
+      } else {
+        userPlan = process.env.YEARLY_PLAN
+      }
 
       const customer = await stripe.customers.create({
         email: userEmail,
         source,
-        plan: process.env.PLAN,
+        plan: userPlan,
       })
 
       // this catches the last current subscription status. We do this because users can cancel and resubscribe

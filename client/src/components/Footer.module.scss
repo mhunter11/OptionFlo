@@ -1,9 +1,5 @@
 @import '../styles/breakpoint.scss';
 
-.logo {
-  width: 10rem;
-}
-
 .bg_color {
   background-color: #000;
   color: #ffffff;
@@ -45,4 +41,31 @@
   align-items: center;
   width: 20rem;
   margin: auto;
+}
+
+.image {
+  width: 26px;
+}
+
+.social_link_container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+}
+
+.social_link {
+  margin: 0 0.5rem;
+}
+
+.p {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 21px;
+  /* identical to box height */
+
+  /* Gray 2 */
+
+  color: #4f4f4f;
 }

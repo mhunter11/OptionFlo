@@ -10,6 +10,8 @@ import {FirebaseContext} from '../../context/auth'
 
 import styles from './Account.module.scss'
 
+import OPTION_FLO_LOGO from '../../images/optionflo-icon.png'
+
 const CHANGE_CREDIT_CARD = gql`
   mutation changeCreditCard($source: String!, $ccLast4: String!) {
     changeCreditCard(source: $source, ccLast4: $ccLast4) {
@@ -27,6 +29,8 @@ export default function Account() {
   const {loading, data} = useQuery(GET_USER_INFO, {
     variables: {myUserId: user ? user.uid : null},
   })
+
+  console.log(data)
   const [changeCreditCard] = useMutation(CHANGE_CREDIT_CARD)
 
   if (loading) {
@@ -46,26 +50,65 @@ export default function Account() {
   }
 
   return (
-    <div>
-      {(data.getUser.admin === true) && <Link to="/admin">Admin Panel</Link>}
-      <div>{data.getUser.email}</div>
-      <div>your current credit card last 4 digits: {data.getUser.ccLast4}</div>
-      <StripeCheckout
-        name="OptionFlo"
-        currency="USD"
-        token={async token => {
-          const response = await changeCreditCard({
-            variables: {source: token.id, ccLast4: token.card.last4},
-          })
-          console.log(response)
-        }}
-        stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
-        panelLabel="Change card"
-      >
-        <button className={styles.stripe_checkout_button}>
-          Change credit card
-        </button>
-      </StripeCheckout>
+    <div className={styles.account_container}>
+      <div className={styles.container}>
+        <div className={styles.account_infomation}>
+          <div className={styles.logo_div}>
+            <img
+              className={styles.logo}
+              src={OPTION_FLO_LOGO}
+              alt="OptionFlo Logo"
+            />
+          </div>
+          <div className={styles.user_info}>
+            <div className={styles.user}>{data.getUser.username}</div>
+            <div className={styles.email}>{data.getUser.email}</div>
+            <div className={styles.user}>
+              Credit Card last 4 digits: {data.getUser.ccLast4}
+            </div>
+            {data.getUser.type === 'standard' && (
+              <StripeCheckout
+                name="OptionFlo"
+                currency="USD"
+                token={async token => {
+                  const response = await changeCreditCard({
+                    variables: {source: token.id, ccLast4: token.card.last4},
+                  })
+                  console.log(response)
+                }}
+                stripeKey={ENVIRONMENT.STRIPE_PUBLISHABLE}
+                panelLabel="Change card"
+              >
+                <button className={styles.stripe_checkout_button}>
+                  Change credit card
+                </button>
+              </StripeCheckout>
+            )}
+          </div>
+        </div>
+
+        <div>
+          {data.getUser.admin === true && (
+            <div className={styles.button_container}>
+              <Link className={styles.paid_button} to="/admin">
+                Admin Panel
+              </Link>
+            </div>
+          )}
+          <div className={styles.user_type}>
+            {data.getUser.type === '' && (
+              <div className={styles.button_container}>
+                <a className={styles.paid_button}>Status: Free User</a>
+              </div>
+            )}
+            {data.getUser.type === 'standard' && (
+              <div className={styles.button_container}>
+                <div className={styles.paid_button}>Status: Paid User</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

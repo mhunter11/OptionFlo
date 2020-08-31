@@ -1,0 +1,113 @@
+@import '../../styles/breakpoint.scss';
+@import '../../styles/color.scss';
+@import '../../styles/positioning.scss';
+
+:root {
+  --color-bg: hsl(3, 100%, 63%);
+  --color-bar: hsl(0, 0%, 95%);
+  --metric-bar-height: 0.5rem;
+  --metric-bar-width: 3.5em;
+}
+
+.nav_container {
+  color: #ffffff;
+  background: linear-gradient(77.57deg, #1e173e 1.1%, #131127 99.4%);
+  position: relative;
+
+  @include --large {
+    display: none;
+  }
+}
+
+.container {
+  padding: 1.5rem 1.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* checkbox */
+.bar {
+  position: absolute;
+  top: auto;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+}
+
+.hamburger {
+  cursor: pointer;
+}
+
+/* bars */
+.bar__element {
+  margin: 0.5em 0;
+  width: var(--metric-bar-width);
+  height: var(--metric-bar-height);
+  background-color: var(--color-bar);
+  transition: all 0.4s ease;
+  border-radius: var(--metric-bar-height);
+  box-shadow: 1px 0px 10px hsla(0, 0%, 20%, 0.2);
+}
+
+.bar__element:hover {
+  filter: brightness(1.05);
+}
+
+.one {
+  transform: translateY(15px) rotate(45deg);
+}
+
+.three {
+  transform: translateY(-15px) rotate(-45deg);
+}
+
+.two {
+  transform: scale(0);
+  transition: all 150ms ease;
+}
+
+.logged_in_name {
+  list-style-type: none;
+  color: white;
+  text-align: center;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.logo {
+  height: 30px;
+}
+
+.logged_out_name {
+  list-style-type: none;
+  color: white;
+  text-align: center;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 2.5rem;
+  padding-top: 2.5rem;
+  height: 100vh;
+  position: absolute;
+  background: linear-gradient(77.57deg, #1e173e 1.1%, #131127 99.4%);
+  width: 100%;
+  z-index: 1;
+}
+
+.link_white {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  line-height: 1.2;
+  font-weight: 800;
+  position: relative;
+  color: #ececee;
+  transition: all 250ms linear;
+}

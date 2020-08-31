@@ -1,0 +1,83 @@
+@import '../../styles/breakpoint.scss';
+@import '../../styles/color.scss';
+@import '../../styles/positioning.scss';
+
+.answer {
+  display: none;
+}
+
+.answer_open {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+  color: #e6e6e6;
+  padding: 2rem;
+  text-align: left;
+  background: #2f2563;
+  border-radius: 10px;
+}
+
+.container {
+  padding: 6.25rem 0;
+}
+
+.h2 {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 52px;
+  letter-spacing: 0.04em;
+  text-align: center;
+
+  @include --large {
+    font-size: 35px;
+  }
+}
+
+.faq_container {
+  text-align: center;
+  margin-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.h5 {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: left;
+  margin-right: 1rem;
+
+  @include --large {
+    margin-right: 0;
+    line-height: 22px;
+  }
+}
+
+.question {
+  background: #1d173d;
+  box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 1.75rem 2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.faq_card {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+
+  @include --large {
+    width: 689px;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+}

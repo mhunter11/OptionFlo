@@ -17,8 +17,3 @@ export const SubscriptionCardData = {
   url: '/register',
 }
 
-// {
-//   header: 'Already Signed Up?',
-//   buttonChildren: 'Pay With Card',
-//   url: '/Subscription',
-// },

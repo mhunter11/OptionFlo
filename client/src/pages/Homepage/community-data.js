@@ -1,11 +1,36 @@
-export const CUSTOMERS_FEEDBACK = [
-  {
-    name: 'samdoc',
-    text: `To anyone considering the value of this DISCORD server - I was initially skeptical about the $25 value and even backed out the 3 day trial earlier. Then I looked around a option tracking services that cost $80-$100 a month. I work in an ICU and don't have time to look at a monitor most of the day and realized that what Jaime does by giving mobile alerts is awesome for the fee. Just my 2 cents`,
-  },
-  {
-    name: 'Travis',
-    text:
-      'Yea that msft trade was spot on. Signed up for premium today. Paid for a years worth of membership on first alert. lol',
-  },
-]
+export const OUR_COMMUNITY = 'Our Community'
+
+export const ACES_HIGH = {
+  twitterHandle: 'Aces_high84',
+  image: require('./images/aces_high_image.jpg'),
+  name: '♠️Aces High♠️',
+  tweet: 'thnx for the flo!🤣 caught the dip🔥🔥🔥🖨️',
+  tweetId: '1282775663124992000',
+}
+
+export const FRANDELL = {
+  twitterHandle: 'Frandell8',
+  image: require('./images/Frandell8.jpg'),
+  name: 'Frandell',
+  tweet: 'What a call, nice 🤙🏾',
+  tweetId: '1282777374438961154',
+}
+
+export const NXARRIA = {
+  twitterHandle: 'nxarria',
+  image: require('./images/nxarria.jpg'),
+  name: 'NA',
+  tweet: 'Genious.  Skillz that killz.',
+  tweetId: '1282706846894166018',
+}
+
+export const TROBERTENJAMIN = {
+  twitterHandle: 'TRobertBenjamin',
+  image: require('./images/tomasbenjamin.jpg'),
+  name: 'tomasbenjamin',
+  tweet:
+    '@OptionFlo I think the beta version is great! How do you see the interface/database evolving past the beta version?',
+  tweetId: '1282053905145184256',
+}
+
+export const TWITTER_LIST = [ACES_HIGH, FRANDELL, NXARRIA, TROBERTENJAMIN]

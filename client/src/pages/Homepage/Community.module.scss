@@ -1,0 +1,33 @@
+@import '../../styles/breakpoint.scss';
+@import '../../styles/color.scss';
+@import '../../styles/positioning.scss';
+
+.twitter_list {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  align-items: center;
+  @include --large {
+    flex-direction: initial;
+    align-items: initial;
+    margin: 0 auto;
+    width: 1280px;
+  }
+}
+
+.h2 {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 35px;
+  line-height: 52px;
+  text-align: center;
+  margin: 2.5rem auto;
+  letter-spacing: 0.04em;
+}
+
+.bg_color {
+  background: #211a47;
+  padding: 6.25rem 0; 
+}

@@ -87,10 +87,10 @@ function AdminView() {
         </button>
       </div>
       {!searchResult &&
-        data.getAllUsers.map(user => {
+        data.getAllUsers.map((user, i) => {
           return (
             <ColumnView
-              key={user.username}
+              key={i}
               email={user.email}
               username={user.username}
               type={user.type}
@@ -100,10 +100,10 @@ function AdminView() {
           )
         })}
       {searchResult &&
-        result.map(user => {
+        result.map((user, i) => {
           return (
             <ColumnView
-              key={user.username}
+              key={i}
               email={user.email}
               username={user.username}
               type={user.type}

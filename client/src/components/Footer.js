@@ -3,34 +3,45 @@ import {Link} from 'react-router-dom'
 
 import styles from './Footer.module.scss'
 
-import LOGO from '../images/logo-02.png'
-import TWITTER from '../images/twitter.svg'
-import DISCORD from '../images/discord.svg'
+import NEW_LOGO from './images/OptionFlow_top_Logo.png'
+
+import {SOCIAL_LINK} from './footer-data'
 
 export default function Footer() {
   return (
     <div className={styles.bg_color}>
       <div className={styles.container}>
         <Link to="/">
-          <img className={styles.logo} src={LOGO} alt="OptionFlo Logo" />
+          <img className={styles.logo} src={NEW_LOGO} alt="OptionFlo Logo" />
         </Link>
-        <ul className={styles.list}>
-          <li className={styles.list_item}>Privacy Policy</li>
-          <li className={styles.list_item}>Terms of Service</li>
-          <li className={styles.list_item}>
-            <Link to="/subscription">Subscription</Link>
-          </li>
-        </ul>
-        <div className={styles.logo_container}>
-          <a className={styles.icon_link} href="https://twitter.com/OptionFlo">
-            <img src={TWITTER} className={styles.icon} alt="Twitter Logo" />
-          </a>
-          <a href="https://discord.gg/RBVCtV2">
-            <img src={DISCORD} className={styles.icon} alt="Discord Logo" />
-          </a>
+        <div className={styles.social_link_container}>
+          {SOCIAL_LINK.map(link => {
+            if (link.trueLink) {
+              return (
+                <Link
+                  className={styles.social_link}
+                  to={link.url}
+                  key={link.name}
+                >
+                  <img className={styles.image} src={link.image} alt="" />
+                </Link>
+              )
+            }
+            return (
+              <a
+                className={styles.social_link}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={link.name}
+              >
+                <img className={styles.image} src={link.image} alt="" />
+              </a>
+            )
+          })}
         </div>
         <div>
-          <p>Copyrights &copy; 2020</p>
+          <p className={styles.p}>Copyrights &copy; {new Date().getFullYear()}. All Rights Reserved.</p>
         </div>
       </div>
     </div>

@@ -1,0 +1,33 @@
+@import '../../styles/breakpoint.scss';
+@import '../../styles/color.scss';
+@import '../../styles/positioning.scss';
+
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding-top: 5rem;
+  padding-bottom: 10rem;
+}
+
+.bg_color {
+  background-color: #211a47;
+  color: #ffffff;
+}
+
+.h3 {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 35px;
+  line-height: 52px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.plan_container {
+  @include --large {
+    display: flex;
+  }
+}
