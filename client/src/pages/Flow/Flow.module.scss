@@ -13,7 +13,7 @@
 .flow_table {
   margin-left: auto;
   margin-right: auto;
-  background-color: #2D2362;
+  background-color: #2d2362;
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -62,6 +62,10 @@
   width: 8%;
   padding-left: 1rem;
   color: #888888;
+}
+
+.td_ticker {
+  width: 10%;
 }
 
 .ticker {
@@ -289,20 +293,20 @@
   @extend %center-children;
 }
 .mobile_ticker_call {
-  background-color: #27AE60;
+  background-color: #27ae60;
 }
 
 .mobile_ticker_put {
-  background-color: #EB5757;
+  background-color: #eb5757;
 }
 
 .mobile_ticker_green_color {
-  color: #27AE60 !important;
+  color: #27ae60 !important;
   filter: brightness(1.75);
 }
 
 .mobile_ticker_red_color {
-  color: #EB5757 !important;
+  color: #eb5757 !important;
   filter: brightness(1.75);
 }
 

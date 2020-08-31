@@ -66,12 +66,15 @@ export default function FlowList(props) {
     >
       {updated && <td className={styles.time}>{formatTime(updated)}</td>}
       {date && <td className={styles.time}>{date}</td>}
-      <td onClick={onClick}>
-        <div className={cx(styles.desktop_ticker, {
-          [styles.mobile_ticker_call]: put_call === 'CALL',
-          [styles.mobile_ticker_put]: put_call === 'PUT',
-        })}>{ticker}</div>
-        
+      <td onClick={onClick}  className={styles.td_ticker}>
+        <div
+          className={cx(styles.desktop_ticker, {
+            [styles.mobile_ticker_call]: put_call === 'CALL',
+            [styles.mobile_ticker_put]: put_call === 'PUT',
+          })}
+        >
+          {ticker}
+        </div>
       </td>
       <td className={styles.date_expiration}>{date_expiration}</td>
       <td className={styles.strike_price}>{strike_price}</td>
@@ -89,7 +92,7 @@ export default function FlowList(props) {
       <td className={styles.description}>{contract}</td>
       <td className={styles.cost_basis}>${OPTION_COST}</td>
       <td className={styles.OI}>{OI}</td>
-      <td>{REF}</td>
+      <td className={styles.td_ticker}>{REF}</td>
     </tr>
   )
 }
