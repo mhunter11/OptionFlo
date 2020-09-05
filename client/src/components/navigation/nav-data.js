@@ -4,6 +4,7 @@ export const LOGOUT = 'Logout'
 export const LOGGED_IN = [
   {name: 'Home', url: '/'},
   {name: 'Flow', url: '/flow'},
+  {name: 'Historical Flow', url: '/historical-flow'},
   {name: 'Plan', url: '/select-a-plan'},
   {name: 'Account', url: '/account'},
 ]
