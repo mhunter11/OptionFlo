@@ -133,13 +133,14 @@
   align-items: center;
   text-align: center;
   text-transform: uppercase;
-  color: #000000;
+  color: white;
   outline: none;
   margin: 0 auto;
 
   @include --large {
     margin: 0;
     margin-top: 1.5rem;
+    white-space: nowrap;
   }
 
   &:hover {
