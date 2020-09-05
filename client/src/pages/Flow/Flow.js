@@ -12,9 +12,6 @@ import {
   HEIGHT,
   WIDTH,
   ITEM_SIZE,
-  MOBILE_WIDTH,
-  MOBILE_HEIGHT,
-  MOBILE_ITEM_SIZE,
   CLASSNAME,
 } from './flow-data'
 
