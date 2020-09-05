@@ -253,11 +253,10 @@
 .ul_list {
   padding: 0;
   margin: 0;
-  min-height: 60vh;
 
   @include --large {
     max-width: 1260px;
-    height: 90vh;
+    height: 900px;
     overflow: auto;
   }
 }
@@ -358,6 +357,13 @@
 }
 
 .mobile_time {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
   font-size: 1rem;
   color: lightgray;
 }
@@ -406,13 +412,21 @@
 .mobile_ticker {
   color: #cfd6d9;
   padding: 0.25rem 0.5rem;
-  font-size: 16px;
-  font-weight: 700;
   width: 4rem;
   height: 2rem;
   border-radius: 15px;
   cursor: pointer;
   @extend %center-children;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 15px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
 }
 
 .mobile_ticker_call {

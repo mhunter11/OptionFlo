@@ -4,11 +4,17 @@ import {ADVANTAGE_LIST, OPTIONFLO_ADVANTAGE} from './advantage-data'
 
 import styles from './Advantage.module.scss'
 
+var divStyle = {
+  marginBottom: '5rem',
+}
+
 export default function Advantage() {
   return (
     <div className={styles.bg_color}>
       <div className={styles.container}>
-        <h2 className={styles.h5}>{OPTIONFLO_ADVANTAGE}</h2>
+        <h2 className={styles.h5} style={divStyle}>
+          {OPTIONFLO_ADVANTAGE}
+        </h2>
         <div className={styles.card_container}>
           {ADVANTAGE_LIST.map(data => {
             return (
