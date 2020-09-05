@@ -7,8 +7,10 @@
   align-items: center;
   background-color: #1d173d;
   color: #ffffff;
-  height: 3.125rem;
+  height: 65px;
   border-top: 1px solid #807774;
+  padding: 1rem 1.5rem;
+
   &:last-child {
     border-bottom: 1px solid #807774;
   }
@@ -47,8 +49,8 @@
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
   color: #ffffff;
+  width: 10%;
 }
 
 .time {
@@ -280,6 +282,7 @@
   display: none;
   @include --large {
     display: block;
+    padding-top: 1.5rem;
   }
 }
 
@@ -298,6 +301,19 @@
     max-width: 1260px;
     margin: auto;
   }
+}
+
+.desktop_row_name {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 13px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
+  width: 10%;
+  color: #e6e6e6;
 }
 
 /* Mobile styles */
@@ -354,7 +370,7 @@
 }
 
 .mobile_flow_list {
-  background-color: var(--c-flow-background);
+  background-color: #2d2362;
   color: #fff;
   align-items: center;
   padding: 1rem 0.75rem;
@@ -388,12 +404,27 @@
   cursor: pointer;
   @extend %center-children;
 }
+
 .mobile_ticker_call {
-  background-color: #06420e;
+  background-color: #00c853;
+}
+
+.desktop_call_put {
+  padding: 8px;
+  border-radius: 1rem;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.mr_5 {
+  margin-right: 0.5rem;
 }
 
 .mobile_ticker_put {
-  background-color: #bf220e;
+  background-color: #f44336;
 }
 
 .mobile_ticker_green_color {
@@ -441,7 +472,6 @@
   height: 24px;
   position: absolute;
   background-color: grey;
-  z-index: 1;
   right: 15px;
   top: 0;
   bottom: 0;
@@ -457,21 +487,41 @@
 }
 
 .mobile_cost_basis {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
   font-size: 18px;
   margin-top: 0.75rem;
 }
 
 .flow_item {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #888888;
   margin-top: 0.25rem;
-  text-transform: capitalize;
 }
 
 .flow_result {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
+  color: #e6e6e6;
   margin-top: 0.5rem;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
   text-transform: uppercase;
 }
 

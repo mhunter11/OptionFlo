@@ -3,9 +3,9 @@ export const FLOW_ROW_NAME = [
   {className: '6', name: 'Ticker', padding: '2.25'},
   {className: '6.5', name: 'Expiration'},
   {className: '6.5', name: 'Strike', padding: '0.5'},
-  {className: '8', name: 'C/P'},
+  {className: '8', name: 'Call/PUt'},
   {className: '5.5', name: 'Type'},
-  {className: '10.5', name: 'Contract & Price'},
+  {className: '10.5', name: 'Contract & Price', marginRight: true},
   // {className: '7.5', name: 'Sentiment'},
   {className: '8', name: 'Cost'},
   {className: '5', name: 'O/I', padding: '1'},
@@ -28,7 +28,7 @@ export const HISTORICAL_FLOW_ROW_NAME = [
 
 export const HEIGHT = 900
 export const WIDTH = 1250
-export const ITEM_SIZE = 45
+export const ITEM_SIZE = 60
 export const CLASSNAME = 'List'
 
 export const MOBILE_WIDTH = 530

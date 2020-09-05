@@ -53,34 +53,37 @@ export default function FlowList(props) {
         [styles.big_buy]: BIG_BUY,
       })}
     >
-      {updated && <div className={styles.time}>{formatTime(updated)}</div>}
-      {date && <div className={styles.time}>{date}</div>}
-      <div
-        className={cx(styles.desktop_ticker, {
-          [styles.mobile_ticker_call]: put_call === 'CALL',
-          [styles.mobile_ticker_put]: put_call === 'PUT',
-        })}
-        onClick={onClick}
-      >
-        {ticker}
+      {updated && (
+        <div className={styles.desktop_row_name}>{formatTime(updated)}</div>
+      )}
+      {date && <div className={styles.desktop_row_name}>{date}</div>}
+      <div className={styles.desktop_row_name} onClick={onClick}>
+        <div
+          className={cx(styles.desktop_call_put, {
+            [styles.mobile_ticker_call]: put_call === 'CALL',
+            [styles.mobile_ticker_put]: put_call === 'PUT',
+          })}
+        >
+          {ticker}
+        </div>
       </div>
-      <div className={styles.date_expiration}>{date_expiration}</div>
-      <div className={styles.strike_price}>{strike_price}</div>
+      <div className={styles.desktop_row_name}>{date_expiration}</div>
+      <div className={styles.desktop_row_name}>{strike_price}</div>
       <div
-        className={cx(styles.put_call, {
+        className={cx(styles.desktop_row_name, {
           [styles.call_green]: put_call === 'CALL',
           [styles.put_red]: put_call === 'PUT',
         })}
       >
         {put_call}
       </div>
-      <div className={styles.option_activity_type}>
+      <div className={styles.desktop_row_name}>
         {option_activity_type === 'SWEEP' ? 'SWEEP' : 'BLOCK'}
       </div>
-      <div className={styles.description}>{contract}</div>
-      <div className={styles.cost_basis}>${OPTION_COST}</div>
-      <div className={styles.OI}>{OI}</div>
-      <div>{REF}</div>
+      <div className={styles.desktop_row_name}>{contract}</div>
+      <div className={styles.desktop_row_name}>${OPTION_COST}</div>
+      <div className={styles.desktop_row_name}>{OI}</div>
+      <div className={styles.desktop_row_name}>{REF}</div>
     </div>
   )
 }

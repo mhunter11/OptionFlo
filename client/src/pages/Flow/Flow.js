@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect, useContext, useCallback} from 'react'
+import cx from 'classnames'
 import {Redirect} from 'react-router-dom'
 import {useQuery} from '@apollo/react-hooks'
 import {FixedSizeList as List} from 'react-window'
@@ -198,7 +199,10 @@ export default function Flow() {
         <div className={styles.row_list}>
           {FLOW_ROW_NAME.map(data => {
             return (
-              <div className={styles.row_name} key={data.name}>
+              <div
+                className={cx(styles.row_name, ([styles.mr_5]: marginRight))}
+                key={data.name}
+              >
                 {data.name}
               </div>
             )
