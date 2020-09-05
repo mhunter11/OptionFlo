@@ -39,7 +39,7 @@ function Register(props) {
   })
 
   function registerUser() {
-    if (values.password != values.confirmPassword) {
+    if (values.password !== values.confirmPassword) {
       swal(
         'Mismatched Passwords',
         'The passwords entered do not match, please try again',

@@ -5,7 +5,7 @@
 .flow_list {
   display: flex;
   align-items: center;
-  background-color: var(--c-flow-background);
+  background-color: #1d173d;
   color: #ffffff;
   height: 3.125rem;
   border-top: 1px solid #807774;
@@ -28,8 +28,16 @@
   max-width: 1260px;
   margin: 0 auto;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding-top: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: #2d2362;
+}
+
+.container_list {
+  border: 1px solid #ccc;
+  max-width: 1260px;
+  margin: 0 auto;
 }
 
 .row_name {
@@ -111,6 +119,86 @@
   }
 }
 
+.input {
+  background: #fff;
+  border: none;
+  padding: 2px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.input {
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  display: block;
+  padding: 15px 10px;
+  background: #fff;
+  z-index: 100;
+  border: none;
+  width: 100%;
+  position: relative;
+  transition: all ease-in-out 0.25s;
+  margin: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.desktop_input_search {
+  max-height: 2.5rem;
+  position: relative;
+  outline: none;
+  color: #333;
+  padding: 1rem 0.5rem;
+  border-width: 0;
+}
+
+.input_search {
+  display: flex;
+  justify-content: space-around;
+}
+
+.input.active input {
+  background: #fff;
+  color: #333;
+  transition: all ease-in-out 0.25s;
+}
+
+.input:after {
+  bottom: -100%;
+  right: -100%;
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #36b4c7;
+  transition: all ease-in-out 0.25s;
+}
+
+.input.active:after {
+  right: 0;
+  bottom: 0;
+  transition: all ease-in-out 0.25s;
+}
+.input:before {
+  top: -100%;
+  left: -100%;
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #36b4c7;
+  transition: all ease-in-out 0.25s;
+}
+.input.active:before {
+  left: 0;
+  top: 0;
+  transition: all ease-in-out 0.25s;
+}
+
 .mobile_button {
   height: 35px;
   margin-left: -14px;
@@ -120,18 +208,28 @@
 }
 
 .button {
-  height: 22px;
-}
-
-.input_search {
+  height: 40px;
+  background: #23eaa4;
+  padding: 1rem 2rem;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  max-width: 270px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  margin: auto;
+  border-width: 0;
   display: flex;
-  justify-content: flex-end;
-  max-height: 2.5rem;
-  margin-bottom: 0.5rem;
-  position: relative;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  cursor: pointer;
 
-  @include --large {
-    margin-left: 4rem;
+  &:hover {
+    opacity: 0.7;
   }
 }
 
@@ -139,9 +237,9 @@
   padding: 0;
   margin: 0;
   min-height: 60vh;
+
   @include --large {
     max-width: 1260px;
-    margin: 0 auto 2.5rem;
     height: 90vh;
     overflow: auto;
   }
@@ -181,14 +279,13 @@
 }
 
 .mobile_view {
-  margin-top: 0.5rem;
   @include --large {
     display: none;
   }
 }
 
 .flow_background_color {
-  background-color: var(--light-black);
+  background: #211a47;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -219,9 +316,30 @@
   padding: 0.5rem 0;
 }
 
+.option_flow_h5 {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  color: #fff;
+  line-height: 26px;
+  letter-spacing: 0.04em;
+}
+
 .mobile_time {
   font-size: 1rem;
   color: lightgray;
+}
+
+.desktop_input_button {
+  display: flex;
+}
+
+.input_field_background {
+  background-color: #2d2362;
+  max-width: 1260px;
+  margin: 0 auto 1rem;
+  padding: 1rem 2.5rem;
 }
 
 .space_between {
@@ -304,7 +422,11 @@
   cursor: pointer;
   position: absolute;
   top: 15px;
-  right: 0.5rem;
+  right: -0.5rem;
+}
+
+.df {
+  position: relative;
 }
 
 .close_icon:after {
@@ -326,6 +448,7 @@
   font-weight: normal;
   font-size: 12px;
   cursor: pointer;
+  z-index: 9999;
 }
 
 .mobile_cost_basis {

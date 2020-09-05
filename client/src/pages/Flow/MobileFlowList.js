@@ -43,11 +43,13 @@ export default function MobileFlowList(props) {
     OPTION_COST = parseInt(OPTION_COST).toLocaleString('en')
   }
 
-  // console.log(`${getContractAndPrice(CONTRACT_AND_PRICE)}`)
+  const isGoldenSweep = GOLDEN_SWEEP && (bidOrAsk === 'A' || bidOrAsk === 'AA')
 
   const contract = `${getContractAndPrice(
     CONTRACT_AND_PRICE
   ).trim()}${getBidOrAskOrder(description)}`
+  const bidOrAsk = getBidOrAskOrder(description)
+
   const MobileOptionData = [
     {item: 'Expiration', result: getFormattedExpirationDate(date_expiration)},
     {item: 'Strike', result: strike_price},
@@ -60,7 +62,7 @@ export default function MobileFlowList(props) {
   return (
     <div
       className={cx(styles.mobile_flow_list, {
-        [styles.golden_sweep]: GOLDEN_SWEEP,
+        [styles.golden_sweep]: isGoldenSweep,
         [styles.big_buy]: BIG_BUY,
       })}
     >

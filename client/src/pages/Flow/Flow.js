@@ -7,13 +7,7 @@ import io from 'socket.io-client'
 
 import styles from './Flow.module.scss'
 
-import {
-  FLOW_ROW_NAME,
-  HEIGHT,
-  WIDTH,
-  ITEM_SIZE,
-  CLASSNAME,
-} from './flow-data'
+import {FLOW_ROW_NAME, HEIGHT, WIDTH, ITEM_SIZE, CLASSNAME} from './flow-data'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
@@ -21,6 +15,7 @@ import {FirebaseContext} from '../../context/auth'
 import {ENVIRONMENT} from '../../env'
 
 import FlowList from './FlowList'
+import InputField from './InputField'
 import MobileFlowList from './MobileFlowList'
 import Loading from '../../components/Loading'
 
@@ -33,7 +28,6 @@ export default function Flow() {
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
   const user = currentUser
-  // let todayOptionData = []
   let todayOptionsTraded = []
   let today = new Date()
   let dd = String(today.getDate()).padStart(2, '0')
@@ -62,26 +56,6 @@ export default function Flow() {
       clearFilter()
       return
     }
-
-    // setSearchInput(ticker)
-    // ticker = ticker.toUpperCase()
-    // let today = new Date()
-    // let dd = String(today.getDate()).padStart(2, '0')
-    // let mm = String(today.getMonth() + 1).padStart(2, '0')
-    // let yyyy = today.getFullYear()
-
-    // today = yyyy + '-' + mm + '-' + dd
-    // if (data !== undefined) {
-    //   // TODO: on weekends show previous option on friday
-    //   data.getOptions.map(data => {
-    //     if (data.date === today) {
-    //       todayOptionData.push(data)
-    //     }
-
-    //     return todayOptionData
-    //   })
-    //   // today option data that is saved on the database
-    // }
 
     // socket data
     const filteredOptionData = options.filter(
@@ -215,22 +189,23 @@ export default function Flow() {
   return (
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
+        <InputField
+          onChange={e => setSearchInput(e.target.value)}
+          onKeyPress={e => (e.key === 'Enter' ? filterData(searchInput) : null)}
+          onClick={() => filterData(searchInput)}
+          value={searchInput}
+        />
         <div className={styles.row_list}>
           {FLOW_ROW_NAME.map(data => {
             return (
-              <div
-                className={styles.row_name}
-                style={{
-                  paddingLeft: `${data.padding}rem`,
-                }}
-                key={data.name}
-              >
+              <div className={styles.row_name} key={data.name}>
                 {data.name}
               </div>
             )
           })}
-          <div className={styles.input_search}>
+          {/* <div className={styles.input_search}>
             <input
+              className={styles.desktop_input_search}
               type="text"
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
@@ -243,7 +218,7 @@ export default function Flow() {
               className={styles.button}
               onClick={() => filterData(searchInput)}
             >
-              Filter
+              Search
             </button>
             <button
               className={styles.button}
@@ -251,9 +226,9 @@ export default function Flow() {
             >
               Reset
             </button>
-          </div>
+          </div> */}
         </div>
-        <div>
+        <div className={styles.container_list}>
           <ul className={styles.ul_list}>
             {filteredOptions && saveOptions.length === 0 && (
               <div className={styles.no_options_found}>No Items Found</div>
@@ -295,7 +270,7 @@ export default function Flow() {
             </div>
           )}
           <div className={styles.input_search}>
-            <div>
+            <div className={styles.df}>
               <input
                 className={styles.input}
                 type="text"
