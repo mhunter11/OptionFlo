@@ -191,7 +191,7 @@ export default function Flow() {
     <div className={styles.flow_background_color}>
       <div className={styles.desktop_view}>
         <InputField
-          onChange={e => setSearchInput(e.target.value)}
+          onChange={e => filterInput(e.target.value)}
           onKeyPress={e => (e.key === 'Enter' ? filterData(searchInput) : null)}
           onClick={() => filterData(searchInput)}
           value={searchInput}
