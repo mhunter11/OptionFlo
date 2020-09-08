@@ -455,7 +455,7 @@
   color: #fff;
   align-items: center;
   padding: 0.75rem;
-  margin: 0.5rem 0.5rem 0;
+  margin: 0.5rem 0.5rem 0 0;
 }
 
 .desktop_ticker {
@@ -529,7 +529,7 @@
 }
 
 .mobile_flow_item_container {
-  margin-right: 0.5rem;
+  margin-right: 0.375rem;
 }
 
 .close_icon {
@@ -638,7 +638,7 @@
   text-transform: uppercase;
   color: #888888;
   margin-top: 0.25rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .flow_result {
@@ -648,12 +648,12 @@
   font-size: 13px;
   line-height: 17px;
   display: flex;
+  justify-content: center;
   align-items: center;
   letter-spacing: 0.05em;
   color: #e6e6e6;
-  margin-top: 0.5rem;
   text-transform: uppercase;
-  white-space: nowrap;
+  text-align: center;
 }
 
 .mobile_cost_call {
