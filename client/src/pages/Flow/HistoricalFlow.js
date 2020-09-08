@@ -1,8 +1,10 @@
 import React, {useState, useContext} from 'react'
+import Calendar from 'react-calendar'
 import {Redirect} from 'react-router-dom'
 import {useQuery} from '@apollo/react-hooks'
 
 import styles from './Flow.module.scss'
+import 'react-calendar/dist/Calendar.css';
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 import {todayDate} from './FlowListFunction'
