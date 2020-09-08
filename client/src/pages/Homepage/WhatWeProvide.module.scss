@@ -59,6 +59,13 @@
   /* or 24px */
 
   letter-spacing: 0.03em;
+  margin-bottom: 5rem;
+
+  @include --large {
+    line-height: 2rem;
+    margin-right: 15rem;
+    margin-bottom: 0;
+  }
 }
 
 .span {
