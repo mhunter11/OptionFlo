@@ -200,7 +200,7 @@ export default function Flow() {
           <InputField
             onChange={e => filterInput(e.target.value)}
             onKeyPress={e =>
-              e.key === 'Enter' ? memoizedfilterData : null
+              e.key === 'Enter' ? memoizedfilterData() : null
             }
             onClick={memoizedfilterData}
             value={searchInput}
@@ -273,7 +273,7 @@ export default function Flow() {
                   value={searchInput}
                   onChange={e => filterInput(e.target.value)}
                   onKeyPress={e =>
-                    e.key === 'Enter' ? memoizedfilterData : null
+                    e.key === 'Enter' ? memoizedfilterData() : null
                   }
                   placeholder="SPY"
                 />
