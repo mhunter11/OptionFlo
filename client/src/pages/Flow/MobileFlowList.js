@@ -11,7 +11,7 @@ import {
   getBigBuy,
   getFormattedExpirationDate,
   getContractAndPrice,
-  getTicker,
+  getTickerOnMobile,
   getBidOrAskOrder,
 } from './FlowListFunction'
 
@@ -29,6 +29,7 @@ export default function MobileFlowList(props) {
     description,
     cost_basis,
     updated,
+    volume,
   } = props
 
   let OPTION_COST = parseInt(cost_basis).toLocaleString('en')
@@ -50,13 +51,20 @@ export default function MobileFlowList(props) {
   ).trim()}${getBidOrAskOrder(description)}`
   const bidOrAsk = getBidOrAskOrder(description)
 
-  const MobileOptionData = [
-    {item: 'Expiration', result: getFormattedExpirationDate(date_expiration)},
+  const MobileOptionDataFirstRow = [
     {item: 'Strike', result: strike_price},
-    {item: 'C/P', result: getTicker(put_call)},
-    {item: 'Contract', result: contract},
-    {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
-    {item: 'price', result: `${REF}`},
+    {item: 'C/P', result: getTickerOnMobile(put_call)},
+    {item: 'Spot', result: REF},
+    // {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
+    // {item: 'price', result: `${REF}`},
+  ]
+  const MobileOptionDataSecondRow = [
+    {
+      item: 'Type',
+      result: option_activity_type === 'SWEEP' ? 'Sweep' : 'Block',
+    },
+    {item: ' Contact', result: contract},
+    {item: 'OI', result: OI},
   ]
 
   return (
@@ -67,6 +75,7 @@ export default function MobileFlowList(props) {
       })}
     >
       <div className={styles.space_between}>
+        <div className={styles.mobile_time}>{formatTime(updated)}</div>
         <div
           className={cx(styles.mobile_ticker, {
             [styles.mobile_ticker_call]: put_call === 'CALL',
@@ -75,9 +84,26 @@ export default function MobileFlowList(props) {
         >
           {ticker}
         </div>
-        <div className={styles.mobile_time}>{formatTime(updated)}</div>
+        <div className={styles.mobile_time}>
+          {getFormattedExpirationDate(date_expiration)}
+        </div>
       </div>
-      <div className={styles.mobile_right_side}>
+      <div className={styles.d_flex_space_between}>
+        {MobileOptionDataFirstRow.map((data, i) => {
+          return <MobileFlowItem {...data} key={i} />
+        })}
+      </div>
+      <div className={styles.d_flex_space_between}>
+        {MobileOptionDataSecondRow.map((data, i) => {
+          return <MobileFlowItem {...data} key={i} />
+        })}
+      </div>
+    </div>
+  )
+}
+
+{
+  /* <div className={styles.mobile_right_side}>
         <div className={styles.mobile_cost_basis_container}>
           <div
             className={cx(styles.mobile_cost_basis, {
@@ -98,7 +124,5 @@ export default function MobileFlowList(props) {
             return <MobileFlowItem {...data} key={i} />
           })}
         </div>
-      </div>
-    </div>
-  )
+      </div> */
 }

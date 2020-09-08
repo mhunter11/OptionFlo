@@ -3,9 +3,10 @@ import React, {useState} from 'react'
 import styles from './Flow.module.scss'
 
 export default function InputField(props) {
-  const {onClick, onKeyPress, onChange, searchInput} = props
+  const {onClick, onKeyPress, onChange, searchInput, filterButtonClick} = props
   const SEARCH = 'Search'
   const OPTION_FLOW = 'Option Flow'
+  const FILTERS = 'Filters'
   return (
     <div className={styles.input_field_background}>
       <div className={styles.space_between}>
@@ -13,6 +14,9 @@ export default function InputField(props) {
           <h5 className={styles.option_flow_h5}>{OPTION_FLOW}</h5>
         </div>
         <div className={styles.desktop_input_button}>
+          {/* <div className={styles.filter_section}>
+            <button className={styles.filter_button} onClick={filterButtonClick}>{FILTERS}</button>
+          </div> */}
           <input
             className={styles.desktop_input_search}
             type="text"

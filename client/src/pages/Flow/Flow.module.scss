@@ -224,6 +224,33 @@
   border-left: 1px solid black;
 }
 
+.mobile_search_button {
+  height: 35px;
+  width: 5rem;
+  background: #23eaa4;
+  padding: 1rem 2rem;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  max-width: 270px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  margin: auto;
+  border-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
 .button {
   height: 40px;
   background: #23eaa4;
@@ -244,6 +271,37 @@
   align-items: center;
   outline: none;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.filter_section {
+  margin-right: 1.5rem;
+}
+
+.filter_button {
+  height: 40px;
+  background: #23eaa4;
+  padding: 1rem 2rem;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  max-width: 270px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  margin: auto;
+  border-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  cursor: pointer;
+  border-radius: 12px;
 
   &:hover {
     opacity: 0.7;
@@ -274,7 +332,7 @@
   background: linear-gradient(
     180deg,
     rgba(20, 20, 18, 0) 0%,
-    rgba(186, 187, 2, 0.1825105042016807) 100%
+    rgba(186, 187, 2, 0.5) 100%
   );
 }
 
@@ -296,7 +354,10 @@
 }
 
 .mobile_view {
+  padding-bottom: 2.5rem;
+
   @include --large {
+    visibility: hidden;
     display: none;
   }
 }
@@ -332,12 +393,15 @@
   display: flex;
   align-items: center;
   max-height: 35px;
+  white-space: nowrap;
 }
 
 .mobile_results_input {
   display: flex;
   padding: 1.5rem 0;
   justify-content: center;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
 }
 
 .display_flex {
@@ -383,14 +447,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .mobile_flow_list {
   background-color: #2d2362;
   color: #fff;
   align-items: center;
-  padding: 1rem 0.75rem;
+  padding: 1rem;
   border-top: 1px solid #807774;
+  margin: 1rem;
+  margin-bottom: 0;
+  border-radius: 24px;
   &:last-child {
     border-bottom: 1px solid #807774;
   }
@@ -467,10 +535,6 @@
 }
 
 .mobile_flow_item_container {
-  font-size: 14px;
-  color: #807774;
-  margin-top: 0.5rem;
-  margin-right: 0.5rem;
 }
 
 .close_icon {
@@ -486,7 +550,18 @@
 }
 
 .df {
+  display: flex;
   position: relative;
+}
+
+.d_flex_space_between {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .close_icon:after {
@@ -496,7 +571,7 @@
   height: 24px;
   position: absolute;
   background-color: grey;
-  right: 15px;
+  right: 6rem;
   top: 0;
   bottom: 0;
   margin: auto;
@@ -525,23 +600,26 @@
 .flow_item {
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 18px;
   line-height: 17px;
   display: flex;
+  justify-content: center;
   align-items: center;
   text-transform: uppercase;
   color: #888888;
   margin-top: 0.25rem;
+  margin-bottom: 1rem;
 }
 
 .flow_result {
-  font-family: Montserrat;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 17px;
   display: flex;
+  justify-content: center;
   align-items: center;
   letter-spacing: 0.05em;
   color: #e6e6e6;

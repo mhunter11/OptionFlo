@@ -78,6 +78,14 @@ export function getTicker(ticker) {
   return 'P'
 }
 
+export function getTickerOnMobile(ticker) {
+  if (ticker === 'CALL') {
+    return 'CALL'
+  }
+
+  return 'PUT'
+}
+
 export function getBidOrAskOrder(contract) {
   if (contract.split(')')[1] !== undefined) {
     const ask_bid = contract.split(')')[1].split(':')[0].trim()

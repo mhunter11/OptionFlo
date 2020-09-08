@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react'
+import {isMobile, isTablet} from 'react-device-detect'
 import cx from 'classnames'
 import {Redirect} from 'react-router-dom'
 import {useQuery} from '@apollo/react-hooks'
 import {FixedSizeList as List} from 'react-window'
-import _ from 'lodash'
+import uniqBy from 'lodash/uniqBy'
 import io from 'socket.io-client'
 
 import styles from './Flow.module.scss'
@@ -24,6 +25,7 @@ export default function Flow() {
   const [options, setOptions] = useState([])
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
+  const [showFilter, setShowFilter] = useState(false)
   const [searchTicker, setSearchTicker] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const {firebase, currentUser} = useContext(FirebaseContext)
@@ -66,9 +68,9 @@ export default function Flow() {
       x => x.ticker === ticker.toUpperCase()
     )
 
-    _.uniqBy(filteredOptionData, 'id').map(x => (x.option_id = x.id))
+    uniqBy(filteredOptionData, 'id').map(x => (x.option_id = x.id))
 
-    const filteredData = _.uniqBy(
+    const filteredData = uniqBy(
       [...filteredOptionData, ...filteredDatabaseData.reverse()],
       'option_id'
     )
@@ -135,11 +137,11 @@ export default function Flow() {
     })
 
     socket.on('options', data => {
-      setOptions(options => _.uniqBy([...data, ...options], 'id'))
+      setOptions(options => uniqBy([...data, ...options], 'id'))
 
       data.map(dataOption => {
         if (dataOption.ticker === searchInput) {
-          setSaveOptions(prevState => _.uniqBy([dataOption, ...prevState]))
+          setSaveOptions(prevState => uniqBy([dataOption, ...prevState]))
         }
       })
     })
@@ -189,13 +191,16 @@ export default function Flow() {
 
   return (
     <div className={styles.flow_background_color}>
+    {(!isMobile) && (
       <div className={styles.desktop_view}>
         <InputField
           onChange={e => filterInput(e.target.value)}
           onKeyPress={e => (e.key === 'Enter' ? filterData(searchInput) : null)}
           onClick={() => filterData(searchInput)}
           value={searchInput}
+          filterButtonClick={() => setShowFilter(!showFilter)}
         />
+        {showFilter && <div>Filtering</div>}
         <div className={styles.row_list}>
           {FLOW_ROW_NAME.map(data => {
             return (
@@ -207,30 +212,6 @@ export default function Flow() {
               </div>
             )
           })}
-          {/* <div className={styles.input_search}>
-            <input
-              className={styles.desktop_input_search}
-              type="text"
-              value={searchInput}
-              onChange={e => setSearchInput(e.target.value)}
-              onKeyPress={e =>
-                e.key === 'Enter' ? filterData(searchInput) : null
-              }
-              placeholder="SPY"
-            />
-            <button
-              className={styles.button}
-              onClick={() => filterData(searchInput)}
-            >
-              Search
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => setFilteredOptions(false)}
-            >
-              Reset
-            </button>
-          </div> */}
         </div>
         <div className={styles.container_list}>
           <ul className={styles.ul_list}>
@@ -264,72 +245,77 @@ export default function Flow() {
                 />
               ))}
           </ul>
-        </div>
       </div>
-      <div className={styles.mobile_view}>
-        <div className={styles.mobile_results_input}>
-          {filteredOptions && (
-            <div className={styles.mobile_results}>
-              {saveOptions.length} Results
-            </div>
-          )}
-          <div className={styles.input_search}>
-            <div className={styles.df}>
-              <input
-                className={styles.input}
-                type="text"
-                value={searchInput}
-                onChange={e => filterInput(e.target.value)}
-                onKeyPress={e =>
-                  e.key === 'Enter' ? filterData(searchInput) : null
-                }
-                placeholder="SPY"
+    </div>
+    )}
+    {(isTablet || isMobile) && (
+    <div className={styles.mobile_view}>
+      <div className={styles.mobile_results_input}>
+        {filteredOptions && (
+          <div className={styles.mobile_results}>
+            {saveOptions.length} Results
+          </div>
+        )}
+        <div className={styles.input_search}>
+          <div className={styles.df}>
+            <input
+              className={styles.input}
+              type="text"
+              value={searchInput}
+              onChange={e => filterInput(e.target.value)}
+              onKeyPress={e =>
+                e.key === 'Enter' ? filterData(searchInput) : null
+              }
+              placeholder="SPY"
+            />
+            <button className={styles.mobile_search_button}>Search</button>
+            {searchTicker && (
+              <button
+                className={styles.close_icon}
+                type="reset"
+                onClick={clearFilter}
               />
-              {searchTicker && (
-                <button
-                  className={styles.close_icon}
-                  type="reset"
-                  onClick={clearFilter}
-                />
-              )}
-            </div>
+            )}
           </div>
         </div>
-        <ul className={styles.ul_list}>
-          {filteredOptions && saveOptions.length === 0 && (
-            <div className={styles.no_options_found}>No Items Found</div>
-          )}
-          {!filteredOptions &&
-            !searchTicker &&
-            options.map((data, index) => (
-              <MobileFlowList
-                ticker={data.ticker}
-                strike_price={data.strike_price}
-                date_expiration={data.date_expiration}
-                put_call={data.put_call}
-                option_activity_type={data.option_activity_type}
-                description={data.description}
-                cost_basis={data.cost_basis}
-                updated={data.updated}
-                key={index}
-              />
-            ))}
-          {filteredOptions &&
-            saveOptions.map((data, index) => (
-              <MobileFlowList
-                ticker={data.ticker}
-                strike_price={data.strike_price}
-                date_expiration={data.date_expiration}
-                put_call={data.put_call}
-                option_activity_type={data.option_activity_type}
-                description={data.description}
-                cost_basis={data.cost_basis}
-                updated={data.updated}
-                key={index}
-              />
-            ))}
-        </ul>
       </div>
+      <ul className={styles.ul_list}>
+        {filteredOptions && saveOptions.length === 0 && (
+          <div className={styles.no_options_found}>No Items Found</div>
+        )}
+        {!filteredOptions &&
+          !searchTicker &&
+          options.map((data, index) => (
+            <MobileFlowList
+              ticker={data.ticker}
+              strike_price={data.strike_price}
+              date_expiration={data.date_expiration}
+              put_call={data.put_call}
+              option_activity_type={data.option_activity_type}
+              description={data.description}
+              cost_basis={data.cost_basis}
+              updated={data.updated}
+              key={index}
+            />
+          ))}
+        {filteredOptions &&
+          saveOptions.map((data, index) => (
+            <MobileFlowList
+              ticker={data.ticker}
+              strike_price={data.strike_price}
+              date_expiration={data.date_expiration}
+              put_call={data.put_call}
+              option_activity_type={data.option_activity_type}
+              description={data.description}
+              cost_basis={data.cost_basis}
+              updated={data.updated}
+              volume={data.volume}
+              key={index}
+            />
+          ))}
+      </ul>
+    </div>
+    )}
     </div>
   )
 }
