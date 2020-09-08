@@ -455,8 +455,8 @@
   background-color: #2d2362;
   color: #fff;
   align-items: center;
-  padding: 1rem;
-  margin: 0.5rem 1rem 0;
+  padding: 0.75rem;
+  margin: 0.5rem 0.5rem 0;
 }
 
 .desktop_ticker {
@@ -530,6 +530,7 @@
 }
 
 .mobile_flow_item_container {
+  margin-right: 0.5rem;
 }
 
 .close_icon {
@@ -630,7 +631,7 @@
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 17px;
   display: flex;
   justify-content: center;
@@ -645,15 +646,15 @@
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 17px;
   display: flex;
-  justify-content: center;
   align-items: center;
   letter-spacing: 0.05em;
   color: #e6e6e6;
   margin-top: 0.5rem;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .mobile_cost_call {

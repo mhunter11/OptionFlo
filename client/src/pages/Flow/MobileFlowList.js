@@ -54,8 +54,8 @@ export default function MobileFlowList(props) {
     {item: 'Expiration', result: getFormattedExpirationDate(date_expiration)},
     {item: 'Strike', result: strike_price},
     {item: 'C/P', result: getTicker(put_call)},
-    {item: 'Contract', result: contract},
-    {item: 'Type', result: option_activity_type === 'SWEEP' ? 'Sweep' : 'Block'},
+    {item: 'Contract', result: contract.replace(/\s+/g, ' ')},
+    {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
   ]
 
   return (
@@ -77,7 +77,12 @@ export default function MobileFlowList(props) {
         <div className={styles.mobile_time}>{formatTime(updated)}</div>
       </div>
       <div className={styles.mobile_right_side}>
-        <div className={cx(styles.mobile_cost_basis_container, styles.space_between)}>
+        <div
+          className={cx(
+            styles.mobile_cost_basis_container,
+            styles.space_between
+          )}
+        >
           <div
             className={cx(styles.mobile_cost_basis, {
               [styles.mobile_cost_call]: put_call === 'CALL',
