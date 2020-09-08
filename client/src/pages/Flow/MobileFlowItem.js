@@ -9,8 +9,8 @@ export default function MobileFlowItem({item, result}) {
       <div className={styles.flow_item}>{item}</div>
       <div
         className={cx(styles.flow_result, {
-          [styles.mobile_ticker_green_color]: result === 'C',
-          [styles.mobile_ticker_red_color]: result === 'P',
+          [styles.mobile_ticker_green_color]: result === 'CALL',
+          [styles.mobile_ticker_red_color]: result === 'PUT',
         })}
       >
         {result}

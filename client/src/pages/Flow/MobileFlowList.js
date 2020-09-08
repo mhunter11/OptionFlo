@@ -53,10 +53,8 @@ export default function MobileFlowList(props) {
 
   const MobileOptionDataFirstRow = [
     {item: 'Strike', result: strike_price},
-    {item: 'C/P', result: getTickerOnMobile(put_call)},
+    { item: 'C/P', result: getTickerOnMobile(put_call) },
     {item: 'Spot', result: REF},
-    // {item: 'Type', result: option_activity_type === 'SWEEP' ? 'S' : 'B'},
-    // {item: 'price', result: `${REF}`},
   ]
   const MobileOptionDataSecondRow = [
     {
@@ -100,29 +98,4 @@ export default function MobileFlowList(props) {
       </div>
     </div>
   )
-}
-
-{
-  /* <div className={styles.mobile_right_side}>
-        <div className={styles.mobile_cost_basis_container}>
-          <div
-            className={cx(styles.mobile_cost_basis, {
-              [styles.mobile_cost_call]: put_call === 'CALL',
-              [styles.mobile_cost_put]: put_call === 'PUT',
-            })}
-          >
-            ${OPTION_COST}
-          </div>
-        </div>
-        <div
-          className={cx(
-            styles.display_flex,
-            styles.mobile_option_data_container
-          )}
-        >
-          {MobileOptionData.map((data, i) => {
-            return <MobileFlowItem {...data} key={i} />
-          })}
-        </div>
-      </div> */
 }

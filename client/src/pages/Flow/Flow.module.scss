@@ -157,6 +157,9 @@
   margin: 0;
   outline: none;
   box-sizing: border-box;
+  height: 40px;
+  border-width: 0;
+  border-radius: 0;
 }
 
 .desktop_input_search {
@@ -226,7 +229,7 @@
 }
 
 .mobile_search_button {
-  height: 35px;
+  height: 40px;
   width: 5rem;
   background: #23eaa4;
   padding: 1rem 2rem;
@@ -235,11 +238,8 @@
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 20px;
   max-width: 270px;
   text-align: center;
-  letter-spacing: 0.04em;
-  margin: auto;
   border-width: 0;
   display: flex;
   justify-content: center;
