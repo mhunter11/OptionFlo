@@ -65,14 +65,10 @@
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  line-height: 1.5rem;
-
+  line-height: 2rem;
   letter-spacing: 0.03em;
   margin-bottom: 2.5rem;
   margin-top: 2rem;
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
-
   text-align: center;
 
   @include --large {
