@@ -171,6 +171,7 @@
   color: #333;
   padding: 1rem 0.5rem;
   border-width: 0;
+  position: relative;
 }
 
 .input_search {
@@ -434,6 +435,7 @@
 
 .desktop_input_button {
   display: flex;
+  position: relative;
 }
 
 .input_field_background {
@@ -447,7 +449,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
 }
 
 .mobile_flow_list {
@@ -562,6 +563,39 @@
   &:last-child {
     margin-bottom: 0.5rem;
   }
+}
+
+.desktop_close_icon {
+  border: 1px solid transparent;
+  background-color: transparent;
+  display: inline-block;
+  vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: -0.5rem;
+}
+
+.desktop_close_icon:after {
+  content: 'X';
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  background-color: grey;
+  right: 9rem;
+  top: 0.25rem;
+  bottom: 0;
+  margin: auto;
+  padding: 6px 7px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-weight: normal;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 9999;
 }
 
 .close_icon:after {

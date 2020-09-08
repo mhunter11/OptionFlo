@@ -3,7 +3,15 @@ import React, {useState} from 'react'
 import styles from './Flow.module.scss'
 
 export default function InputField(props) {
-  const {onClick, onKeyPress, onChange, searchInput, filterButtonClick} = props
+  const {
+    onClick,
+    onKeyPress,
+    onChange,
+    searchInput,
+    filterButtonClick,
+    clearFilter,
+    searchTicker,
+  } = props
   const SEARCH = 'Search'
   const OPTION_FLOW = 'Option Flow'
   const FILTERS = 'Filters'
@@ -25,6 +33,13 @@ export default function InputField(props) {
             onKeyPress={onKeyPress}
             placeholder="SPY"
           />
+          {searchTicker && (
+            <button
+              className={styles.desktop_close_icon}
+              type="reset"
+              onClick={clearFilter}
+            />
+          )}
           <button className={styles.button} onClick={onClick}>
             {SEARCH}
           </button>

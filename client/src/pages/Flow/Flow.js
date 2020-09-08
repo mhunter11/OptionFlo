@@ -125,11 +125,11 @@ export default function Flow() {
     setSearchTicker(true)
   }
 
-  function clearFilter() {
+  const clearFilter = useCallback(() => {
     setFilteredOptions(false)
     setSearchInput('')
     setSearchTicker(false)
-  }
+  }, [])
 
   useEffect(() => {
     socket.on('all_options', function (data) {
@@ -191,131 +191,136 @@ export default function Flow() {
 
   return (
     <div className={styles.flow_background_color}>
-    {(!isMobile) && (
-      <div className={styles.desktop_view}>
-        <InputField
-          onChange={e => filterInput(e.target.value)}
-          onKeyPress={e => (e.key === 'Enter' ? filterData(searchInput) : null)}
-          onClick={() => filterData(searchInput)}
-          value={searchInput}
-          filterButtonClick={() => setShowFilter(!showFilter)}
-        />
-        {showFilter && <div>Filtering</div>}
-        <div className={styles.row_list}>
-          {FLOW_ROW_NAME.map(data => {
-            return (
-              <div
-                className={cx(styles.row_name, ([styles.mr_5]: marginRight))}
-                key={data.name}
-              >
-                {data.name}
-              </div>
-            )
-          })}
+      {!isMobile && (
+        <div className={styles.desktop_view}>
+          <InputField
+            onChange={e => filterInput(e.target.value)}
+            onKeyPress={e =>
+              e.key === 'Enter' ? filterData(searchInput) : null
+            }
+            onClick={() => filterData(searchInput)}
+            value={searchInput}
+            filterButtonClick={() => setShowFilter(!showFilter)}
+            searchTicker={searchTicker}
+            clearFilter={clearFilter}
+            searchInput={searchInput}
+          />
+          {showFilter && <div>Filtering</div>}
+          <div className={styles.row_list}>
+            {FLOW_ROW_NAME.map(data => {
+              return (
+                <div
+                  className={cx(styles.row_name, ([styles.mr_5]: marginRight))}
+                  key={data.name}
+                >
+                  {data.name}
+                </div>
+              )
+            })}
+          </div>
+          <div className={styles.container_list}>
+            <ul className={styles.ul_list}>
+              {filteredOptions && saveOptions.length === 0 && (
+                <div className={styles.no_options_found}>No Items Found</div>
+              )}
+              {!filteredOptions && !searchTicker && (
+                <List
+                  className={CLASSNAME}
+                  height={HEIGHT}
+                  itemCount={options.length}
+                  itemSize={ITEM_SIZE}
+                  width={WIDTH}
+                >
+                  {Row}
+                </List>
+              )}
+              {filteredOptions &&
+                saveOptions.map((data, index) => (
+                  <FlowList
+                    ticker={data.ticker}
+                    strike_price={data.strike_price}
+                    date_expiration={data.date_expiration}
+                    put_call={data.put_call}
+                    option_activity_type={data.option_activity_type}
+                    description={data.description}
+                    sentiment={data.sentiment}
+                    cost_basis={data.cost_basis}
+                    updated={data.updated}
+                    key={index}
+                  />
+                ))}
+            </ul>
+          </div>
         </div>
-        <div className={styles.container_list}>
+      )}
+      {(isTablet || isMobile) && (
+        <div className={styles.mobile_view}>
+          <div className={styles.mobile_results_input}>
+            {filteredOptions && (
+              <div className={styles.mobile_results}>
+                {saveOptions.length} Results
+              </div>
+            )}
+            <div className={styles.input_search}>
+              <div className={styles.df}>
+                <input
+                  className={styles.input}
+                  type="text"
+                  value={searchInput}
+                  onChange={e => filterInput(e.target.value)}
+                  onKeyPress={e =>
+                    e.key === 'Enter' ? filterData(searchInput) : null
+                  }
+                  placeholder="SPY"
+                />
+                <button className={styles.mobile_search_button}>Search</button>
+                {searchTicker && (
+                  <button
+                    className={styles.close_icon}
+                    type="reset"
+                    onClick={clearFilter}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
           <ul className={styles.ul_list}>
             {filteredOptions && saveOptions.length === 0 && (
               <div className={styles.no_options_found}>No Items Found</div>
             )}
-            {!filteredOptions && !searchTicker && (
-              <List
-                className={CLASSNAME}
-                height={HEIGHT}
-                itemCount={options.length}
-                itemSize={ITEM_SIZE}
-                width={WIDTH}
-              >
-                {Row}
-              </List>
-            )}
-            {filteredOptions &&
-              saveOptions.map((data, index) => (
-                <FlowList
+            {!filteredOptions &&
+              !searchTicker &&
+              options.map((data, index) => (
+                <MobileFlowList
                   ticker={data.ticker}
                   strike_price={data.strike_price}
                   date_expiration={data.date_expiration}
                   put_call={data.put_call}
                   option_activity_type={data.option_activity_type}
                   description={data.description}
-                  sentiment={data.sentiment}
                   cost_basis={data.cost_basis}
                   updated={data.updated}
                   key={index}
                 />
               ))}
+            {filteredOptions &&
+              saveOptions.map((data, index) => (
+                <MobileFlowList
+                  ticker={data.ticker}
+                  strike_price={data.strike_price}
+                  date_expiration={data.date_expiration}
+                  put_call={data.put_call}
+                  option_activity_type={data.option_activity_type}
+                  description={data.description}
+                  cost_basis={data.cost_basis}
+                  updated={data.updated}
+                  volume={data.volume}
+                  key={index}
+                />
+              ))}
           </ul>
-      </div>
-    </div>
-    )}
-    {(isTablet || isMobile) && (
-    <div className={styles.mobile_view}>
-      <div className={styles.mobile_results_input}>
-        {filteredOptions && (
-          <div className={styles.mobile_results}>
-            {saveOptions.length} Results
-          </div>
-        )}
-        <div className={styles.input_search}>
-          <div className={styles.df}>
-            <input
-              className={styles.input}
-              type="text"
-              value={searchInput}
-              onChange={e => filterInput(e.target.value)}
-              onKeyPress={e =>
-                e.key === 'Enter' ? filterData(searchInput) : null
-              }
-              placeholder="SPY"
-            />
-            <button className={styles.mobile_search_button}>Search</button>
-            {searchTicker && (
-              <button
-                className={styles.close_icon}
-                type="reset"
-                onClick={clearFilter}
-              />
-            )}
-          </div>
         </div>
-      </div>
-      <ul className={styles.ul_list}>
-        {filteredOptions && saveOptions.length === 0 && (
-          <div className={styles.no_options_found}>No Items Found</div>
-        )}
-        {!filteredOptions &&
-          !searchTicker &&
-          options.map((data, index) => (
-            <MobileFlowList
-              ticker={data.ticker}
-              strike_price={data.strike_price}
-              date_expiration={data.date_expiration}
-              put_call={data.put_call}
-              option_activity_type={data.option_activity_type}
-              description={data.description}
-              cost_basis={data.cost_basis}
-              updated={data.updated}
-              key={index}
-            />
-          ))}
-        {filteredOptions &&
-          saveOptions.map((data, index) => (
-            <MobileFlowList
-              ticker={data.ticker}
-              strike_price={data.strike_price}
-              date_expiration={data.date_expiration}
-              put_call={data.put_call}
-              option_activity_type={data.option_activity_type}
-              description={data.description}
-              cost_basis={data.cost_basis}
-              updated={data.updated}
-              volume={data.volume}
-              key={index}
-            />
-          ))}
-      </ul>
-    </div>
-    )}
+      )}
     </div>
   )
 }
