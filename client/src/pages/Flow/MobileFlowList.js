@@ -62,7 +62,7 @@ export default function MobileFlowList(props) {
       result: option_activity_type === 'SWEEP' ? 'Sweep' : 'Block',
     },
     {item: ' Contact', result: contract},
-    {item: 'OI', result: OI},
+    {item: 'Cost', result: `$${OPTION_COST}`},
   ]
 
   return (
