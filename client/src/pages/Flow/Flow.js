@@ -80,6 +80,10 @@ export default function Flow() {
     // setSearchInput(ticker)
   }
 
+  const memoizedfilterData = useCallback(() => {
+    filterData(searchInput)
+  }, [searchInput])
+
   const Row = ({index, style}) => (
     <div key={index} style={style}>
       <FlowList
@@ -196,9 +200,9 @@ export default function Flow() {
           <InputField
             onChange={e => filterInput(e.target.value)}
             onKeyPress={e =>
-              e.key === 'Enter' ? filterData(searchInput) : null
+              e.key === 'Enter' ? memoizedfilterData : null
             }
-            onClick={() => filterData(searchInput)}
+            onClick={memoizedfilterData}
             value={searchInput}
             filterButtonClick={() => setShowFilter(!showFilter)}
             searchTicker={searchTicker}
@@ -269,7 +273,7 @@ export default function Flow() {
                   value={searchInput}
                   onChange={e => filterInput(e.target.value)}
                   onKeyPress={e =>
-                    e.key === 'Enter' ? filterData(searchInput) : null
+                    e.key === 'Enter' ? memoizedfilterData : null
                   }
                   placeholder="SPY"
                 />
