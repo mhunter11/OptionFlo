@@ -74,6 +74,7 @@ export default function Flow() {
       [...filteredOptionData, ...filteredDatabaseData.reverse()],
       'option_id'
     )
+    setSearchInput(ticker)
     setSaveOptions(filteredData)
 
     setFilteredOptions(true)
