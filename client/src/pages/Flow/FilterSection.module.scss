@@ -30,6 +30,7 @@
   border-width: 0;
   outline: none;
   margin-right: 1.5rem;
+  cursor: pointer;
 }
 
 .done_button {
@@ -46,6 +47,7 @@
   letter-spacing: 0.05em;
   border-width: 0;
   outline: none;
+  cursor: pointer;
 }
 
 .button_container {
@@ -72,6 +74,14 @@
   letter-spacing: 0.05em;
   color: #ffffff;
   margin-left: 1rem;
+}
+
+.input_checkbox {
+  background: red;
+  height: 24px;
+  width: 24px;
+  outline: none;
+  cursor: pointer;
 }
 
 .label {

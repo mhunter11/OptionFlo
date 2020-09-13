@@ -12,7 +12,13 @@ export default function FAQ() {
       <h2 className={styles.h2}>{FAQ_TITLE}</h2>
       <div className={styles.faq_container}>
         {FAQ_ITEMS.map(item => {
-          return <FaqCard answer={item.answer} question={item.question} />
+          return (
+            <FaqCard
+              key={item.answer}
+              answer={item.answer}
+              question={item.question}
+            />
+          )
         })}
       </div>
     </div>
