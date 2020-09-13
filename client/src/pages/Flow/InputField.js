@@ -22,9 +22,9 @@ export default function InputField(props) {
           <h5 className={styles.option_flow_h5}>{OPTION_FLOW}</h5>
         </div>
         <div className={styles.desktop_input_button}>
-          {/* <div className={styles.filter_section}>
+          <div className={styles.filter_section}>
             <button className={styles.filter_button} onClick={filterButtonClick}>{FILTERS}</button>
-          </div> */}
+          </div>
           <input
             className={styles.desktop_input_search}
             type="text"

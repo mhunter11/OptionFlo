@@ -20,6 +20,7 @@ import FlowList from './FlowList'
 import InputField from './InputField'
 import MobileFlowList from './MobileFlowList'
 import Loading from '../../components/Loading'
+import FilterSection from './FilterSection'
 
 export default function Flow() {
   const [options, setOptions] = useState([])
@@ -210,7 +211,7 @@ export default function Flow() {
             clearFilter={clearFilter}
             searchInput={searchInput}
           />
-          {showFilter && <div>Filtering</div>}
+          {showFilter && <FilterSection />}
           <div className={styles.row_list}>
             {FLOW_ROW_NAME.map(data => {
               return (

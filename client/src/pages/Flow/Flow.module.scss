@@ -169,7 +169,6 @@
   font-size: 16px;
   line-height: 20px;
   max-height: 2.5rem;
-  position: relative;
   outline: none;
   color: #333;
   padding: 1rem 0.5rem;
@@ -348,6 +347,8 @@
 .desktop_view {
   padding-bottom: 2.5rem;
   display: none;
+  position: relative;
+
   @include --large {
     display: block;
     padding-top: 1.5rem;
