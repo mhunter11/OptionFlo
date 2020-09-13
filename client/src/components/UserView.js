@@ -39,7 +39,7 @@ export default function UserView({children}) {
   }
 
   if (data.getUser.type === 'free' || data.getUser.type === '') {
-    return <Redirect to="/subscription">Please subscribe</Redirect>
+    return <Redirect to="/select-a-plan">Please subscribe</Redirect>
   }
   return <div className={styles.container}>{children}</div>
 }

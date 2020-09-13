@@ -13,6 +13,7 @@ export const FILTER_SELECTION_DATA = [
   {name: 'Puts only', select: 'false', onChange: e => filterData(e)},
   {name: 'Weeklies', select: 'false', onChange: e => filterData(e)},
   {name: '$0.50 and less', select: 'false', onChange: e => filterData(e)},
+  {name: 'Sweeps only', select: 'false', onChange: e => filterData(e)},
 ]
 
 const filterData = e => {
@@ -21,6 +22,7 @@ const filterData = e => {
 
 export default function FilterSection() {
   const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION_DATA)
+
   const reset = useCallback(() => {
     setFilterSelection(FILTER_SELECTION_DATA)
   }, [])

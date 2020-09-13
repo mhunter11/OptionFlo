@@ -17,7 +17,7 @@ export default function Jumbotron() {
       <div className={styles.header}>
         <h1 className={styles.h1}>{AFFORDABLE_HEADER}</h1>
         <p className={styles.p}>{OPTIONFLO_DESCRIPTION}</p>
-        <Link className={styles.btn} to="/subscription">
+        <Link className={styles.btn} to="/select-a-plan">
           {START_TRIAL}
         </Link>
       </div>
