@@ -50,7 +50,7 @@ export default function Account() {
   }
 
   if (!data && !loading) {
-    return <div>data is undefined</div>
+    return <Redirect to="/login">Please login</Redirect>
   }
 
   if (!firebase.user) {
@@ -118,23 +118,25 @@ export default function Account() {
                 <div className={styles.button_container}>
                   <div className={styles.paid_button}>Status: Paid User</div>
                 </div>
-                <div className={styles.button_container}>
-                  <buttton
-                    className={styles.paid_button}
-                    onClick={async e => {
-                      swal(
-                        'Success',
-                        'Your subscription has been cancelled',
-                        'success'
-                      )
-                      const response = await cancelSubscription()
-                      console.log(response)
-                    }}
-                  >
-                    Cancel Account
-                  </buttton>
-                </div>
               </>
+            )}
+            {data.getUser.stripeId && (
+              <div className={styles.button_container}>
+                <button
+                  className={styles.paid_button}
+                  onClick={async e => {
+                    swal(
+                      'Success',
+                      'Your subscription has been cancelled',
+                      'success'
+                    )
+                    const response = await cancelSubscription()
+                    console.log(response)
+                  }}
+                >
+                  Cancel Account
+                </button>
+              </div>
             )}
           </div>
         </div>

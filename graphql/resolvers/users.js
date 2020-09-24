@@ -284,7 +284,7 @@ module.exports = {
         stripeCustomer.default_source
       )
 
-      user.type = ''
+      user.type = 'canceled'
       user.stripeId = ''
       user.ccLast4 = ''
       await user.save()
