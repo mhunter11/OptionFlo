@@ -261,6 +261,36 @@ module.exports = {
 
       throw new AuthenticationError('Not authenticated')
     },
+    async cancelSubscription(_, __, context) {
+      const firebaseUser = await checkAuth(context)
+      const user = await User.findOne({firebaseId: firebaseUser.uid})
+
+      if (!user) {
+        throw new AuthenticationError('Not authenticated')
+      }
+
+      if (!user || !user.stripeId || user.type !== 'standard') {
+        throw new Error()
+      }
+
+      const stripeCustomer = await stripe.customers.retrieve(user.stripeId)
+
+      const [subscription] = stripeCustomer.subscriptions.data
+
+      await stripe.subscriptions.del(subscription.id)
+
+      await stripe.customers.deleteSource(
+        user.stripeId,
+        stripeCustomer.default_source
+      )
+
+      user.type = ''
+      user.stripeId = ''
+      user.ccLast4 = ''
+      await user.save()
+
+      return user
+    },
     async saveOption(_, {options}, context) {
       let results = []
 
