@@ -98,24 +98,8 @@ export default function Flow() {
       return
     }
 
-    // socket data
-    const filteredOptionData = options.filter(
-      x => x.ticker === ticker.toUpperCase()
-    )
-    const filteredDatabaseData = todayOptionsTraded.filter(
-      x => x.ticker === ticker.toUpperCase()
-    )
-
-    uniqBy(filteredOptionData, 'id').map(x => (x.option_id = x.id))
-
-    const filteredData = uniqBy(
-      [...filteredOptionData, ...filteredDatabaseData.reverse()],
-      'option_id'
-    )
     setSearchInput(ticker)
-    setSaveOptions(filteredData)
 
-    setFilteredOptions(true)
     // setSearchInput(ticker)
   }
 
@@ -179,6 +163,7 @@ export default function Flow() {
   function filterInput(ticker) {
     if (!ticker || ticker.length === 0) {
       setSearchTicker(false)
+      filteredOptions(false)
     }
 
     setSearchInput(ticker)
@@ -212,6 +197,11 @@ export default function Flow() {
   }
 
   const optionFilterFunction = option => {
+    if (searchInput) {
+      filteredOptions(true)
+      return option.ticker === searchInput
+    }
+
     if (openOrders) {
       return getBidOrAskOrder(option.description) === ('A' || 'AA')
     }
@@ -321,7 +311,9 @@ export default function Flow() {
         <div className={styles.desktop_view}>
           <InputField
             onChange={e => filterInput(e.target.value)}
-            onKeyPress={e => (e.key === 'Enter' ? memoizedfilterData() : null)}
+            onKeyPress={e =>
+              e.key === 'Enter' ? optionFilterFunction() : null
+            }
             onClick={memoizedfilterData}
             value={searchInput}
             filterButtonClick={() => setShowFilter(!showFilter)}
@@ -375,42 +367,23 @@ export default function Flow() {
           </div>
           <div className={styles.container_list}>
             <ul className={styles.ul_list}>
-              {filteredOptions && saveOptions.length === 0 && (
+              {filteredOptions && options.length === 0 && (
                 <div className={styles.no_options_found}>No Items Found</div>
               )}
-              {!filteredOptions &&
-                !searchTicker &&
-                options
-                  .filter(optionFilterFunction)
-                  .map((data, index) => (
-                    <FlowList
-                      ticker={data.ticker}
-                      strike_price={data.strike_price}
-                      date_expiration={data.date_expiration}
-                      put_call={data.put_call}
-                      option_activity_type={data.option_activity_type}
-                      description={data.description}
-                      sentiment={data.sentiment}
-                      cost_basis={data.cost_basis}
-                      updated={data.updated}
-                      key={index}
-                    />
-                  ))}
-              {filteredOptions &&
-                saveOptions.map((data, index) => (
-                  <FlowList
-                    ticker={data.ticker}
-                    strike_price={data.strike_price}
-                    date_expiration={data.date_expiration}
-                    put_call={data.put_call}
-                    option_activity_type={data.option_activity_type}
-                    description={data.description}
-                    sentiment={data.sentiment}
-                    cost_basis={data.cost_basis}
-                    updated={data.updated}
-                    key={index}
-                  />
-                ))}
+              {options.filter(optionFilterFunction).map((data, index) => (
+                <FlowList
+                  ticker={data.ticker}
+                  strike_price={data.strike_price}
+                  date_expiration={data.date_expiration}
+                  put_call={data.put_call}
+                  option_activity_type={data.option_activity_type}
+                  description={data.description}
+                  sentiment={data.sentiment}
+                  cost_basis={data.cost_basis}
+                  updated={data.updated}
+                  key={index}
+                />
+              ))}
             </ul>
           </div>
         </div>
@@ -420,7 +393,7 @@ export default function Flow() {
           <div className={styles.mobile_results_input}>
             {filteredOptions && (
               <div className={styles.mobile_results}>
-                {saveOptions.length} Results
+                {options.length} Results
               </div>
             )}
             <div className={styles.input_search}>
@@ -435,7 +408,12 @@ export default function Flow() {
                   }
                   placeholder="SPY"
                 />
-                <button className={styles.mobile_search_button}>Search</button>
+                <button
+                  className={styles.mobile_search_button}
+                  onClick={() => setShowFilter(!showFilter)}
+                >
+                  Filter
+                </button>
                 {searchTicker && (
                   <button
                     className={styles.close_icon}
@@ -445,43 +423,59 @@ export default function Flow() {
                 )}
               </div>
             </div>
+            {/* {showFilter && (
+              <div className={filterStyles.filter_container}>
+                <div className={filterStyles.button_container}>
+                  {ButtonProps.map(data => {
+                    return (
+                      <button
+                        key={data.children}
+                        onClick={data.onClick}
+                        className={data.className}
+                      >
+                        {data.children}
+                      </button>
+                    )
+                  })}
+                </div>
+                <div className={filterStyles.filter_selection_container}>
+                  {filterSelection.map(data => {
+                    return (
+                      <label className={filterStyles.label} key={data.name}>
+                        <input
+                          className={filterStyles.input_checkbox}
+                          type="checkbox"
+                          id={data.name}
+                          onChange={onFilterChange}
+                          checked={data.checked}
+                        />
+                        <span className={filterStyles.span_name}>
+                          {data.name}
+                        </span>
+                      </label>
+                    )
+                  })}
+                </div>
+              </div>
+            )} */}
           </div>
           <ul className={styles.ul_list}>
             {filteredOptions && saveOptions.length === 0 && (
               <div className={styles.no_options_found}>No Items Found</div>
             )}
-            {!filteredOptions &&
-              !searchTicker &&
-              options
-                .filter(optionFilterFunction)
-                .map((data, index) => (
-                  <MobileFlowList
-                    ticker={data.ticker}
-                    strike_price={data.strike_price}
-                    date_expiration={data.date_expiration}
-                    put_call={data.put_call}
-                    option_activity_type={data.option_activity_type}
-                    description={data.description}
-                    cost_basis={data.cost_basis}
-                    updated={data.updated}
-                    key={index}
-                  />
-                ))}
-            {filteredOptions &&
-              saveOptions.map((data, index) => (
-                <MobileFlowList
-                  ticker={data.ticker}
-                  strike_price={data.strike_price}
-                  date_expiration={data.date_expiration}
-                  put_call={data.put_call}
-                  option_activity_type={data.option_activity_type}
-                  description={data.description}
-                  cost_basis={data.cost_basis}
-                  updated={data.updated}
-                  volume={data.volume}
-                  key={index}
-                />
-              ))}
+            {options.filter(optionFilterFunction).map((data, index) => (
+              <MobileFlowList
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                cost_basis={data.cost_basis}
+                updated={data.updated}
+                key={index}
+              />
+            ))}
           </ul>
         </div>
       )}
