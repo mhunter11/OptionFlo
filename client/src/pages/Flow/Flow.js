@@ -8,8 +8,33 @@ import uniqBy from 'lodash/uniqBy'
 import io from 'socket.io-client'
 
 import styles from './Flow.module.scss'
+import filterStyles from './FilterSection.module.scss'
 
-import {FLOW_ROW_NAME, HEIGHT, WIDTH, ITEM_SIZE, CLASSNAME} from './flow-data'
+import {
+  FLOW_ROW_NAME,
+  HEIGHT,
+  WIDTH,
+  ITEM_SIZE,
+  CLASSNAME,
+  ASK,
+  ONE_MILL,
+  FIVE_HUNDRED,
+  ABOVE_ASK,
+  STOCK_ONLY,
+  ETFS_ONLY,
+  CALLS_ONLY,
+  PUTS_ONLY,
+  WEEKLIES,
+  FIFTY_CENTS,
+  SWEEPS_ONLY,
+  FILTER_SELECTION_DATA,
+} from './flow-data'
+
+import {
+  getBidOrAskOrder,
+  getNewContractPrice,
+  getContractMoreThan1M,
+} from './FlowListFunction'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
@@ -29,6 +54,11 @@ export default function Flow() {
   const [showFilter, setShowFilter] = useState(false)
   const [searchTicker, setSearchTicker] = useState(false)
   const [searchInput, setSearchInput] = useState('')
+  const [openOrders, setOpenOrders] = useState(false)
+  const [oneMill, setOneMill] = useState(false)
+  const [fiveMill, setFiveMill] = useState(false)
+  const [aboveAsk, setAboveAsk] = useState(false)
+  const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION_DATA)
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
   const user = currentUser
@@ -86,37 +116,54 @@ export default function Flow() {
     filterData(searchInput)
   }, [searchInput])
 
-  const Row = ({index, style}) => (
-    <div key={index} style={style}>
-      <FlowList
-        ticker={options[index].ticker}
-        strike_price={options[index].strike_price}
-        date_expiration={options[index].date_expiration}
-        put_call={options[index].put_call}
-        option_activity_type={options[index].option_activity_type}
-        description={options[index].description}
-        sentiment={options[index].sentiment}
-        cost_basis={options[index].cost_basis}
-        updated={options[index].updated}
-        onClick={() => filterData(options[index].ticker)}
-      />
-    </div>
-  )
+  // const Row = ({index, style}) => (
+  //   <div key={index} style={style}>
+  //     <FlowList
+  //       ticker={options[index].ticker}
+  //       strike_price={options[index].strike_price}
+  //       date_expiration={options[index].date_expiration}
+  //       put_call={options[index].put_call}
+  //       option_activity_type={options[index].option_activity_type}
+  //       description={options[index].description}
+  //       sentiment={options[index].sentiment}
+  //       cost_basis={options[index].cost_basis}
+  //       updated={options[index].updated}
+  //       onClick={() => filterData(options[index].ticker)}
+  //     />
+  //   </div>
+  // )
 
-  const MobileRow = ({index, style}) => (
-    <div key={index} style={style}>
-      <MobileFlowList
-        ticker={options[index].ticker}
-        strike_price={options[index].strike_price}
-        date_expiration={options[index].date_expiration}
-        put_call={options[index].put_call}
-        option_activity_type={options[index].option_activity_type}
-        description={options[index].description}
-        cost_basis={options[index].cost_basis}
-        updated={options[index].updated}
-      />
-    </div>
-  )
+  // const MobileRow = ({index, style}) => (
+  //   <div key={index} style={style}>
+  //     <MobileFlowList
+  //       ticker={options[index].ticker}
+  //       strike_price={options[index].strike_price}
+  //       date_expiration={options[index].date_expiration}
+  //       put_call={options[index].put_call}
+  //       option_activity_type={options[index].option_activity_type}
+  //       description={options[index].description}
+  //       cost_basis={options[index].cost_basis}
+  //       updated={options[index].updated}
+  //     />
+  //   </div>
+  // )
+
+  const reset = useCallback(() => {
+    setFilterSelection(FILTER_SELECTION_DATA)
+    setOpenOrders(false)
+    setOneMill(false)
+    setFiveMill(false)
+    setAboveAsk(false)
+  }, [])
+
+  const ButtonProps = [
+    {
+      children: 'Clear All',
+      onClick: reset,
+      className: filterStyles.clear_button,
+    },
+    {children: 'Done', onClick: 'onClick', className: filterStyles.done_button},
+  ]
 
   if (data !== undefined) {
     todayOptionsTraded = data.getOptionsByDate
@@ -129,6 +176,35 @@ export default function Flow() {
 
     setSearchInput(ticker)
     setSearchTicker(true)
+  }
+
+  function onFilterChange(e) {
+    const {id, checked} = e.target
+    if (id === ASK) {
+      setOpenOrders(!openOrders)
+    } else if (id === ONE_MILL) {
+      setOneMill(!oneMill)
+    } else if (id === FIVE_HUNDRED) {
+      setFiveMill(!fiveMill)
+    } else if (id === ABOVE_ASK) {
+      setAboveAsk(!aboveAsk)
+    }
+  }
+
+  const optionFilterFunction = option => {
+    // return getBidOrAskOrder(option.description) === ('A' || 'AA')
+    // return getNewContractPrice(option.description)
+    // console.log(getContractMoreThan1M(option.cost_basis))
+
+    if (openOrders) {
+      return getBidOrAskOrder(option.description) === ('A' || 'AA')
+    }
+
+    if (oneMill) {
+      return getNewContractPrice(option.description) === 1000000
+    }
+
+    return option
   }
 
   const clearFilter = useCallback(() => {
@@ -165,45 +241,43 @@ export default function Flow() {
     return <Loading />
   }
 
-  if (errorR) {
-    if (!firebase.user) {
-      return <Redirect to="/" />
-    } else {
-      //Keep loading if we're waiting for a user that is logged in
-      return <Loading />
-    }
-  }
+  // if (errorR) {
+  //   if (!firebase.user) {
+  //     return <Redirect to="/" />
+  //   } else {
+  //     //Keep loading if we're waiting for a user that is logged in
+  //     return <Loading />
+  //   }
+  // }
 
-  if (dataR == null) {
-    //firebase.auth.signOut(); //Just sign the user out
-    return <Redirect to="/" />
-  }
+  // if (dataR == null) {
+  //   //firebase.auth.signOut(); //Just sign the user out
+  //   return <Redirect to="/" />
+  // }
 
-  if (!user && !loadingR) {
-    return <Redirect to="/login">Please login</Redirect>
-  }
+  // if (!user && !loadingR) {
+  //   return <Redirect to="/login">Please login</Redirect>
+  // }
 
-  if (!dataR && !loadingR) {
-    return <Redirect to="/" />
-  }
+  // if (!dataR && !loadingR) {
+  //   return <Redirect to="/" />
+  // }
 
-  if (!dataR.getUser && !loadingR) {
-    return <Redirect to="/login">Please login</Redirect>
-  }
+  // if (!dataR.getUser && !loadingR) {
+  //   return <Redirect to="/login">Please login</Redirect>
+  // }
 
-  if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
-    return <Redirect to="/select-a-plan">Please subscribe</Redirect>
-  }
-
+  // if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
+  //   return <Redirect to="/select-a-plan">Please subscribe</Redirect>
+  // }
+  console.log(options)
   return (
     <div className={styles.flow_background_color}>
       {!isMobile && (
         <div className={styles.desktop_view}>
           <InputField
             onChange={e => filterInput(e.target.value)}
-            onKeyPress={e =>
-              e.key === 'Enter' ? memoizedfilterData() : null
-            }
+            onKeyPress={e => (e.key === 'Enter' ? memoizedfilterData() : null)}
             onClick={memoizedfilterData}
             value={searchInput}
             filterButtonClick={() => setShowFilter(!showFilter)}
@@ -211,14 +285,45 @@ export default function Flow() {
             clearFilter={clearFilter}
             searchInput={searchInput}
           />
-          {showFilter && <FilterSection />}
+          {showFilter && (
+            <div className={filterStyles.filter_container}>
+              <div className={filterStyles.button_container}>
+                {ButtonProps.map(data => {
+                  return (
+                    <button
+                      key={data.children}
+                      onClick={data.onClick}
+                      className={data.className}
+                    >
+                      {data.children}
+                    </button>
+                  )
+                })}
+              </div>
+              <div className={filterStyles.filter_selection_container}>
+                {filterSelection.map(data => {
+                  return (
+                    <label className={filterStyles.label} key={data.name}>
+                      <input
+                        className={filterStyles.input_checkbox}
+                        type="checkbox"
+                        id={data.name}
+                        onChange={onFilterChange}
+                        checked={data.checked}
+                      />
+                      <span className={filterStyles.span_name}>
+                        {data.name}
+                      </span>
+                    </label>
+                  )
+                })}
+              </div>
+            </div>
+          )}
           <div className={styles.row_list}>
             {FLOW_ROW_NAME.map(data => {
               return (
-                <div
-                  className={cx(styles.row_name, ([styles.mr_5]: marginRight))}
-                  key={data.name}
-                >
+                <div className={cx(styles.row_name)} key={data.name}>
                   {data.name}
                 </div>
               )
@@ -229,17 +334,24 @@ export default function Flow() {
               {filteredOptions && saveOptions.length === 0 && (
                 <div className={styles.no_options_found}>No Items Found</div>
               )}
-              {!filteredOptions && !searchTicker && (
-                <List
-                  className={CLASSNAME}
-                  height={HEIGHT}
-                  itemCount={options.length}
-                  itemSize={ITEM_SIZE}
-                  width={WIDTH}
-                >
-                  {Row}
-                </List>
-              )}
+              {!filteredOptions &&
+                !searchTicker &&
+                options
+                  .filter(optionFilterFunction)
+                  .map((data, index) => (
+                    <FlowList
+                      ticker={data.ticker}
+                      strike_price={data.strike_price}
+                      date_expiration={data.date_expiration}
+                      put_call={data.put_call}
+                      option_activity_type={data.option_activity_type}
+                      description={data.description}
+                      sentiment={data.sentiment}
+                      cost_basis={data.cost_basis}
+                      updated={data.updated}
+                      key={index}
+                    />
+                  ))}
               {filteredOptions &&
                 saveOptions.map((data, index) => (
                   <FlowList
@@ -296,19 +408,21 @@ export default function Flow() {
             )}
             {!filteredOptions &&
               !searchTicker &&
-              options.map((data, index) => (
-                <MobileFlowList
-                  ticker={data.ticker}
-                  strike_price={data.strike_price}
-                  date_expiration={data.date_expiration}
-                  put_call={data.put_call}
-                  option_activity_type={data.option_activity_type}
-                  description={data.description}
-                  cost_basis={data.cost_basis}
-                  updated={data.updated}
-                  key={index}
-                />
-              ))}
+              options
+                .filter(optionFilterFunction)
+                .map((data, index) => (
+                  <MobileFlowList
+                    ticker={data.ticker}
+                    strike_price={data.strike_price}
+                    date_expiration={data.date_expiration}
+                    put_call={data.put_call}
+                    option_activity_type={data.option_activity_type}
+                    description={data.description}
+                    cost_basis={data.cost_basis}
+                    updated={data.updated}
+                    key={index}
+                  />
+                ))}
             {filteredOptions &&
               saveOptions.map((data, index) => (
                 <MobileFlowList

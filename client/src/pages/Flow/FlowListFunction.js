@@ -42,6 +42,13 @@ export function getGoldenSweep(cost_basis, type, buy, oi) {
   )
 }
 
+export function getContractMoreThan1M(cost_basis) {
+  const contractCost = parseInt(cost_basis)
+  if (contractCost >= 1000000) {
+    return cost_basis
+  }
+}
+
 export function getBigBuy(buy) {
   return parseInt(buy) >= 10000
 }
@@ -68,6 +75,10 @@ export function getContractAndPrice(contract) {
   }
 
   return contract
+}
+
+export function getNewContractPrice(description) {
+  return description.split('@')[1].split('vs')[0]
 }
 
 export function getTicker(ticker) {

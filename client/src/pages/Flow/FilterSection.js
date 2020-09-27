@@ -1,26 +1,40 @@
 import React, {useState, useCallback} from 'react'
 
+import {
+  ASK,
+  ONE_MILL,
+  FIVE_HUNDRED,
+  ABOVE_ASK,
+  STOCK_ONLY,
+  ETFS_ONLY,
+  CALLS_ONLY,
+  PUTS_ONLY,
+  WEEKLIES,
+  FIFTY_CENTS,
+  SWEEPS_ONLY,
+} from './flow-data'
+
 import styles from './FilterSection.module.scss'
 
 export const FILTER_SELECTION_DATA = [
-  {name: 'Opening Orders', select: 'false', onChange: e => filterData(e)},
-  {name: '$1M and above', select: 'false', onChange: e => filterData(e)},
-  {name: '$500k and above', select: 'false', onChange: e => filterData(e)},
-  {name: 'Above ask', select: 'false', onChange: e => filterData(e)},
-  {name: 'Stocks only', select: 'false', onChange: e => filterData(e)},
-  {name: 'ETFs only', select: 'false', onChange: e => filterData(e)},
-  {name: 'Calls only', select: 'false', onChange: e => filterData(e)},
-  {name: 'Puts only', select: 'false', onChange: e => filterData(e)},
-  {name: 'Weeklies', select: 'false', onChange: e => filterData(e)},
-  {name: '$0.50 and less', select: 'false', onChange: e => filterData(e)},
-  {name: 'Sweeps only', select: 'false', onChange: e => filterData(e)},
+  {name: ASK, select: 'false', onChange: e => filterData(e)},
+  {name: ONE_MILL, select: 'false', onChange: e => filterData(e)},
+  {name: FIVE_HUNDRED, select: 'false', onChange: e => filterData(e)},
+  {name: ABOVE_ASK, select: 'false', onChange: e => filterData(e)},
+  {name: STOCK_ONLY, select: 'false', onChange: e => filterData(e)},
+  {name: ETFS_ONLY, select: 'false', onChange: e => filterData(e)},
+  {name: CALLS_ONLY, select: 'false', onChange: e => filterData(e)},
+  {name: PUTS_ONLY, select: 'false', onChange: e => filterData(e)},
+  {name: WEEKLIES, select: 'false', onChange: e => filterData(e)},
+  {name: FIFTY_CENTS, select: 'false', onChange: e => filterData(e)},
+  {name: SWEEPS_ONLY, select: 'false', onChange: e => filterData(e)},
 ]
 
 const filterData = e => {
   console.dir(e.target.checked)
 }
 
-export default function FilterSection() {
+export default function FilterSection({onChange}) {
   const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION_DATA)
 
   const reset = useCallback(() => {
@@ -54,11 +68,12 @@ export default function FilterSection() {
       <div className={styles.filter_selection_container}>
         {filterSelection.map(data => {
           return (
-            <label className={styles.label}>
+            <label className={styles.label} key={data.name}>
               <input
                 className={styles.input_checkbox}
                 type="checkbox"
-                onChange={data.onChange}
+                id={data.name}
+                onChange={onChange}
                 checked={data.checked}
               />
               <span className={styles.span_name}>{data.name}</span>
