@@ -27,7 +27,7 @@ import {
   WEEKLIES,
   FIFTY_CENTS,
   SWEEPS_ONLY,
-  FILTER_SELECTION_DATA,
+  FILTER_SELECTION,
 } from './flow-data'
 
 import {
@@ -58,7 +58,13 @@ export default function Flow() {
   const [oneMill, setOneMill] = useState(false)
   const [fiveMill, setFiveMill] = useState(false)
   const [aboveAsk, setAboveAsk] = useState(false)
-  const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION_DATA)
+  const [stockOnly, setStockOnly] = useState(false)
+  const [etfOnly, setEtfOnly] = useState(false)
+  const [callsOnly, setCallsOnly] = useState(false)
+  const [putsOnly, setPutsOnly] = useState(false)
+  const [sweepsOnly, setSweepsOnly] = useState(false)
+  const [fiftyCents, setFiftyCents] = useState(false)
+  const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION)
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
   const user = currentUser
@@ -149,7 +155,7 @@ export default function Flow() {
   // )
 
   const reset = useCallback(() => {
-    setFilterSelection(FILTER_SELECTION_DATA)
+    setFilterSelection(FILTER_SELECTION)
     setOpenOrders(false)
     setOneMill(false)
     setFiveMill(false)
@@ -180,6 +186,7 @@ export default function Flow() {
 
   function onFilterChange(e) {
     const {id, checked} = e.target
+    console.log(id, checked)
     if (id === ASK) {
       setOpenOrders(!openOrders)
     } else if (id === ONE_MILL) {
@@ -188,20 +195,52 @@ export default function Flow() {
       setFiveMill(!fiveMill)
     } else if (id === ABOVE_ASK) {
       setAboveAsk(!aboveAsk)
+    } else if (id === STOCK_ONLY) {
+      setStockOnly(!stockOnly)
+    } else if (id === ETFS_ONLY) {
+      setEtfOnly(!etfOnly)
+    } else if (id === CALLS_ONLY) {
+      setCallsOnly(!callsOnly)
+    } else if (id === PUTS_ONLY) {
+      setPutsOnly(!putsOnly)
+    } else if (id === SWEEPS_ONLY) {
+      setSweepsOnly(!sweepsOnly)
+    } else if (id === FIFTY_CENTS) {
+      setFiftyCents(!fiftyCents)
     }
   }
 
   const optionFilterFunction = option => {
-    // return getBidOrAskOrder(option.description) === ('A' || 'AA')
-    // return getNewContractPrice(option.description)
-    // console.log(getContractMoreThan1M(option.cost_basis))
-
     if (openOrders) {
       return getBidOrAskOrder(option.description) === ('A' || 'AA')
     }
 
     if (oneMill) {
-      return getNewContractPrice(option.description) === 1000000
+      return option.cost_basis >= 1000000
+    }
+
+    if (stockOnly) {
+      return option.underlying_type === 'STOCK'
+    }
+
+    if (etfOnly) {
+      return option.underlying_type === 'ETF'
+    }
+
+    if (callsOnly) {
+      return option.put_call === 'CALL'
+    }
+
+    if (putsOnly) {
+      return option.put_call === 'PUT'
+    }
+
+    if (sweepsOnly) {
+      return option.option_activity_type === 'SWEEP'
+    }
+
+    if (fiftyCents) {
+      return getNewContractPrice(option.description).split('$')[1].trim() <= 0.5
     }
 
     return option

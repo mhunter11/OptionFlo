@@ -60,3 +60,17 @@ export const FILTER_SELECTION_DATA = [
   {name: FIFTY_CENTS},
   {name: SWEEPS_ONLY},
 ]
+
+export const FILTER_SELECTION = [
+  {name: ASK, value: 'A', type: 'description'},
+  {name: ONE_MILL, value: 1000000, type: 'cost_basis'},
+  {name: FIVE_HUNDRED, value: 500000, type: 'cost_basis'},
+  // {name: ABOVE_ASK, value: 'A', type: 'description'},
+  {name: STOCK_ONLY, value: 'STOCK', type: 'underlying_type'},
+  {name: ETFS_ONLY, value: 'ETF', type: 'underlying_type'},
+  {name: CALLS_ONLY, value: 'CALL', type: 'put_call'},
+  {name: PUTS_ONLY, value: 'PUT', type: 'put_call'},
+  // {name: WEEKLIES, value: new Date(), type: 'date_expiration'},
+  {name: FIFTY_CENTS, value: 0.5, type: 'description'},
+  {name: SWEEPS_ONLY, value: 'SWEEP', type: 'option_activity_type'},
+]
