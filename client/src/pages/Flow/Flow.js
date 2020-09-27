@@ -64,6 +64,7 @@ export default function Flow() {
   const [putsOnly, setPutsOnly] = useState(false)
   const [sweepsOnly, setSweepsOnly] = useState(false)
   const [fiftyCents, setFiftyCents] = useState(false)
+  const [fiveHundred, setFiveHundred] = useState(false)
   const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION)
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
@@ -191,8 +192,6 @@ export default function Flow() {
       setOpenOrders(!openOrders)
     } else if (id === ONE_MILL) {
       setOneMill(!oneMill)
-    } else if (id === FIVE_HUNDRED) {
-      setFiveMill(!fiveMill)
     } else if (id === ABOVE_ASK) {
       setAboveAsk(!aboveAsk)
     } else if (id === STOCK_ONLY) {
@@ -207,6 +206,8 @@ export default function Flow() {
       setSweepsOnly(!sweepsOnly)
     } else if (id === FIFTY_CENTS) {
       setFiftyCents(!fiftyCents)
+    } else if (id === FIVE_HUNDRED) {
+      setFiveHundred(!fiveHundred)
     }
   }
 
@@ -217,6 +218,10 @@ export default function Flow() {
 
     if (oneMill) {
       return option.cost_basis >= 1000000
+    }
+
+    if (fiveHundred) {
+      return option.cost_basis >= 500000
     }
 
     if (stockOnly) {
@@ -309,7 +314,7 @@ export default function Flow() {
   // if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
   //   return <Redirect to="/select-a-plan">Please subscribe</Redirect>
   // }
-  console.log(options)
+
   return (
     <div className={styles.flow_background_color}>
       {!isMobile && (
