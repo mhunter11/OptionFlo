@@ -92,19 +92,26 @@ export default function Flow() {
     filterData(searchInput)
   }, [searchInput])
 
-  const reset = useCallback(() => {
-    setFilterSelection(FILTER_SELECTION)
-    setOpenOrders(false)
-    setOneMill(false)
-    setAboveAsk(false)
-  }, [])
+  // const reset = useCallback(() => {
+  //   setFilterSelection(FILTER_SELECTION)
+  //   setOpenOrders(false)
+  //   setOneMill(false)
+  //   setAboveAsk(false)
+  //   setStockOnly(false)
+  //   setEtfOnly(false)
+  //   setCallsOnly(false)
+  //   setPutsOnly(false)
+  //   setSweepsOnly(false)
+  //   setFiftyCents(false)
+  //   setFiveHundred(false)
+  // }, [])
 
   const ButtonProps = [
-    {
-      children: 'Clear All',
-      onClick: reset,
-      className: filterStyles.clear_button,
-    },
+    // {
+    //   children: 'Clear All',
+    //   onClick: reset,
+    //   className: filterStyles.clear_button,
+    // },
     {
       children: 'Done',
       onClick: () => setShowFilter(!showFilter),
@@ -153,7 +160,6 @@ export default function Flow() {
 
   const optionFilterFunction = option => {
     const conditions = []
-
     if (searchInput) {
       // setFilteredOptions(true)
       return option.ticker === searchInput.toUpperCase()
