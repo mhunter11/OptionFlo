@@ -27,6 +27,7 @@ export const GETS_OPTIONS_BY_DATE = gql`
       open_interest
       date_expiration
       date
+      underlying_type
       description
       ask
       cost_basis

@@ -34,3 +34,43 @@ export const CLASSNAME = 'List'
 export const MOBILE_WIDTH = 530
 export const MOBILE_HEIGHT = 700
 export const MOBILE_ITEM_SIZE = 150
+
+export const ASK = 'Opening Orders'
+export const ONE_MILL = '$1M and above'
+export const FIVE_HUNDRED = '$500k and above'
+export const ABOVE_ASK = 'Above Ask'
+export const STOCK_ONLY = 'Stocks Only'
+export const ETFS_ONLY = 'ETFs Only'
+export const CALLS_ONLY = 'Calls Only'
+export const PUTS_ONLY = 'Put Only'
+export const WEEKLIES = 'Weeklies'
+export const FIFTY_CENTS = '$0.50 and less'
+export const SWEEPS_ONLY = 'Sweeps Only'
+
+export const FILTER_SELECTION_DATA = [
+  {name: ASK},
+  {name: ONE_MILL},
+  {name: FIVE_HUNDRED},
+  {name: ABOVE_ASK},
+  {name: STOCK_ONLY},
+  {name: ETFS_ONLY},
+  {name: CALLS_ONLY},
+  {name: PUTS_ONLY},
+  {name: WEEKLIES},
+  {name: FIFTY_CENTS},
+  {name: SWEEPS_ONLY},
+]
+
+export const FILTER_SELECTION = [
+  {name: ASK, value: 'A', type: 'description'},
+  {name: ONE_MILL, value: 1000000, type: 'cost_basis'},
+  {name: FIVE_HUNDRED, value: 500000, type: 'cost_basis'},
+  // {name: ABOVE_ASK, value: 'A', type: 'description'},
+  {name: STOCK_ONLY, value: 'STOCK', type: 'underlying_type'},
+  {name: ETFS_ONLY, value: 'ETF', type: 'underlying_type'},
+  {name: CALLS_ONLY, value: 'CALL', type: 'put_call'},
+  {name: PUTS_ONLY, value: 'PUT', type: 'put_call'},
+  // {name: WEEKLIES, value: new Date(), type: 'date_expiration'},
+  {name: FIFTY_CENTS, value: 0.5, type: 'description'},
+  {name: SWEEPS_ONLY, value: 'SWEEP', type: 'option_activity_type'},
+]

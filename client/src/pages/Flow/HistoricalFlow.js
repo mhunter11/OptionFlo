@@ -83,7 +83,7 @@ export default function HistoricalFlow() {
   }
 
   if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
-    return <Redirect to="/subscription">Please subscribe</Redirect>
+    return <Redirect to="/select-a-plan">Please subscribe</Redirect>
   }
 
   return (

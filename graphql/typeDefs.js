@@ -129,6 +129,7 @@ module.exports = gql`
     createSubscriptionQuarterly(source: String!, ccLast4: String!): User
     createSubscriptionYearly(source: String!, ccLast4: String!): User
     changeCreditCard(source: String!, ccLast4: String!): User
+    cancelSubscription: User
     saveOption(options: [OptionData]): [Option]!
     updateUserType(username: String): User!
   }

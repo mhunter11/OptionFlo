@@ -16,6 +16,23 @@
   }
 }
 
+.filter_container {
+  background: #2d2362;
+
+  @include --large {
+    width: 25rem;
+    height: 40rem;
+    position: absolute;
+    z-index: 9999;
+    right: 13.5rem;
+    top: 5rem;
+  }
+}
+
+.filter_display_none {
+  display: none;
+}
+
 .desktop_input {
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
@@ -169,7 +186,6 @@
   font-size: 16px;
   line-height: 20px;
   max-height: 2.5rem;
-  position: relative;
   outline: none;
   color: #333;
   padding: 1rem 0.5rem;
@@ -348,6 +364,8 @@
 .desktop_view {
   padding-bottom: 2.5rem;
   display: none;
+  position: relative;
+
   @include --large {
     display: block;
     padding-top: 1.5rem;

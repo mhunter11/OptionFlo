@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import {Redirect, Link} from 'react-router-dom'
+import swal from 'sweetalert'
 import StripeCheckout from 'react-stripe-checkout'
 import {useMutation, useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -7,6 +8,8 @@ import gql from 'graphql-tag'
 import {GET_USER_INFO} from '../../util/gql'
 import {ENVIRONMENT} from '../../env'
 import {FirebaseContext} from '../../context/auth'
+
+import Loading from '../../components/Loading'
 
 import styles from './Account.module.scss'
 
@@ -23,6 +26,15 @@ const CHANGE_CREDIT_CARD = gql`
   }
 `
 
+const CANCEL_SUBSCRIPTION = gql`
+  mutation cancelSubscription {
+    cancelSubscription {
+      id
+      type
+    }
+  }
+`
+
 export default function Account() {
   const {firebase, currentUser} = useContext(FirebaseContext)
   const user = currentUser
@@ -30,15 +42,15 @@ export default function Account() {
     variables: {myUserId: user ? user.uid : null},
   })
 
-  console.log(data)
   const [changeCreditCard] = useMutation(CHANGE_CREDIT_CARD)
+  const [cancelSubscription] = useMutation(CANCEL_SUBSCRIPTION)
 
   if (loading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (!data && !loading) {
-    return <div>data is undefined</div>
+    return <Redirect to="/login">Please login</Redirect>
   }
 
   if (!firebase.user) {
@@ -46,7 +58,7 @@ export default function Account() {
   }
 
   if (data.getUser.type === 'free' || data.getUser.type === '') {
-    return <Redirect to="/subscription">Please subscribe</Redirect>
+    return <Redirect to="/select-a-plan">Please subscribe</Redirect>
   }
 
   return (
@@ -102,8 +114,28 @@ export default function Account() {
               </div>
             )}
             {data.getUser.type === 'standard' && (
+              <>
+                <div className={styles.button_container}>
+                  <div className={styles.paid_button}>Status: Paid User</div>
+                </div>
+              </>
+            )}
+            {data.getUser.stripeId && (
               <div className={styles.button_container}>
-                <div className={styles.paid_button}>Status: Paid User</div>
+                <button
+                  className={styles.paid_button}
+                  onClick={async e => {
+                    swal(
+                      'Success',
+                      'Your subscription has been cancelled',
+                      'success'
+                    )
+                    const response = await cancelSubscription()
+                    console.log(response)
+                  }}
+                >
+                  Cancel Account
+                </button>
               </div>
             )}
           </div>

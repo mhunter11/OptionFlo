@@ -3,13 +3,28 @@ import {isMobile, isTablet} from 'react-device-detect'
 import cx from 'classnames'
 import {Redirect} from 'react-router-dom'
 import {useQuery} from '@apollo/react-hooks'
-import {FixedSizeList as List} from 'react-window'
 import uniqBy from 'lodash/uniqBy'
 import io from 'socket.io-client'
 
 import styles from './Flow.module.scss'
+import filterStyles from './FilterSection.module.scss'
 
-import {FLOW_ROW_NAME, HEIGHT, WIDTH, ITEM_SIZE, CLASSNAME} from './flow-data'
+import {
+  FLOW_ROW_NAME,
+  ASK,
+  ONE_MILL,
+  FIVE_HUNDRED,
+  ABOVE_ASK,
+  STOCK_ONLY,
+  ETFS_ONLY,
+  CALLS_ONLY,
+  PUTS_ONLY,
+  FIFTY_CENTS,
+  SWEEPS_ONLY,
+  FILTER_SELECTION,
+} from './flow-data'
+
+import {getBidOrAskOrder, getNewContractPrice} from './FlowListFunction'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
@@ -23,11 +38,21 @@ import Loading from '../../components/Loading'
 
 export default function Flow() {
   const [options, setOptions] = useState([])
-  const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
   const [showFilter, setShowFilter] = useState(false)
   const [searchTicker, setSearchTicker] = useState(false)
   const [searchInput, setSearchInput] = useState('')
+  const [openOrders, setOpenOrders] = useState(false)
+  const [oneMill, setOneMill] = useState(false)
+  const [aboveAsk, setAboveAsk] = useState(false)
+  const [stockOnly, setStockOnly] = useState(false)
+  const [etfOnly, setEtfOnly] = useState(false)
+  const [callsOnly, setCallsOnly] = useState(false)
+  const [putsOnly, setPutsOnly] = useState(false)
+  const [sweepsOnly, setSweepsOnly] = useState(false)
+  const [fiftyCents, setFiftyCents] = useState(false)
+  const [fiveHundred, setFiveHundred] = useState(false)
+  const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION)
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
   const user = currentUser
@@ -60,62 +85,32 @@ export default function Flow() {
       return
     }
 
-    // socket data
-    const filteredOptionData = options.filter(
-      x => x.ticker === ticker.toUpperCase()
-    )
-    const filteredDatabaseData = todayOptionsTraded.filter(
-      x => x.ticker === ticker.toUpperCase()
-    )
-
-    uniqBy(filteredOptionData, 'id').map(x => (x.option_id = x.id))
-
-    const filteredData = uniqBy(
-      [...filteredOptionData, ...filteredDatabaseData.reverse()],
-      'option_id'
-    )
     setSearchInput(ticker)
-    setSaveOptions(filteredData)
-
-    setFilteredOptions(true)
-    // setSearchInput(ticker)
   }
 
   const memoizedfilterData = useCallback(() => {
     filterData(searchInput)
   }, [searchInput])
 
-  const Row = ({index, style}) => (
-    <div key={index} style={style}>
-      <FlowList
-        ticker={options[index].ticker}
-        strike_price={options[index].strike_price}
-        date_expiration={options[index].date_expiration}
-        put_call={options[index].put_call}
-        option_activity_type={options[index].option_activity_type}
-        description={options[index].description}
-        sentiment={options[index].sentiment}
-        cost_basis={options[index].cost_basis}
-        updated={options[index].updated}
-        onClick={() => filterData(options[index].ticker)}
-      />
-    </div>
-  )
+  const reset = useCallback(() => {
+    setFilterSelection(FILTER_SELECTION)
+    setOpenOrders(false)
+    setOneMill(false)
+    setAboveAsk(false)
+  }, [])
 
-  const MobileRow = ({index, style}) => (
-    <div key={index} style={style}>
-      <MobileFlowList
-        ticker={options[index].ticker}
-        strike_price={options[index].strike_price}
-        date_expiration={options[index].date_expiration}
-        put_call={options[index].put_call}
-        option_activity_type={options[index].option_activity_type}
-        description={options[index].description}
-        cost_basis={options[index].cost_basis}
-        updated={options[index].updated}
-      />
-    </div>
-  )
+  const ButtonProps = [
+    {
+      children: 'Clear All',
+      onClick: reset,
+      className: filterStyles.clear_button,
+    },
+    {
+      children: 'Done',
+      onClick: () => setShowFilter(!showFilter),
+      className: filterStyles.done_button,
+    },
+  ]
 
   if (data !== undefined) {
     todayOptionsTraded = data.getOptionsByDate
@@ -124,10 +119,85 @@ export default function Flow() {
   function filterInput(ticker) {
     if (!ticker || ticker.length === 0) {
       setSearchTicker(false)
+      setFilteredOptions(false)
     }
 
     setSearchInput(ticker)
     setSearchTicker(true)
+  }
+
+  function onFilterChange(e) {
+    const {id, checked} = e.target
+    if (id === ASK) {
+      setOpenOrders(!openOrders)
+    } else if (id === ONE_MILL) {
+      setOneMill(!oneMill)
+    } else if (id === ABOVE_ASK) {
+      setAboveAsk(!aboveAsk)
+    } else if (id === STOCK_ONLY) {
+      setStockOnly(!stockOnly)
+    } else if (id === ETFS_ONLY) {
+      setEtfOnly(!etfOnly)
+    } else if (id === CALLS_ONLY) {
+      setCallsOnly(!callsOnly)
+    } else if (id === PUTS_ONLY) {
+      setPutsOnly(!putsOnly)
+    } else if (id === SWEEPS_ONLY) {
+      setSweepsOnly(!sweepsOnly)
+    } else if (id === FIFTY_CENTS) {
+      setFiftyCents(!fiftyCents)
+    } else if (id === FIVE_HUNDRED) {
+      setFiveHundred(!fiveHundred)
+    }
+  }
+
+  const optionFilterFunction = option => {
+    const conditions = []
+
+    if (searchInput) {
+      // setFilteredOptions(true)
+      return option.ticker === searchInput.toUpperCase()
+    }
+
+    if (openOrders) {
+      conditions.push(getBidOrAskOrder(option.description) === ('A' || 'AA'))
+    }
+
+    if (oneMill) {
+      conditions.push(option.cost_basis >= 1000000)
+    }
+
+    if (fiveHundred) {
+      conditions.push(option.cost_basis >= 500000)
+    }
+
+    if (stockOnly) {
+      conditions.push(option.underlying_type === 'STOCK')
+    }
+
+    if (etfOnly) {
+      conditions.push(option.underlying_type === 'ETF')
+    }
+
+    if (callsOnly) {
+      conditions.push(option.put_call === 'CALL')
+    }
+
+    if (putsOnly) {
+      conditions.push(option.put_call === 'PUT')
+    }
+
+    if (sweepsOnly) {
+      conditions.push(option.option_activity_type === 'SWEEP')
+    }
+
+    if (fiftyCents) {
+      conditions.push(
+        getNewContractPrice(option.description).split('$')[1].trim() <= 0.5
+      )
+    }
+
+    return conditions.every(Boolean)
   }
 
   const clearFilter = useCallback(() => {
@@ -141,16 +211,6 @@ export default function Flow() {
       setOptions(options => [...options, ...data])
     })
 
-    socket.on('options', data => {
-      setOptions(options => uniqBy([...data, ...options], 'id'))
-
-      data.map(dataOption => {
-        if (dataOption.ticker === searchInput) {
-          setSaveOptions(prevState => uniqBy([dataOption, ...prevState]))
-        }
-      })
-    })
-
     socket.on('clear', function () {
       setOptions([])
     })
@@ -159,6 +219,16 @@ export default function Flow() {
       socket.close()
     }
   }, [])
+
+  useEffect(() => {
+    socket.on('options', data => {
+      setOptions(options => uniqBy([...data, ...options], 'id'))
+    })
+
+    return () => {
+      socket.close()
+    }
+  }, [data])
 
   if (loadingR) {
     return <Loading />
@@ -191,7 +261,7 @@ export default function Flow() {
   }
 
   if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
-    return <Redirect to="/subscription">Please subscribe</Redirect>
+    return <Redirect to="/select-a-plan">Please subscribe</Redirect>
   }
 
   return (
@@ -200,24 +270,57 @@ export default function Flow() {
         <div className={styles.desktop_view}>
           <InputField
             onChange={e => filterInput(e.target.value)}
-            onKeyPress={e =>
-              e.key === 'Enter' ? memoizedfilterData() : null
-            }
-            onClick={memoizedfilterData}
+            // onKeyPress={e =>
+            //   e.key === 'Enter' ? memoizedfilterData() : null
+            // }
+            // onClick={memoizedfilterData}
             value={searchInput}
             filterButtonClick={() => setShowFilter(!showFilter)}
             searchTicker={searchTicker}
             clearFilter={clearFilter}
             searchInput={searchInput}
           />
-          {showFilter && <div>Filtering</div>}
+
+          <div
+            className={cx(styles.filter_container, {
+              [styles.filter_display_none]: !showFilter,
+            })}
+          >
+            <div className={filterStyles.button_container}>
+              {ButtonProps.map(data => {
+                return (
+                  <button
+                    key={data.children}
+                    onClick={data.onClick}
+                    className={data.className}
+                  >
+                    {data.children}
+                  </button>
+                )
+              })}
+            </div>
+            <div className={filterStyles.filter_selection_container}>
+              {filterSelection.map(data => {
+                return (
+                  <label className={filterStyles.label} key={data.name}>
+                    <input
+                      className={filterStyles.input_checkbox}
+                      type="checkbox"
+                      id={data.name}
+                      onChange={onFilterChange}
+                      checked={data.checked}
+                    />
+                    <span className={filterStyles.span_name}>{data.name}</span>
+                  </label>
+                )
+              })}
+            </div>
+          </div>
+
           <div className={styles.row_list}>
             {FLOW_ROW_NAME.map(data => {
               return (
-                <div
-                  className={cx(styles.row_name, ([styles.mr_5]: marginRight))}
-                  key={data.name}
-                >
+                <div className={cx(styles.row_name)} key={data.name}>
                   {data.name}
                 </div>
               )
@@ -225,35 +328,23 @@ export default function Flow() {
           </div>
           <div className={styles.container_list}>
             <ul className={styles.ul_list}>
-              {filteredOptions && saveOptions.length === 0 && (
+              {filteredOptions && options.length === 0 && (
                 <div className={styles.no_options_found}>No Items Found</div>
               )}
-              {!filteredOptions && !searchTicker && (
-                <List
-                  className={CLASSNAME}
-                  height={HEIGHT}
-                  itemCount={options.length}
-                  itemSize={ITEM_SIZE}
-                  width={WIDTH}
-                >
-                  {Row}
-                </List>
-              )}
-              {filteredOptions &&
-                saveOptions.map((data, index) => (
-                  <FlowList
-                    ticker={data.ticker}
-                    strike_price={data.strike_price}
-                    date_expiration={data.date_expiration}
-                    put_call={data.put_call}
-                    option_activity_type={data.option_activity_type}
-                    description={data.description}
-                    sentiment={data.sentiment}
-                    cost_basis={data.cost_basis}
-                    updated={data.updated}
-                    key={index}
-                  />
-                ))}
+              {options.filter(optionFilterFunction).map((data, index) => (
+                <FlowList
+                  ticker={data.ticker}
+                  strike_price={data.strike_price}
+                  date_expiration={data.date_expiration}
+                  put_call={data.put_call}
+                  option_activity_type={data.option_activity_type}
+                  description={data.description}
+                  sentiment={data.sentiment}
+                  cost_basis={data.cost_basis}
+                  updated={data.updated}
+                  key={index}
+                />
+              ))}
             </ul>
           </div>
         </div>
@@ -263,7 +354,7 @@ export default function Flow() {
           <div className={styles.mobile_results_input}>
             {filteredOptions && (
               <div className={styles.mobile_results}>
-                {saveOptions.length} Results
+                {options.length} Results
               </div>
             )}
             <div className={styles.input_search}>
@@ -278,7 +369,12 @@ export default function Flow() {
                   }
                   placeholder="SPY"
                 />
-                <button className={styles.mobile_search_button}>Search</button>
+                <button
+                  className={styles.mobile_search_button}
+                  onClick={() => setShowFilter(!showFilter)}
+                >
+                  Filter
+                </button>
                 {searchTicker && (
                   <button
                     className={styles.close_icon}
@@ -288,41 +384,62 @@ export default function Flow() {
                 )}
               </div>
             </div>
+
+            <div
+              className={cx(filterStyles.filter_container, {
+                [styles.filter_display_none]: !showFilter,
+              })}
+            >
+              <div className={filterStyles.button_container}>
+                {ButtonProps.map(data => {
+                  return (
+                    <button
+                      key={data.children}
+                      onClick={data.onClick}
+                      className={data.className}
+                    >
+                      {data.children}
+                    </button>
+                  )
+                })}
+              </div>
+              <div className={filterStyles.filter_selection_container}>
+                {filterSelection.map(data => {
+                  return (
+                    <label className={filterStyles.label} key={data.name}>
+                      <input
+                        className={filterStyles.input_checkbox}
+                        type="checkbox"
+                        id={data.name}
+                        onChange={onFilterChange}
+                        checked={data.checked}
+                      />
+                      <span className={filterStyles.span_name}>
+                        {data.name}
+                      </span>
+                    </label>
+                  )
+                })}
+              </div>
+            </div>
           </div>
           <ul className={styles.ul_list}>
-            {filteredOptions && saveOptions.length === 0 && (
+            {filteredOptions && options.length === 0 && (
               <div className={styles.no_options_found}>No Items Found</div>
             )}
-            {!filteredOptions &&
-              !searchTicker &&
-              options.map((data, index) => (
-                <MobileFlowList
-                  ticker={data.ticker}
-                  strike_price={data.strike_price}
-                  date_expiration={data.date_expiration}
-                  put_call={data.put_call}
-                  option_activity_type={data.option_activity_type}
-                  description={data.description}
-                  cost_basis={data.cost_basis}
-                  updated={data.updated}
-                  key={index}
-                />
-              ))}
-            {filteredOptions &&
-              saveOptions.map((data, index) => (
-                <MobileFlowList
-                  ticker={data.ticker}
-                  strike_price={data.strike_price}
-                  date_expiration={data.date_expiration}
-                  put_call={data.put_call}
-                  option_activity_type={data.option_activity_type}
-                  description={data.description}
-                  cost_basis={data.cost_basis}
-                  updated={data.updated}
-                  volume={data.volume}
-                  key={index}
-                />
-              ))}
+            {options.filter(optionFilterFunction).map((data, index) => (
+              <MobileFlowList
+                ticker={data.ticker}
+                strike_price={data.strike_price}
+                date_expiration={data.date_expiration}
+                put_call={data.put_call}
+                option_activity_type={data.option_activity_type}
+                description={data.description}
+                cost_basis={data.cost_basis}
+                updated={data.updated}
+                key={index}
+              />
+            ))}
           </ul>
         </div>
       )}

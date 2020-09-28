@@ -8,7 +8,7 @@ export const COMMUNITY_LIST = [{name: 'Email', email: 'optionflo@gmail.com'}]
 
 export const SUBSCRIPTION = {
   name: 'Subscription',
-  url: '/subscription',
+  url: '/select-a-plan',
   trueLink: true,
   image: require('../images/optionflow_favicon.png'),
 }
