@@ -156,7 +156,7 @@ export default function Flow() {
 
     if (searchInput) {
       // setFilteredOptions(true)
-      return option.ticker === searchInput
+      return option.ticker === searchInput.toUpperCase()
     }
 
     if (openOrders) {
