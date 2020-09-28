@@ -22,9 +22,18 @@ import {
   FIFTY_CENTS,
   SWEEPS_ONLY,
   FILTER_SELECTION,
+  GOLDEN_SWEEP,
+  TENK_ORDER,
 } from './flow-data'
 
-import {getBidOrAskOrder, getNewContractPrice} from './FlowListFunction'
+import {
+  getBidOrAskOrder,
+  getNewContractPrice,
+  getGoldenSweep,
+  getOI,
+  getBuy,
+  getBigBuy,
+} from './FlowListFunction'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 
@@ -52,6 +61,8 @@ export default function Flow() {
   const [sweepsOnly, setSweepsOnly] = useState(false)
   const [fiftyCents, setFiftyCents] = useState(false)
   const [fiveHundred, setFiveHundred] = useState(false)
+  const [isGoldenSweep, setIsGoldenSweep] = useState(false)
+  const [tenKOrder, setTenKOrder] = useState(false)
   const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION)
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
@@ -72,7 +83,7 @@ export default function Flow() {
     }
   )
 
-  const {loading, error, data} = useQuery(GETS_OPTIONS_BY_DATE, {
+  const {loading, error, data: dataO} = useQuery(GETS_OPTIONS_BY_DATE, {
     variables: {
       inputDate: today,
       // inputTicker: searchInput,
@@ -86,6 +97,27 @@ export default function Flow() {
     }
 
     setSearchInput(ticker)
+
+    // // socket data
+    // const filteredOptionData = options.filter(
+    //   x => x.ticker === ticker.toUpperCase()
+    // )
+    // const filteredDatabaseData = todayOptionsTraded.filter(
+    //   x => x.ticker === ticker.toUpperCase()
+    // )
+
+    // uniqBy(filteredOptionData, 'id').map(x => (x.option_id = x.id))
+
+    // const filteredData = uniqBy(
+    //   [...filteredOptionData, ...filteredDatabaseData.reverse()],
+    //   'option_id'
+    // )
+
+    // console.log(filteredData)
+    // setOptions(filteredData)
+
+    // setFilteredOptions(true)
+    // // setSearchInput(ticker)
   }
 
   const memoizedfilterData = useCallback(() => {
@@ -119,8 +151,8 @@ export default function Flow() {
     },
   ]
 
-  if (data !== undefined) {
-    todayOptionsTraded = data.getOptionsByDate
+  if (dataO !== undefined) {
+    todayOptionsTraded = dataO.getOptionsByDate
   }
 
   function filterInput(ticker) {
@@ -155,6 +187,10 @@ export default function Flow() {
       setFiftyCents(!fiftyCents)
     } else if (id === FIVE_HUNDRED) {
       setFiveHundred(!fiveHundred)
+    } else if (id === GOLDEN_SWEEP) {
+      setIsGoldenSweep(!isGoldenSweep)
+    } else if (id === TENK_ORDER) {
+      setTenKOrder(!tenKOrder)
     }
   }
 
@@ -203,6 +239,25 @@ export default function Flow() {
       )
     }
 
+    if (isGoldenSweep) {
+      const OI = getOI(option.description)
+      const BUY = getBuy(option.description)
+      const GOLDEN_SWEEP = getGoldenSweep(
+        option.cost_basis,
+        option.option_activity_type,
+        BUY,
+        OI
+      )
+      const bidOrAsk = getBidOrAskOrder(option.description)
+      conditions.push(GOLDEN_SWEEP && (bidOrAsk === 'A' || bidOrAsk === 'AA'))
+    }
+
+    if (tenKOrder) {
+      const BUY = getBuy(option.description)
+      const BIG_BUY = getBigBuy(BUY)
+      conditions.push(BIG_BUY === true)
+    }
+
     return conditions.every(Boolean)
   }
 
@@ -214,7 +269,7 @@ export default function Flow() {
 
   useEffect(() => {
     socket.on('all_options', function (data) {
-      setOptions(options => [...options, ...data])
+      setOptions(options => [...options, ...data, ...todayOptionsTraded])
     })
 
     socket.on('options', data => {

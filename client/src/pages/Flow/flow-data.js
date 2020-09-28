@@ -46,6 +46,8 @@ export const PUTS_ONLY = 'Put Only'
 export const WEEKLIES = 'Weeklies'
 export const FIFTY_CENTS = '$0.50 and less'
 export const SWEEPS_ONLY = 'Sweeps Only'
+export const GOLDEN_SWEEP = 'Golden Sweep'
+export const TENK_ORDER = 'Big buy'
 
 export const FILTER_SELECTION_DATA = [
   {name: ASK},
@@ -73,4 +75,6 @@ export const FILTER_SELECTION = [
   // {name: WEEKLIES, value: new Date(), type: 'date_expiration'},
   {name: FIFTY_CENTS, value: 0.5, type: 'description'},
   {name: SWEEPS_ONLY, value: 'SWEEP', type: 'option_activity_type'},
+  {name: GOLDEN_SWEEP, value: 'GOLDEN', type: 'description'},
+  {name: TENK_ORDER, value: '10k Order', type: 'description'},
 ]

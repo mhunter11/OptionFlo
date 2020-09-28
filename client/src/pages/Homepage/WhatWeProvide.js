@@ -37,9 +37,9 @@ export default function WhatWeProvide() {
         </div>
         <div className={styles.price_container}>
           <span className={styles.price_text}>{PRICE_TEXT}</span>
-          <Link to="/select-a-plan" className={styles.buy_now}>
+          {/* <Link to="/select-a-plan" className={styles.buy_now}>
             {BUY_NOW}
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>
