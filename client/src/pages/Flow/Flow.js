@@ -211,6 +211,10 @@ export default function Flow() {
       setOptions(options => [...options, ...data])
     })
 
+    socket.on('options', data => {
+      setOptions(options => uniqBy([...data, ...options], 'id'))
+    })
+
     socket.on('clear', function () {
       setOptions([])
     })
@@ -219,16 +223,6 @@ export default function Flow() {
       socket.close()
     }
   }, [])
-
-  useEffect(() => {
-    socket.on('options', data => {
-      setOptions(options => uniqBy([...data, ...options], 'id'))
-    })
-
-    return () => {
-      socket.close()
-    }
-  }, [data])
 
   if (loadingR) {
     return <Loading />
