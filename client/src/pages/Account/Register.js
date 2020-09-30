@@ -35,7 +35,7 @@ function Register(props) {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
-    variables: values,
+    variables: {values, twitter: twitter},
   })
 
   function registerUser() {
@@ -117,7 +117,7 @@ function Register(props) {
               <input
                 className={styles.input}
                 label="Username"
-                placeholder="Username.."
+                placeholder="@Twitter.."
                 name="username"
                 type="text"
                 value={values.username}
