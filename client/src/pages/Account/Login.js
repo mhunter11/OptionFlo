@@ -68,7 +68,7 @@ function Login(props) {
       .catch(function () {
         swal(
           'Error',
-          'An error has occured please try to sign in again in a few minutes'
+          'Email and password, do not match please try again'
         )
       })
   }
