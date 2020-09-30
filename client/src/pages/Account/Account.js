@@ -57,10 +57,6 @@ export default function Account() {
     return <Redirect to="/login">Please login</Redirect>
   }
 
-  if (data.getUser.type === 'free' || data.getUser.type === '') {
-    return <Redirect to="/select-a-plan">Please subscribe</Redirect>
-  }
-
   return (
     <div className={styles.account_container}>
       <div className={styles.container}>
@@ -110,7 +106,7 @@ export default function Account() {
           <div className={styles.user_type}>
             {data.getUser.type === '' && (
               <div className={styles.button_container}>
-                <a className={styles.paid_button}>Status: Free User</a>
+                <a className={styles.paid_button}>Status: Not Paid</a>
               </div>
             )}
             {data.getUser.type === 'standard' && (
