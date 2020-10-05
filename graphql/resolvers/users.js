@@ -161,7 +161,7 @@ module.exports = {
         username,
         email,
         createdAt: new Date().toISOString(),
-        type: '',
+        type: 'free-trial',
         stripeId: '',
         ccLast4: '',
       })
