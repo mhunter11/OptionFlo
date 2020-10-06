@@ -39,6 +39,14 @@ function Register(props) {
   })
 
   function registerUser() {
+    if (values.username === '') {
+      swal(
+        'Invalid Twitter account',
+        'Please enter a valid Twitter account',
+        'warning'
+      )
+      return
+    }
     if (values.password !== values.confirmPassword) {
       swal(
         'Mismatched Passwords',
