@@ -117,7 +117,7 @@ function Register(props) {
               <input
                 className={styles.input}
                 label="Username"
-                placeholder="@Twitter.."
+                placeholder="Username"
                 name="username"
                 type="text"
                 value={values.username}
@@ -127,7 +127,7 @@ function Register(props) {
               <input
                 className={styles.input}
                 label="Email"
-                placeholder="Email.."
+                placeholder="Email"
                 name="email"
                 type="email"
                 value={values.email}
@@ -137,7 +137,7 @@ function Register(props) {
               <input
                 className={styles.input}
                 label="Password"
-                placeholder="Password.."
+                placeholder="Password"
                 name="password"
                 type="password"
                 value={values.password}
@@ -147,7 +147,7 @@ function Register(props) {
               <input
                 className={styles.input}
                 label="Confirm Password"
-                placeholder="Confirm Password.."
+                placeholder="Confirm Password"
                 name="confirmPassword"
                 type="password"
                 value={values.confirmPassword}
