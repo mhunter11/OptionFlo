@@ -35,7 +35,7 @@ function Register(props) {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
-    variables: {values},
+    variables: values,
   })
 
   function registerUser() {
@@ -121,7 +121,7 @@ function Register(props) {
                 name="username"
                 type="text"
                 value={values.username}
-                error={errors.username ? true : false}
+                error={errors.username}
                 onChange={onChange}
               />
               <input
@@ -131,7 +131,7 @@ function Register(props) {
                 name="email"
                 type="email"
                 value={values.email}
-                error={errors.email ? true : false}
+                error={errors.email}
                 onChange={onChange}
               />
               <input
@@ -141,7 +141,7 @@ function Register(props) {
                 name="password"
                 type="password"
                 value={values.password}
-                error={errors.password ? true : false}
+                error={errors.password}
                 onChange={onChange}
               />
               <input
@@ -151,7 +151,7 @@ function Register(props) {
                 name="confirmPassword"
                 type="password"
                 value={values.confirmPassword}
-                error={errors.confirmPassword ? true : false}
+                error={errors.confirmPassword}
                 onChange={onChange}
               />
             </div>
