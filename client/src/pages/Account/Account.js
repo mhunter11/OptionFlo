@@ -116,7 +116,7 @@ export default function Account() {
                 </div>
               </>
             )}
-            {data.getUser.stripeId && (
+            {data.getUser.stripeId && data.getUser.type === 'standard' && (
               <div className={styles.button_container}>
                 <button
                   className={styles.paid_button}
