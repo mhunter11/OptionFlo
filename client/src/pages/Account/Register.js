@@ -78,7 +78,7 @@ function Register(props) {
       .createUserWithEmailAndPassword(values.email, values.password)
       .then(function (data) {
         let user = data.user
-        // user.sendEmailVerification()
+        user.sendEmailVerification()
         values.uid = user.uid
         return user.updateProfile({
           displayName: values.username,
