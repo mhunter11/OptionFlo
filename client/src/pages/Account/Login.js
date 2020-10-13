@@ -49,15 +49,16 @@ function Login(props) {
           return
         }
 
-        if (!data.user.emailVerified) {
-          swal(
-            'Not Verified',
-            'Your account has not been verified. Please check your email for instructions to verify your email.\nIf you just verified your account, try logging out and logging back in.',
-            'error'
-          )
-          firebase.auth.signOut()
-          return
-        }
+        // if (!data.user.emailVerified) {
+        //   swal(
+        //     'Not Verified',
+        //     'Your account has not been verified. Please check your email for instructions to verify your email.\nIf you just verified your account, try logging out and logging back in.',
+        //     'error'
+        //   )
+        //   firebase.auth.signOut()
+        //   return
+        // }
+
         const firebaseId = data.user.uid
         const res = await addFirebaseId({
           variables: {email: values.username, firebaseId},
