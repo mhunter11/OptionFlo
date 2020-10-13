@@ -78,7 +78,7 @@ function Register(props) {
       .createUserWithEmailAndPassword(values.email, values.password)
       .then(function (data) {
         let user = data.user
-        user.sendEmailVerification()
+        // user.sendEmailVerification()
         values.uid = user.uid
         return user.updateProfile({
           displayName: values.username,
@@ -89,7 +89,7 @@ function Register(props) {
         firebase.auth.signOut()
         swal(
           'Created',
-          'Your account has been created\nPlease check your email for a verification link',
+          'Your account has been created\nPlease sign in',
           'success'
         )
         setHome(true)
@@ -104,7 +104,7 @@ function Register(props) {
   }
 
   if (goHome) {
-    return <Redirect to="/" />
+    return <Redirect to="/login" />
   }
 
   return (
