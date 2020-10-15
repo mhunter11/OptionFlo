@@ -48,6 +48,7 @@ export const FIFTY_CENTS = '$0.50 and less'
 export const SWEEPS_ONLY = 'Sweeps Only'
 export const GOLDEN_SWEEP = 'Golden Sweep'
 export const TENK_ORDER = 'Big buy'
+export const VOLUME_OVER_OI = 'Volume > OI'
 
 export const FILTER_SELECTION_DATA = [
   {name: ASK},
@@ -77,4 +78,5 @@ export const FILTER_SELECTION = [
   {name: SWEEPS_ONLY, value: 'SWEEP', type: 'option_activity_type'},
   {name: GOLDEN_SWEEP, value: 'GOLDEN', type: 'description'},
   {name: TENK_ORDER, value: '10k Order', type: 'description'},
+  {name: VOLUME_OVER_OI, value: 'Volume > OI', type: 'description'},
 ]

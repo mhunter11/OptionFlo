@@ -24,6 +24,7 @@ import {
   FILTER_SELECTION,
   GOLDEN_SWEEP,
   TENK_ORDER,
+  VOLUME_OVER_OI,
 } from './flow-data'
 
 import {
@@ -63,6 +64,7 @@ export default function Flow() {
   const [fiveHundred, setFiveHundred] = useState(false)
   const [isGoldenSweep, setIsGoldenSweep] = useState(false)
   const [tenKOrder, setTenKOrder] = useState(false)
+  const [volumeOverOI, setVolumeOverOI] = useState(false)
   const [filterSelection, setFilterSelection] = useState(FILTER_SELECTION)
   const {firebase, currentUser} = useContext(FirebaseContext)
   const socket = io(ENVIRONMENT.DATA_SERVER_URL, {transports: ['websocket']})
@@ -166,7 +168,7 @@ export default function Flow() {
   }
 
   function onFilterChange(e) {
-    const {id, checked} = e.target
+    const {id} = e.target
     if (id === ASK) {
       setOpenOrders(!openOrders)
     } else if (id === ONE_MILL) {
@@ -191,6 +193,8 @@ export default function Flow() {
       setIsGoldenSweep(!isGoldenSweep)
     } else if (id === TENK_ORDER) {
       setTenKOrder(!tenKOrder)
+    } else if (id === VOLUME_OVER_OI) {
+      setVolumeOverOI(!volumeOverOI)
     }
   }
 
@@ -256,6 +260,10 @@ export default function Flow() {
       const BUY = getBuy(option.description)
       const BIG_BUY = getBigBuy(BUY)
       conditions.push(BIG_BUY === true)
+    }
+
+    if (volumeOverOI) {
+      conditions.push(option.volume > option.open_interest)
     }
 
     return conditions.every(Boolean)
