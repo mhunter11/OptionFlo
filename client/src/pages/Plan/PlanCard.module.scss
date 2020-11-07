@@ -31,3 +31,11 @@
     display: flex;
   }
 }
+
+.sale_container {
+  @include --large {
+    display: flex;
+    justify-content: center;
+    padding: 5rem 0 1.5rem;
+  }
+}

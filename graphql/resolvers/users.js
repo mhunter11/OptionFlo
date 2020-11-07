@@ -190,6 +190,8 @@ module.exports = {
         userPlan = process.env.PLAN
       } else if (subPlan === 'Quarterly Plan') {
         userPlan = process.env.QUARTERLY_PLAN
+      } else if (subPlan === 'Holiday Sale!') {
+        userPlan = process.env.HOLIDAY_PLAN
       } else {
         userPlan = process.env.YEARLY_PLAN
       }

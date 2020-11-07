@@ -1,5 +1,16 @@
 export const SELECT_A_PLAN = 'Select A Plan'
 
+
+export const DISCOUNT_MONTHLY_PLAN = {
+  name: 'Holiday Sale!',
+  price: '$30',
+  frequency: 'Monthly',
+  url: '/discount-monthly-plan',
+  billed: '$30/month, auto-renews',
+  intPrice: 3000
+}
+
+
 export const MONTHLY_PLAN = {
   name: 'Monthly Plan',
   price: '$60',

@@ -15,7 +15,8 @@ import STOCK_ICON from './images/optionflow_stock_icon.png'
 
 import styles from './WhatWeProvide.module.scss'
 
-export default function WhatWeProvide() {
+export default function WhatWeProvide(props) {
+  const PRICE_FOR_USER = props.salePrice || PRICE_TEXT
   return (
     <div className={styles.container}>
       <div>
@@ -36,7 +37,7 @@ export default function WhatWeProvide() {
           })}
         </div>
         <div className={styles.price_container}>
-          <span className={styles.price_text}>{PRICE_TEXT}</span>
+          <span className={styles.price_text}>{PRICE_FOR_USER}</span>
           {/* <Link to="/select-a-plan" className={styles.buy_now}>
             {BUY_NOW}
           </Link> */}

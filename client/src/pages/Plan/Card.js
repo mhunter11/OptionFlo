@@ -23,7 +23,7 @@ export default function Card(props) {
     onError(err) {
       swal(
         `Something went wrong`,
-        `Oopsie Woopsie. Something went wrong on our end. Please contact us by email: optionflo@gmail.com or twitter: @optionflo`,
+        `Oopsie Woopsie. Something went wrong on our end. Please contact us by discord: https://discord.gg/t3bH5UM`,
         'error'
       )
     },

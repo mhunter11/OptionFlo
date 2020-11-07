@@ -12,6 +12,7 @@ import Account from './pages/Account/Account'
 import VerifyEmail from './pages/Account/VerifyEmail'
 import ResetPassword from './pages/Account/ResetPassword'
 import SelectAPlan from './pages/Plan/SelectAPlan'
+import SalePlan from './pages/Plan/SalePlan'
 import Admin from './pages/Account/Admin'
 
 import 'semantic-ui-css/semantic.min.css'
@@ -32,6 +33,7 @@ export default function App() {
       <Route exact path="/reset" component={ResetPassword} />
       <Route exact path="/historical-flow" component={HistoricalFlow} />
       <Route exact path="/admin" component={Admin} />
+      <Route exact path="/sale" component={SalePlan} />
       <Footer />
     </Router>
   )
