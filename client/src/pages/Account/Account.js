@@ -112,7 +112,7 @@ export default function Account() {
             {data.getUser.type === 'standard' && (
               <>
                 <div className={styles.button_container}>
-                  <div className={styles.paid_button}>Status: Paid User</div>
+                  <div className={styles.paid_button}>Status: Paid</div>
                 </div>
               </>
             )}
