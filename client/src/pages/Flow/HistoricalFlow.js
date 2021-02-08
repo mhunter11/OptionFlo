@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {useQuery} from '@apollo/react-hooks'
 
 import styles from './Flow.module.scss'
-import 'react-calendar/dist/Calendar.css';
+import 'react-calendar/dist/Calendar.css'
 
 import {GET_USER_INFO, GETS_OPTIONS_BY_DATE} from '../../util/gql'
 import {todayDate} from './FlowListFunction'
@@ -17,9 +17,10 @@ export default function HistoricalFlow() {
   const {currentUser} = useContext(FirebaseContext)
   const user = currentUser
   const [date, setDate] = useState(todayDate)
-  const [searchInput, setSearchInput] = useState('')
+  const [value, setValue] = useState(new Date())
   const [saveOptions, setSaveOptions] = useState([])
   const [filteredOptions, setFilteredOptions] = useState(false)
+  const [openCalendar, setOpenCalendar] = useState(false)
   const {loading: loadingR, error: errorR, data: dataR} = useQuery(
     GET_USER_INFO,
     {
@@ -38,9 +39,9 @@ export default function HistoricalFlow() {
 
   let dataOptions
 
-  if (!loading) {
-    dataOptions = data.getOptionsByDate
-  }
+  // if (!loading) {
+  //   dataOptions = data.getOptionsByDate || ''
+  // }
 
   function filterData(date) {
     if (!date || date.length === 0 || date.split('-').length !== 3) {
@@ -61,30 +62,42 @@ export default function HistoricalFlow() {
     setSaveOptions(() => [...filterData])
   }
 
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+      day = ('0' + date.getDate()).slice(-2)
+    return [date.getFullYear(), mnth, day].join('-')
+  }
+
+  const onChange = nextValue => {
+    setValue(nextValue)
+    console.log(convert(nextValue))
+  }
+
   //"loadingR"
-  if (loadingR) {
-    return <Loading />
-  }
+  // if (loadingR) {
+  //   return <Loading />
+  // }
 
-  if (errorR) {
-    return <Redirect to="/" />
-  }
+  // if (errorR) {
+  //   return <Redirect to="/" />
+  // }
 
-  if (!user && !loadingR) {
-    return <Redirect to="/login">Please login</Redirect>
-  }
+  // if (!user && !loadingR) {
+  //   return <Redirect to="/login">Please login</Redirect>
+  // }
 
-  if (!dataR && !loadingR) {
-    return <Redirect to="/" />
-  }
+  // if (!dataR && !loadingR) {
+  //   return <Redirect to="/" />
+  // }
 
-  if (!dataR.getUser && !loadingR) {
-    return <Redirect to="/login">Please login</Redirect>
-  }
+  // if (!dataR.getUser && !loadingR) {
+  //   return <Redirect to="/login">Please login</Redirect>
+  // }
 
-  if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
-    return <Redirect to="/select-a-plan">Please subscribe</Redirect>
-  }
+  // if (dataR.getUser.type === 'free' || dataR.getUser.type === '') {
+  //   return <Redirect to="/select-a-plan">Please subscribe</Redirect>
+  // }
 
   return (
     <div className={styles.flow_background_color}>
@@ -104,7 +117,12 @@ export default function HistoricalFlow() {
             )
           })}
           <div className={styles.input_search}>
-            <input
+            {openCalendar && (
+              <div className={styles.calendar_container}>
+                <Calendar onChange={onChange} value={value} />
+              </div>
+            )}
+            {/* <input
               type="text"
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
@@ -112,18 +130,12 @@ export default function HistoricalFlow() {
                 e.key === 'Enter' ? filterData(searchInput) : null
               }
               placeholder="YYYY-MM-DD"
-            />
+            /> */}
             <button
               className={styles.button}
-              onClick={() => filterData(searchInput)}
+              onClick={() => setOpenCalendar(!openCalendar)}
             >
               Filter
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => setFilteredOptions(false)}
-            >
-              Reset
             </button>
           </div>
         </div>
