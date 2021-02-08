@@ -74,7 +74,7 @@ function Register(props) {
       return
     }
 
-    firebase.auth
+    firebase.auth()
       .createUserWithEmailAndPassword(values.email, values.password)
       .then(function (data) {
         let user = data.user
@@ -86,7 +86,7 @@ function Register(props) {
       })
       .then(function () {
         addUser()
-        firebase.auth.signOut()
+        firebase.auth().signOut()
         swal(
           'Created',
           'Your account has been created\nPlease sign in',

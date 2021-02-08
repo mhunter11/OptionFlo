@@ -28,7 +28,7 @@ function VerifyEmail() {
 
     mode = getParameterByName('mode')
 
-    var auth = firebase.auth
+    var auth = firebase.auth()
 
     switch (mode) {
       case 'verifyEmail': {
@@ -61,7 +61,7 @@ function VerifyEmail() {
               ).then(() => {
                 setSignIn(true)
               })
-            } else if (firebase.auth.currentUser != null && firebase.auth.currentUser.emailVerified) {
+            } else if (firebase.auth().currentUser != null && firebase.auth().currentUser.emailVerified) {
               swal(
                 'Success',
                 'Your email has successfully been verified',

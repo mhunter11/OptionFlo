@@ -41,7 +41,7 @@ function Login(props) {
   })
 
   function loginUserCallback() {
-    firebase.auth
+    firebase.auth()
       .signInWithEmailAndPassword(values.username, values.password)
       .then(async function (data) {
         if (data == null) {
@@ -69,7 +69,8 @@ function Login(props) {
       .catch(function () {
         swal(
           'Error',
-          'Email and password, do not match please try again'
+          'Email and password, do not match please try again',
+          'error'
         )
       })
   }
@@ -95,7 +96,7 @@ function Login(props) {
     })
       .then(willReset => {
         if (willReset) {
-          return firebase.auth.sendPasswordResetEmail(values.username)
+          return firebase.auth().sendPasswordResetEmail(values.username)
         }
       })
       .then(function () {
