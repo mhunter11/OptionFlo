@@ -383,6 +383,7 @@
 
 .flow_background_color {
   background: #211a47;
+  height: 100vw;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -390,6 +391,12 @@
     max-width: 1260px;
     margin: auto;
   }
+}
+
+.calendar_container {
+  position: absolute;
+  top: 20%;
+  left: 55%;
 }
 
 .desktop_row_name {
