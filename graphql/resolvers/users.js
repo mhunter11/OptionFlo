@@ -320,7 +320,6 @@ module.exports = {
         const underlying_type = op.underlying_type
         const cost_basis = op.cost_basis
         const put_call = op.put_call
-        const price = op.price
         const size = op.size
         const day_volume = op.day_volume
         const strike_price = op.strike_price
@@ -329,8 +328,6 @@ module.exports = {
         const trade_count = op.trade_count
         const open_interest = op.open_interest
         const volume = op.volume
-        const bid = op.bid
-        const ask = op.ask
         const midpoint = op.midpoint
 
         const newOption = new Option({
@@ -345,7 +342,6 @@ module.exports = {
           underlying_type,
           cost_basis,
           put_call,
-          price,
           size,
           day_volume,
           strike_price,
@@ -354,8 +350,6 @@ module.exports = {
           trade_count,
           open_interest,
           volume,
-          bid,
-          ask,
           midpoint,
           option_id,
         })

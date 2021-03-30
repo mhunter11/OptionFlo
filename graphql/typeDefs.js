@@ -62,7 +62,6 @@ module.exports = gql`
     underlying_type: String!
     cost_basis: String!
     put_call: String!
-    price: String!
     size: String!
     strike_price: String!
     date_expiration: String!
@@ -70,8 +69,6 @@ module.exports = gql`
     trade_count: String!
     open_interest: String!
     volume: String!
-    bid: String!
-    ask: String!
     midpoint: String!
   }
 
@@ -88,15 +85,12 @@ module.exports = gql`
     cost_basis: String!
     put_call: String!
     strike_price: String!
-    price: String!
     size: String!
     date_expiration: String!
     option_activity_type: String!
     trade_count: String!
     open_interest: String!
     volume: String!
-    bid: String!
-    ask: String!
     midpoint: String!
     updated: String
     option_id: String!

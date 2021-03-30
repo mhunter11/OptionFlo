@@ -13,7 +13,6 @@ const optionSchema = new Schema({
   cost_basis: String,
   put_call: String,
   size: String,
-  price: String,
   day_volume: String,
   strike_price: String,
   date_expiration: String,
@@ -21,8 +20,6 @@ const optionSchema = new Schema({
   trade_count: String,
   open_interest: String,
   volume: String,
-  bid: String,
-  ask: String,
   midpoint: String,
   option_id: {
     type: String,
