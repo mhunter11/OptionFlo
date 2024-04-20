@@ -4,8 +4,6 @@ const User = require('../../models/User')
 const Option = require('../../models/Option')
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 const NEW_OPTION = 'NEW_OPTION'
-const EMAIL_1 = 'huntermelverton@gmail.com'
-const EMAIL_2 = 'jaim5oh@gmail.com'
 
 module.exports = {
   Query: {
