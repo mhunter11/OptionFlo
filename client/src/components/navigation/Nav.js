@@ -9,7 +9,7 @@ export function Nav() {
   const {firebase, currentUser} = useContext(FirebaseContext)
 
   const performSignout = () => {
-    firebase.auth.signOut()
+    firebase.auth().signOut()
   }
 
   const user = currentUser ? true : false

@@ -23,7 +23,7 @@ export default function MenuBar() {
   ]
 
   function performSignout(e) {
-    firebase.auth.signOut()
+    firebase.auth().signOut()
   }
 
   const menuBar = currentUser ? (
