@@ -82,10 +82,10 @@ cookie@0.3.1:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
   integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
 
-date-and-time@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/date-and-time/-/date-and-time-0.12.0.tgz#6d30c91c47fa72edadd628b71ec2ac46909b9267"
-  integrity sha512-n2RJIAp93AucgF/U/Rz5WRS2Hjg5Z+QxscaaMCi6pVZT1JpJKRH+C08vyH/lRR1kxNXnPxgo3lWfd+jCb/UcuQ==
+date-and-time@^0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/date-and-time/-/date-and-time-0.14.2.tgz#a4266c3dead460f6c231fe9674e585908dac354e"
+  integrity sha512-EFTCh9zRSEpGPmJaexg7HTuzZHh6cnJj1ui7IGCFNXzd2QdpsNh05Db5TF3xzJm30YN+A8/6xHSuRcQqoc3kFA==
 
 debug@~3.1.0:
   version "3.1.0"
